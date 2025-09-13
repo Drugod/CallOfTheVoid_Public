@@ -1,0 +1,131 @@
+// Overview Of Interactable Properties:
+
+// name: 			the actual classname of the interactable entity in the C game code
+// interaction:		how to use this interactable
+// spawnflags:		conditional parameter that specifies the value the edicts "spawnflags" must have to be interactable
+// health:			conditional parameter that specifies whether or not edict must have health to be interactable
+// targetname:		conditional parameter that specifies whether or not edict must have a targetname to be interactable
+// logic_op:		if multiple conditional parameters exist, use this to set whether they must all be valid or only one
+// bounds:			if defined, use this bounds for the entity, instead of it's in-game one
+
+
+// Valid Interaction Types:
+
+// push:			this interactable must be pushed to activate
+// shoot:			this interactable must be shot to activate
+// use:				this interactable must be used to activate
+// ride:			this interactable must be ridden
+// touch:			this interactable must be touched
+
+
+// Valid Logic Op Types:
+
+// and:				All conditions must be true
+// or:				At least one condition must be true
+
+
+// Valid Interactables:
+
+{
+  name			func_door_secret
+  interaction	shoot
+  spawnflags	16
+  targetname	false
+  logic_op		or
+}
+
+{ // some buttons can be shot, if they have health
+  name			func_button
+  interaction	shoot
+  health		true
+}
+
+{
+  name			func_button
+  interaction	push
+}
+
+{
+  name			trigger_multiple
+  interaction	shoot
+  health		true
+}
+
+{
+  name			trigger_once
+  interaction	shoot
+  health		true
+}
+
+{
+  name			func_plat
+  interaction	ride
+}
+
+// fixme: rogue func_plat2 is weird, need to verify
+{
+  name			func_plat2
+  interaction	ride
+}
+
+{
+  name			func_door
+  interaction	ride
+}
+
+// doors can be shootable in Q2
+{
+  name			func_door
+  interaction	shoot
+  health        true
+}
+
+{
+  name			func_door_rotating
+  interaction	ride
+}
+
+{
+  name			func_rotating
+  interaction	ride
+}
+
+{
+  name			func_train
+  interaction	ride
+}
+
+{ // there are some doors that can be shootable, so we need to see them.
+  name			func_door
+  interaction	shoot
+  health		true
+}
+
+{
+  name			func_explosive
+  interaction	shoot
+  health		true
+}
+
+{
+  name			trigger_push
+  interaction	touch
+}
+
+{
+  name			trigger_teleporter
+  interaction	touch
+  bounds		{ -16 -16 -8 } { 16 16 48 }
+}
+
+{
+  name			misc_teleporter
+  interaction	touch
+  bounds		{ -16 -16 -8 } { 16 16 48 }
+}
+
+{
+  name			trigger_ctf_teleport
+  interaction	touch
+  bounds		{ -16 -16 -8 } { 16 16 48 }
+}

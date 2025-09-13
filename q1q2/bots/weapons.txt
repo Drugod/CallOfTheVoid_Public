@@ -1,0 +1,475 @@
+// Overview Of Weapon Properties:
+
+// name: 				classname of the weapon, as it appears in C code.
+// damage:				the amount of raw damage this weapon does each "shot"
+// ideal_fov:			the ideal FOV the target should be inside of for the bot to fire the weapon
+// min_range: 			the absolute min range the bot must be from it's enemy to use this weapon ( else it is invalid ). 0 if don't care
+// max_range: 			the absolute max range the bot can be from it's enemy to use this weapon ( else it is invalid ). 0 if don't care
+// min_height			the absolute min height difference ( below the bot ) between the bot and the enemy allowed. 0 if don't care
+// max_height			the absolute max height difference ( above the bot ) between the bot and the enemy allowed. 0 if don't care
+// speed:				if fire a projectile, how fast the projectile travels ( for predictive aiming )
+// priority: 			relative priority that you assign this weapon ( vs. other valid weapons ) - tweak this as you like. 0 = never choose this weapon
+// ammo_name: 			classname of the ammo, as it appears in C code. Use "none" if no ammo needed
+// min_ammo: 			the minimum amount of ammo this weapon needs to have to be considered for use
+// max_ammo:			the maximum amount of ammo the player can carry for this weapon
+// flags: 				describe properties of this weapon to the bots
+// aim_point: 			where on the enemies body we should aim the weapon.
+// trigger_type:		how the bots should handle the trigger to fire this weapon
+// trigger_hold:		how long to hold trigger, in seconds, before weapon is ready to fire. 0 = instant
+// trigger_cooldown:	how long to wait, in seconds, before can fire again. 0 = no cooldown
+
+
+// Valid Aim Points:
+
+// feet:				aim at the targets feet
+// head:				aim at targets head
+// center:				aim at targets center ( default )
+
+
+// Valid Weapon Flags:
+
+// melee:				this is a melee weapon
+// hitscan:				this is an instant hit weapon
+// projectile:			this weapon fires projectiles
+// parabolic:			this weapon is affected by gravity
+// explosive:			this weapon is explosive
+// sticky:				this weapon shot sticks to walls
+// starting:			bot spawns with this weapon in inventory
+// initial:				bot spawns with this weapon in hand
+// suitable:			this weapon is suitable for general combat, else bot will focus on finding a suitable gun 
+// rocket_jump:			this weapon could be used for rocket_jump traversals
+
+
+// Valid Trigger Types:
+
+// continuous:			fire this weapon by always holding down the trigger
+// hold_and_release:	fire this weapon by holding the trigger for a time, then releasing it
+
+
+// For A Weapon To Be Considered, Each Of The Following Must Be True:
+ 
+// 1. The bot has the weapon in inventory, with enough ammo.
+// 2. The bots target is within the min/max distance from the bot.
+// 3. If min/max height is defined, the enemy must be within this distance on the Z axis ( up/down in idTech ).
+// 4. If all of the above are true, then the weapon with the highest priority value wins.
+
+
+// === Valid id Weapons:
+
+{ // Grapple (just in case they somehow activate one)
+  name					"weapon_grapple"
+  damage				5
+  ideal_fov				15
+  min_range				0
+  max_range				4096
+  min_height			0
+  max_height			0
+  speed					800
+  priority				0
+  ammo_name				"none"
+  min_ammo				0
+  max_ammo				0
+  flags					initial | starting | projectile
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Blaster
+  name					"weapon_blaster"
+  damage				15
+  ideal_fov				15
+  min_range				0
+  max_range				4096
+  min_height			0
+  max_height			0
+  speed					1500
+  priority				1
+  ammo_name				"none"
+  min_ammo				0
+  max_ammo				0
+  flags					initial | starting | projectile
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Shotgun
+  name					"weapon_shotgun"
+  damage				48
+  ideal_fov				15
+  min_range				0
+  max_range				768
+  min_height			0
+  max_height			0
+  speed					0
+  priority				2
+  ammo_name				"ammo_shells"
+  min_ammo				1
+  max_ammo				100
+  flags					hitscan | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Super Shotgun
+  name					"weapon_supershotgun"
+  damage				120
+  ideal_fov				15 
+  min_range				0
+  max_range				768
+  min_height			0
+  max_height			0
+  speed					0
+  priority				4
+  ammo_name				"ammo_shells"
+  min_ammo				2
+  max_ammo				100
+  flags					hitscan | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // MachineGun
+  name					"weapon_machinegun"
+  damage				8
+  ideal_fov				15  
+  min_range				0
+  max_range				4096
+  min_height			0
+  max_height			0
+  speed					0
+  priority				3
+  ammo_name				"ammo_bullets"
+  min_ammo				1
+  max_ammo				200
+  flags					hitscan | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Chaingun
+  name					"weapon_chaingun"
+  damage				6
+  ideal_fov				15  
+  min_range				0
+  max_range				4096
+  min_height			0
+  max_height			0
+  speed					0
+  priority				4
+  ammo_name				"ammo_bullets"
+  min_ammo				1
+  max_ammo				200
+  flags					hitscan | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Hand Grenade
+  name					"ammo_grenades"
+  damage				125
+  ideal_fov				30  
+  min_range				96
+  max_range				512
+  min_height			0
+  max_height			256
+  speed					600
+  priority				1
+  ammo_name				"ammo_grenades"
+  min_ammo				1
+  max_ammo				50
+  flags					projectile | parabolic | explosive
+  aim_point				head
+  trigger_type			hold_and_release
+  trigger_hold			3
+  trigger_cooldown		1
+}
+
+{ // Grenade Launcher
+  name					"weapon_grenadelauncher"
+  damage				120
+  ideal_fov				20  
+  min_range				192
+  max_range				768
+  min_height			0
+  max_height			512
+  speed					600
+  priority				5
+  ammo_name				"ammo_grenades"
+  min_ammo				1
+  max_ammo				50
+  flags					projectile | parabolic | explosive | suitable
+  aim_point				head
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Rocket Launcher
+  name					"weapon_rocketlauncher"
+  damage				110
+  ideal_fov				15  
+  min_range				100
+  max_range				1280
+  min_height			0
+  max_height			0
+  speed					650
+  priority				7
+  ammo_name				"ammo_rockets"
+  min_ammo				1
+  max_ammo				50
+  flags					projectile | explosive | suitable | rocket_jump
+  aim_point				feet
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Hyperblaster
+  name					"weapon_hyperblaster"
+  damage				15
+  ideal_fov				30  
+  min_range				64
+  max_range				1024
+  min_height			0
+  max_height			0
+  speed					1000
+  priority				6
+  ammo_name				"ammo_cells"
+  min_ammo				1
+  max_ammo				200
+  flags					projectile | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Railgun
+  name					"weapon_railgun"
+  damage				100
+  ideal_fov				15  
+  min_range				256
+  max_range				8192
+  min_height			0
+  max_height			0
+  speed					0
+  priority				6
+  ammo_name				"ammo_slugs"
+  min_ammo				1
+  max_ammo				50
+  flags					hitscan | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // BFG 10K!!!
+  name					"weapon_bfg"
+  damage				200
+  ideal_fov				30  
+  min_range				128
+  max_range				4096
+  min_height			0
+  max_height			0
+  speed					400
+  priority				8
+  ammo_name				"ammo_cells"
+  min_ammo				50
+  max_ammo				200
+  flags					projectile | explosive | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+// Paril: mission pack weapons
+{
+  name					"weapon_chainfist"
+  damage				30
+  min_range				0
+  max_range				64
+  speed					0
+  priority				1
+  ammo_name				"none"
+  min_ammo				0
+  max_ammo				0
+  flags					melee
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Plasma Beam
+  name					"weapon_plasmabeam"
+  damage				15
+  ideal_fov				15  
+  min_range				128
+  max_range				8192
+  min_height			0
+  max_height			0
+  speed					0
+  priority				8
+  ammo_name				"ammo_cells"
+  min_ammo				2
+  max_ammo				200
+  flags					hitscan | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // ETF Rifle
+  name					"weapon_etf_rifle"
+  damage				10
+  ideal_fov				15  
+  min_range				0
+  max_range				768
+  min_height			0
+  max_height			0
+  speed					750
+  priority				5
+  ammo_name				"ammo_flechettes"
+  min_ammo				1
+  max_ammo				200
+  flags					projectile | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Booby Trap
+  name					"ammo_trap"
+  damage				300
+  ideal_fov				30  
+  min_range				96
+  max_range				512
+  min_height			0
+  max_height			256
+  speed					600
+  priority				1
+  ammo_name				"ammo_trap"
+  min_ammo				1
+  max_ammo				50
+  flags					projectile | parabolic | explosive
+  aim_point				center
+  trigger_type			hold_and_release
+  trigger_hold			3
+  trigger_cooldown		1
+}
+
+{ // Tesla Trap
+  name					"ammo_tesla"
+  damage				30
+  ideal_fov				30  
+  min_range				96
+  max_range				1024
+  min_height			0
+  max_height			256
+  speed					600
+  priority				1
+  ammo_name				"ammo_tesla"
+  min_ammo				1
+  max_ammo				50
+  flags					projectile | parabolic | explosive
+  aim_point				center
+  trigger_type			hold_and_release
+  trigger_hold			3
+  trigger_cooldown		1
+}
+
+{ // Proximity Mine Launcher
+  name					"weapon_proxlauncher"
+  damage				90
+  ideal_fov				15  
+  min_range				96
+  max_range				1048
+  min_height			0
+  max_height			512
+  speed					600
+  priority				5
+  ammo_name				"ammo_prox"
+  min_ammo				1
+  max_ammo				50
+  flags					projectile | parabolic | explosive | sticky
+  aim_point				head
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Ion Ripper
+  name					"weapon_boomer"
+  damage				30
+  ideal_fov				15  
+  min_range				0
+  max_range				768
+  min_height			0
+  max_height			0
+  speed					500
+  priority				6
+  ammo_name				"ammo_cells"
+  min_ammo				1
+  max_ammo				200
+  flags					projectile | suitable // FIXME: bouncy? would that help them use this at all?
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Phalanx
+  name					"weapon_phalanx"
+  damage				160
+  ideal_fov				15  
+  min_range				80
+  max_range				2048
+  min_height			0
+  max_height			0
+  speed					725
+  priority				7
+  ammo_name				"ammo_magslug"
+  min_ammo				1
+  max_ammo				50
+  flags					projectile | explosive | suitable
+  aim_point				feet
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}
+
+{ // Disruptor
+  name					"weapon_disintegrator"
+  damage				9999
+  ideal_fov				5  
+  min_range				0
+  max_range				512
+  min_height			0
+  max_height			0
+  speed					800
+  priority				10
+  ammo_name				"ammo_disruptor"
+  min_ammo				1
+  max_ammo				50
+  flags					projectile | suitable
+  aim_point				center
+  trigger_type			continuous
+  trigger_hold			0
+  trigger_cooldown		0
+}

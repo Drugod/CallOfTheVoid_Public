@@ -1,0 +1,91 @@
+// Overview Of Game Rule Properties:
+
+// cvar: 			name of the cvars to check ( Max is 2 cvars )
+// value:			value of the cvars to check ( Max is 2 cvars )	
+
+// Valid Game Settings ( all are either 'true' or 'false' - default is 'false' ):
+// weapon_stay:		if 'cvar' & 'value' match - whether or not weapons stay
+// team_damage:		if 'cvar' & 'value' match - whether or not you hurt team members
+// has_teams		if 'cvar' & 'value' match - gametype is a team game
+// game_type:		if 'cvar' & 'value' match - what gametype is active
+// only_gametype:	only check the cvars if the gametype is this
+// not_gametype:	only check the cvars if the gametype is NOT this
+// logic_op:		set to 'and' if both cvars must be true, 'or' if only one - default: 'or'
+
+// NOTE: the settings for a particular game mode are set based on matching cvar/value
+// NOTE: pairs, using a "first come, first served" rule for each entry
+
+
+// Valid Game Types:
+
+//	dm:				Deathmatch 
+// 	tdm:			Team Deathmatch
+//	coop: 			Cooperative
+// 	ctf:			Capture The Flag
+
+// Valid Logic Ops:
+
+// and:				Logical "And" ( both cvars must be true ).
+// or:				Logical "Or" ( one cvar must be true ).
+
+
+// Valie Gametype Cvars
+{
+  cvar				teamplay
+  value				1
+  
+  has_teams			true
+  game_type			tdm
+}
+
+{
+  cvar				coop
+  value				1
+  
+  has_teams			true
+  game_type			coop
+}
+
+{
+  cvar				deathmatch
+  value				1
+  
+  game_type			dm
+}
+
+{
+  cvar				ctf
+  value				1
+  
+  has_teams			true
+  game_type			ctf
+}
+
+// Valid Game Setting Cvars
+
+{
+  cvar				g_friendly_fire
+  value				1
+  
+  team_damage 		true
+}
+
+{ // dm/tdm/ctf all use the same cvar below for weapon stay
+ not_gametype      	coop 
+ cvar               g_dm_weapons_stay
+ value              1
+
+ weapon_stay        true
+}
+
+{ // checks that both cvars are set to the value below
+ only_gametype      coop
+ cvar               g_coop_instanced_items
+ value              0
+ logic_op			and
+ cvar               g_coop_squad_respawn
+ value              0
+
+ weapon_stay        true
+}
+

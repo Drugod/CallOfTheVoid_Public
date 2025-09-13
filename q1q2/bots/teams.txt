@@ -1,0 +1,20 @@
+// Overview Of Team Properties:
+
+// value:			value of the team as set in C code
+// name:			name of the team ( for debugging )
+
+// This translates non-zero based teams set in C, into 0 based team numbers
+// internally for ease of use and debugging in the bot code. Teams will be 
+// numbered in the order they are defined in this file ( 0 - N ).
+
+// NOTE: There are a max of two teams supported by all of the bot systems!
+
+{
+  value				1
+  name 				"Red Team"
+}
+
+{
+  value				2
+  name 				"Blue Team"
+}

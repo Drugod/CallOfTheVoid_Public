@@ -1,0 +1,76 @@
+// Overview Of Danger Properties:
+
+// name: 					the actual classname of the danger, as used in the game code
+// sight_dist:				max dist bot can see the danger. Default = FLT_MAX
+// flags: 					describe properties of this danger to the bots
+
+
+// Valid Danger Flags:
+
+// takes_damage:			this danger can be destroyed by weapon fire
+// ignore_if_team:			this danger won't harm its team ( based on owner )
+// ignore_if_coop:			this danger won't harm us in coop
+// ignore_if_no_team_dmg:	this danger won't harm us in a team game, if team dmg is off.
+// timer_based:				this danger explodes on a timer
+// nav_hazard:				this danger blocks navigation thru the area
+// check_velocity:			this danger is only active when it's stationary
+// check_beam:				this danger is a laser with a start/end point
+// exploding_barrel:		this danger should be shot on sight when enemies near
+// update_pvs:				this danger should have its PVS updated regularly
+
+
+// === Valid Dangers:
+
+{ // Proximity Mine
+  name			"prox_mine"
+  sight_dist	384
+  flags			takes_damage | check_velocity | ignore_if_coop
+}
+
+{ // Grenade ( fired from Grenade Launcher )
+  name			"grenade"
+  sight_dist	384
+  flags			timer_based | update_pvs | ignore_if_no_team_dmg
+}
+
+{ // Hand Grenade
+  name			"hand_grenade"
+  sight_dist	384
+  flags			timer_based | check_velocity | ignore_if_no_team_dmg
+}
+
+{ // Tesla Mine
+  name			"tesla_mine"
+  sight_dist	384
+  flags			takes_damage | check_velocity | ignore_if_coop | ignore_if_team
+}
+
+{ // Laser Field
+  name			"target_laser"
+  sight_dist	384
+  flags			check_beam | nav_hazard
+}
+
+{ // Laser Field (Xatrix)
+  name			"target_mal_laser"
+  sight_dist	384
+  flags			check_beam | nav_hazard
+}
+
+{ // "Food Cube Trap" - turns victims into food cubes
+  name			"food_cube_trap"
+  sight_dist	384
+  flags			takes_damage | check_velocity
+}
+
+{ // Doppelganger - really just for distraction, but fun to see bots react
+  name			"doppleganger"
+  sight_dist	1024
+  flags			takes_damage | ignore_if_team | timer_based | check_velocity | ignore_if_coop
+}
+
+{ // Explosive Barrels - Barrels O' Fun!
+  name			"misc_explobox"
+  sight_dist	1024
+  flags			takes_damage | exploding_barrel
+}

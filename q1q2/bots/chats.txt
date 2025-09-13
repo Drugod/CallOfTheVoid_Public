@@ -1,0 +1,195 @@
+// Overview Of Chat Properties:
+
+// locstring: 	the name of the loc string to use for lookup
+// type: 		the type of chat this is - MUST match the C++ code!
+// time:		how long to wait before sending the chat ( in milliseconds )
+// chance:		chance that a chat happens. Values are between 1 ( rarely happens ) to 100 ( always happens )
+// team:		'true' if the chat is intended to only be seen by teammates, 'false' if everyone should see it.
+
+{
+	locstring 	"m_bot_chat_connected"
+	type 		"connected"
+	time		900
+	chance		15
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_disconnect"
+	type 		"disconnected"
+	time		100
+	chance		50
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_match_start"
+	type 		"match_start"
+	time		1200
+	chance		15
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_match_end"
+	type 		"match_end"
+	time		1200
+	chance		15
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_melee_murder"
+	type 		"melee_murder"
+	time		900
+	chance		50
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_kia_human"
+	type 		"kia_human"
+	time		900
+	chance		15
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_kia_monster"
+	type 		"kia_monster"
+	time		900
+	chance		100
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_kia_friendly"
+	type 		"kia_friendly"
+	time		900
+	chance		100
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_fragged_enemy"
+	type 		"fragged_enemy"
+	time		900
+	chance		10
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_fragged_friendly"
+	type 		"fragged_friendly"
+	time		900
+	chance		100
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_fragged_self"
+	type 		"fragged_self"
+	time		900
+	chance		25
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_telefragged_enemy"
+	type 		"telefragged_enemy"
+	time		500
+	chance		100
+	team		false
+}
+
+{
+	locstring 	"m_bot_chat_telefragged_friendly"
+	type 		"telefragged_friendly"
+	time		500
+	chance		100
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_telefragged_self"
+	type 		"telefragged_self"
+	time		500
+	chance		100
+	team		false
+}
+
+// Escort specific chats...
+{
+	locstring 	"m_bot_chat_escort_following"
+	type 		"escort_following"
+	time		900
+	chance		100
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_escort_annoyed"
+	type 		"escort_annoyed"
+	time		900
+	chance		100
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_escort_goal_died"
+	type 		"escort_goal_died"
+	time		900
+	chance		100
+	team		true
+}
+
+// CTF specific chats...
+
+{
+	locstring 	"m_bot_chat_ctf_on_defense"
+	type 		"ctf_on_defense"
+	time		900
+	chance		50
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_ctf_on_offense"
+	type 		"ctf_on_offense"
+	time		900
+	chance		25
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_ctf_returning_dropped_flag"
+	type 		"ctf_returning_dropped_flag"
+	time		900
+	chance		75
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_ctf_attacking_enemy_carrier"
+	type 		"ctf_attacking_enemy_carrier"
+	time		900
+	chance		75
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_ctf_delivering_flag"
+	type 		"ctf_delivering_flag"
+	time		900
+	chance		100
+	team		true
+}
+
+{
+	locstring 	"m_bot_chat_ctf_camping_enemy_base"
+	type 		"ctf_camping_enemy_base"
+	time		900
+	chance		75
+	team		true
+}
+

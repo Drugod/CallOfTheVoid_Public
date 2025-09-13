@@ -1,0 +1,321 @@
+skill practice // Bots are so easy to kill, that it's nearly impossible to lose to them
+{
+  aiming.max_acceleration				180		// max angle acceleration allowed per second
+  aiming.spring_stiffness				40		// stiffness of the spring used to track targets. Larger value = tighter spring
+  aiming.damping						5		// affects spring start/stop speed, and can be used to create oscillations
+  aiming.lead_targets					false	// can the bot lead targets when using projectiles weapons
+  aiming.velocity_offset				-0.25	// apply this offset in seconds ( a positive number leads the target, a negative number lags the target )
+  aiming.modifier.max_angle				60		// if yaw/pitch angle difference of current and ideal is greater than this, will apply aim modifiers to catch up
+  aiming.modifier.apply_time			2		// how long, in seconds, to apply the aim modifiers if max angle condition is met. 0 = disabled
+  aiming.modifier.accel_scalar			2		// how much to scale the 'aiming.max_acceleration' value above if modifiers are active
+  aiming.modifier.spring_scalar			2		// how much to scale the 'aiming.spring_stiffness' value above if modifiers are active
+  aiming.modifier.damping_scalar		2		// how much to scale the 'aiming.damping' value above if modifiers are active
+  	
+  behaviors.allow_combat				false	// is bot allowed to use specific combat behaviors? False = bot fights stupidly
+  behaviors.combat.allow_grab_items		false	// is bot allowed to grab ANY items ( health/ammo/weapons/etc ) while in combat?
+  behaviors.combat.max_item_dist		560		// max dist bot can "see" items while in combat ( in game units )
+  behaviors.combat.min_health_pct		95		// only grab health if bot has less than this pct of max health
+  behaviors.combat.min_ammo_pct			75		// only grab ammo if bot has less than this pct of max ammo for current gun
+  behaviors.combat.min_armor_pct		95		// only grab armor if bot has less than this pct of max armor for their current armor type
+  behaviors.combat.grab_weapons			true	// is bot allowed to grab nearby weapons during combat?
+  behaviors.combat.allow_melee 			false 	// is bot allowed to do engage in melee combat?
+
+  behaviors.allow_check_six				true	// is bot allowed to periodically check behind itself for enemies?
+  behaviors.allow_grab_items			false	// is bot allowed to grab items ( health/ammo/etc ) when not in combat?
+  behaviors.allow_grab_power_items		false	// is bot allowed to grab powerups ( quad, invis, Mega Health, Red Armor, etc )? 
+  behaviors.react_to_dangers			false	// is bot allowed to see & react to dangers in the world?
+  behaviors.defer_power_items_to_humans	true	// only relevant in team games - let a nearby human teammate pickup the power item instead
+  behaviors.min_respawn_time			1.5		// in seconds
+  behaviors.max_respawn_time			2.5		// in seconds
+  
+  movement.allow_jumping_in_combat		false	// is bot allowed to jump in combat?
+  movement.jump_chance					0		// chance ( 0 - 100 ), that the bot will jump in combat
+  movement.jump_cooldown				0		// in seconds - min time that must pass between checks to potentially jump
+  movement.walk_only					true	// bot will only walk when moving around the map
+  movement.allow_rocket_jumping			false	// bot will use rocket jumping to reach areas of the map
+
+  senses.sight_time						0.3		// in seconds - how fast bot gains awareness of a visible enemy
+  senses.sight_decay_time				0.125	// in seconds - how fast bot loses awareness of a non-visible enemy
+  senses.invis_enemy_sight_scalar		2		// if enemy is invisible - scale 'senses.sight_time' by this amount
+  senses.max_invis_enemy_sight_dist		128		// if enemy is invisible - won't be able to see this beyond this distance.
+  senses.fov_angle						120		// in degrees - the FOV the bot uses to determine if enemy is in front of bot or not
+  senses.forget_non_vis_enemy_time		1		// in seconds - how long until we "forget" about an enemy we can't currently see
+  senses.sound_range					512		// in quake units - how far away can this bot hear an enemy
+  senses.sound_time						0.5		// in seconds - how fast bot gains awareness of an audible enemy
+  senses.sound_decay_time				2		// in seconds - how fast bot loses awareness of a non-audible enemy
+  senses.sound_persist_time				0.3		// in seconds - how long an individual sound event "lingers" in the bots memory
+	
+  weapons.sight_time					0.3		// in seconds - how fast can bot fire weapon on a visible enemy
+  weapons.decay_time					1		// in seconds - how fast bot will stop firing on a non-visible enemy
+  weapons.fov_scalar					4		// how much to scale the ideal FOV set by the bots current weapon
+}
+
+//=============================================
+
+skill easy
+{
+  aiming.max_acceleration				225		// max angle acceleration allowed per second
+  aiming.spring_stiffness				60		// stiffness of the spring used to track targets. Larger value = tighter spring
+  aiming.damping						10		// affects spring start/stop speed, and can be used to create oscillations
+  aiming.lead_targets					false	// can the bot lead targets when using projectiles weapons
+  aiming.velocity_offset				-0.2	// apply this offset in seconds ( a positive number leads the target, a negative number lags the target )
+  aiming.modifier.max_angle				50		// if yaw/pitch angle difference of current and ideal is greater than this, will apply aim modifiers to catch up
+  aiming.modifier.apply_time			1.5		// how long, in seconds, to apply the aim modifiers if max angle condition is met. 0 = disabled
+  aiming.modifier.accel_scalar			2		// how much to scale the 'aiming.max_acceleration' value above if modifiers are active
+  aiming.modifier.spring_scalar			2		// how much to scale the 'aiming.spring_stiffness' value above if modifiers are active
+  aiming.modifier.damping_scalar		2		// how much to scale the 'aiming.damping' value above if modifiers are active
+  	
+  behaviors.allow_combat				false	// is bot allowed to use specific combat behaviors? False = bot fights stupidly
+  behaviors.combat.allow_grab_items		false	// is bot allowed to grab ANY items ( health/ammo/weapons/etc ) while in combat?
+  behaviors.combat.max_item_dist		560		// max dist bot can "see" items while in combat ( in game units )
+  behaviors.combat.min_health_pct		95		// only grab health if bot has less than this pct of max health
+  behaviors.combat.min_ammo_pct			75		// only grab ammo if bot has less than this pct of max ammo for current gun
+  behaviors.combat.min_armor_pct		95		// only grab armor if bot has less than this pct of max armor for their current armor type
+  behaviors.combat.grab_weapons			true	// is bot allowed to grab nearby weapons during combat?
+  behaviors.combat.allow_melee 			true 	// is bot allowed to do engage in melee combat?
+
+  behaviors.allow_check_six				true	// is bot allowed to periodically check behind itself for enemies?
+  behaviors.allow_grab_items			true	// is bot allowed to grab items ( health/ammo/etc ) when not in combat?
+  behaviors.allow_grab_power_items		false	// is bot allowed to grab powerups ( quad, invis, Mega Health, Red Armor, etc )? 
+  behaviors.react_to_dangers			false	// is bot allowed to see & react to dangers in the world?
+  behaviors.defer_power_items_to_humans	true	// only relevant in team games - let a nearby human teammate pickup the power item instead
+  behaviors.min_respawn_time			1		// in seconds
+  behaviors.max_respawn_time			1.5		// in seconds
+  
+  movement.allow_jumping_in_combat 		false	// is bot allowed to jump in combat?
+  movement.jump_chance					15		// chance ( 0 - 100 ), that the bot will jump in combat
+  movement.jump_cooldown				2		// in seconds - min time that must pass between checks to potentially jump
+  movement.walk_only					true	// bot will only walk when moving around the map
+  movement.allow_rocket_jumping			false	// bot will use rocket jumping to reach areas of the map
+
+  senses.sight_time						0.25	// in seconds - how fast bot gains awareness of a visible enemy
+  senses.sight_decay_time				0.3		// in seconds - how fast bot loses awareness of a non-visible enemy
+  senses.invis_enemy_sight_scalar		2		// if enemy is invisible - scale 'senses.sight_time' by this amount
+  senses.max_invis_enemy_sight_dist		256		// if enemy is invisible - won't be able to see this beyond this distance. 
+  senses.fov_angle						130		// in degrees - the FOV the bot uses to determine if enemy is in front of bot or not
+  senses.forget_non_vis_enemy_time		1.5		// in seconds - how long until we "forget" about an enemy we can't currently see
+  senses.sound_range					640		// in quake units - how far away can this bot hear an enemy
+  senses.sound_time						0.4		// in seconds - how fast bot gains awareness of an audible enemy
+  senses.sound_decay_time				2.5		// in seconds - how fast bot loses awareness of a non-audible enemy
+  senses.sound_persist_time				0.4		// in seconds - how long an individual sound event "lingers" in the bots memory
+	
+  weapons.sight_time					0.2		// in seconds - how fast can bot fire weapon on a visible enemy
+  weapons.decay_time					3		// in seconds - how fast bot will stop firing on a non-visible enemy
+  weapons.fov_scalar					3		// how much to scale the ideal FOV set by the bots current weapon
+}
+
+//=============================================
+
+skill medium
+{
+  aiming.max_acceleration				315		// max angle acceleration allowed per second
+  aiming.spring_stiffness				80		// stiffness of the spring used to track targets. Larger value = tighter spring
+  aiming.damping						15		// affects spring start/stop speed, and can be used to create oscillations
+  aiming.lead_targets					true	// can the bot lead targets when using projectiles weapons
+  aiming.velocity_offset				-0.15	// apply this offset in seconds ( a positive number leads the target, a negative number lags the target )
+  aiming.modifier.max_angle				40		// if yaw/pitch angle difference of current and ideal is greater than this, will apply aim modifiers to catch up
+  aiming.modifier.apply_time			1		// how long, in seconds, to apply the aim modifiers if max angle condition is met. 0 = disabled
+  aiming.modifier.accel_scalar			1.1		// how much to scale the 'aiming.max_acceleration' value above if modifiers are active
+  aiming.modifier.spring_scalar			1.1		// how much to scale the 'aiming.spring_stiffness' value above if modifiers are active
+  aiming.modifier.damping_scalar		1.1		// how much to scale the 'aiming.damping' value above if modifiers are active  
+  	
+  behaviors.allow_combat				true	// is bot allowed to use specific combat behaviors? False = bot fights stupidly
+  behaviors.combat.allow_grab_items		false	// is bot allowed to grab ANY items ( health/ammo/weapons/etc ) while in combat?
+  behaviors.combat.max_item_dist		560		// max dist bot can "see" items while in combat ( in game units )
+  behaviors.combat.min_health_pct		95		// only grab health if bot has less than this pct of max health
+  behaviors.combat.min_ammo_pct			75		// only grab ammo if bot has less than this pct of max ammo for current gun
+  behaviors.combat.min_armor_pct		95		// only grab armor if bot has less than this pct of max armor for their current armor type
+  behaviors.combat.grab_weapons			true	// is bot allowed to grab nearby weapons during combat?
+  behaviors.combat.allow_melee 			true 	// is bot allowed to do engage in melee combat?
+ 
+ behaviors.allow_check_six				true	// is bot allowed to periodically check behind itself for enemies?  
+  behaviors.allow_grab_items			true	// is bot allowed to grab items ( health/ammo/etc ) when not in combat?
+  behaviors.allow_grab_power_items		true	// is bot allowed to grab powerups ( quad, invis, Mega Health, Red Armor, etc )? 
+  behaviors.react_to_dangers			true	// is bot allowed to see & react to dangers in the world?
+  behaviors.defer_power_items_to_humans	true	// only relevant in team games - let a nearby human teammate pickup the power item instead
+  behaviors.min_respawn_time			0.9		// in seconds
+  behaviors.max_respawn_time			1.5		// in seconds
+  
+  movement.allow_jumping_in_combat		true	// is bot allowed to jump in combat?
+  movement.jump_chance					25		// chance ( 0 - 100 ), that the bot will jump in combat
+  movement.jump_cooldown				1		// in seconds - min time that must pass between checks to potentially jump
+  movement.walk_only					false	// bot will only walk when moving around the map
+  movement.allow_rocket_jumping			true	// bot will use rocket jumping to reach areas of the map
+
+  senses.sight_time						0.25	// in seconds - how fast bot gains awareness of a visible enemy
+  senses.sight_decay_time				0.4		// in seconds - how fast bot loses awareness of a non-visible enemy
+  senses.invis_enemy_sight_scalar		2		// if enemy is invisible - scale 'senses.sight_time' by this amount
+  senses.max_invis_enemy_sight_dist		384		// if enemy is invisible - won't be able to see this beyond this distance.  
+  senses.fov_angle						140		// in degrees - the FOV the bot uses to determine if enemy is in front of bot or not
+  senses.forget_non_vis_enemy_time		2		// in seconds - how long until we "forget" about an enemy we can't currently see
+  senses.sound_range					768		// in quake units - how far away can this bot hear an enemy
+  senses.sound_time						0.3		// in seconds - how fast bot gains awareness of an audible enemy
+  senses.sound_decay_time				3		// in seconds - how fast bot loses awareness of a non-audible enemy
+  senses.sound_persist_time				0.5		// in seconds - how long an individual sound event "lingers" in the bots memory
+	
+  weapons.sight_time					0.15	// in seconds - how fast can bot fire weapon on a visible enemy
+  weapons.decay_time					2		// in seconds - how fast bot will stop firing on a non-visible enemy
+  weapons.fov_scalar					2		// how much to scale the ideal FOV set by the bots current weapon
+}
+
+//=============================================
+
+skill hard
+{
+  aiming.max_acceleration				360		// max angle acceleration allowed per second
+  aiming.spring_stiffness				125		// stiffness of the spring used to track targets. Larger value = tighter spring
+  aiming.damping						20		// affects spring start/stop speed, and can be used to create oscillations
+  aiming.lead_targets					true	// can the bot lead targets when using projectiles weapons
+  aiming.velocity_offset				-0.10	// apply this offset in seconds ( a positive number leads the target, a negative number lags the target )
+  aiming.modifier.max_angle				30		// if yaw/pitch angle difference of current and ideal is greater than this, wilal apply aim modifiers to catch up
+  aiming.modifier.apply_time			0.75	// how long, in seconds, to apply the aim modifiers if max angle condition is met. 0 = disabled
+  aiming.modifier.accel_scalar			1.25	// how much to scale the 'aiming.max_acceleration' value above if modifiers are active
+  aiming.modifier.spring_scalar			1.25	// how much to scale the 'aiming.spring_stiffness' value above if modifiers are active
+  aiming.modifier.damping_scalar		1.25	// how much to scale the 'aiming.damping' value above if modifiers are active
+  	
+  behaviors.allow_combat				true	// is bot allowed to use specific combat behaviors? False = bot fights stupidly
+  behaviors.combat.allow_grab_items 	true	// is bot allowed to grab ANY items ( health/ammo/weapons/etc ) while in combat?
+  behaviors.combat.max_item_dist		560		// max dist bot can "see" items while in combat ( in game units )
+  behaviors.combat.min_health_pct		95		// only grab health if bot has less than this pct of max health
+  behaviors.combat.min_ammo_pct			75		// only grab ammo if bot has less than this pct of max ammo for current gun
+  behaviors.combat.min_armor_pct		95		// only grab armor if bot has less than this pct of max armor for their current armor type
+  behaviors.combat.grab_weapons			true	// is bot allowed to grab nearby weapons during combat?
+  behaviors.combat.allow_melee 			true 	// is bot allowed to do engage in melee combat?
+
+  behaviors.allow_check_six				true	// is bot allowed to periodically check behind itself for enemies?   
+  behaviors.allow_grab_items			true	// is bot allowed to grab items ( health/ammo/etc ) when not in combat?
+  behaviors.allow_grab_power_items		true	// is bot allowed to grab powerups ( quad, invis, Mega Health, Red Armor, etc )? 
+  behaviors.react_to_dangers			true	// is bot allowed to see & react to dangers in the world?
+  behaviors.defer_power_items_to_humans	true	// only relevant in team games - let a nearby human teammate pickup the power item instead
+  behaviors.min_respawn_time			0.9		// in seconds
+  behaviors.max_respawn_time			1.5		// in seconds
+  
+  movement.allow_jumping_in_combat		true	// is bot allowed to jump in combat?
+  movement.jump_chance					35		// chance ( 0 - 100 ), that the bot will jump in combat
+  movement.jump_cooldown				1		// in seconds - min time that must pass between checks to potentially jump
+  movement.walk_only					false	// bot will only walk when moving around the map
+  movement.allow_rocket_jumping			true	// bot will use rocket jumping to reach areas of the map  
+
+  senses.sight_time						0.15	// in seconds - how fast bot gains awareness of a visible enemy
+  senses.sight_decay_time				1		// in seconds - how fast bot loses awareness of a non-visible enemy
+  senses.invis_enemy_sight_scalar		2		// if enemy is invisible - scale 'senses.sight_time' by this amount
+  senses.max_invis_enemy_sight_dist		512		// if enemy is invisible - won't be able to see this beyond this distance.  
+  senses.fov_angle						160		// in degrees - the FOV the bot uses to determine if enemy is in front of bot or not
+  senses.forget_non_vis_enemy_time		4		// in seconds - how long until we "forget" about an enemy we can't currently see
+  senses.sound_range					1024	// in quake units - how far away can this bot hear an enemy
+  senses.sound_time						0.2		// in seconds - how fast bot gains awareness of an audible enemy
+  senses.sound_decay_time				3.5		// in seconds - how fast bot loses awareness of a non-audible enemy
+  senses.sound_persist_time				1		// in seconds - how long an individual sound event "lingers" in the bots memory
+	
+  weapons.sight_time					0.1		// in seconds - how fast can bot fire weapon on a visible enemy
+  weapons.decay_time					2		// in seconds - how fast bot will stop firing on a non-visible enemy
+  weapons.fov_scalar					1.2		// how much to scale the ideal FOV set by the bots current weapon
+}
+
+//=============================================
+
+skill expert
+{
+  aiming.max_acceleration				720		// max angle acceleration allowed per second
+  aiming.spring_stiffness				500		// stiffness of the spring used to track targets. Larger value = tighter spring
+  aiming.damping						30		// affects spring start/stop speed, and can be used to create oscillations
+  aiming.lead_targets					true	// can the bot lead targets when using projectiles weapons
+  aiming.velocity_offset				0		// apply this offset in seconds ( a positive number leads the target, a negative number lags the target )
+  aiming.modifier.max_angle				20		// if yaw/pitch angle difference of current and ideal is greater than this, will apply aim modifiers to catch up
+  aiming.modifier.apply_time			0.4		// how long, in seconds, to apply the aim modifiers if max angle condition is met. 0 = disabled
+  aiming.modifier.accel_scalar			1.5		// how much to scale the 'aiming.max_acceleration' value above if modifiers are active
+  aiming.modifier.spring_scalar			1.5		// how much to scale the 'aiming.spring_stiffness' value above if modifiers are active
+  aiming.modifier.damping_scalar		1.5		// how much to scale the 'aiming.damping' value above if modifiers are active
+  	
+  behaviors.allow_combat				true	// is bot allowed to use specific combat behaviors? False = bot fights stupidly
+  behaviors.combat.allow_grab_items		true	// is bot allowed to grab ANY items ( health/ammo/weapons/etc ) while in combat?
+  behaviors.combat.max_item_dist		560		// max dist bot can "see" items while in combat ( in game units )
+  behaviors.combat.min_health_pct		95		// only grab health if bot has less than this pct of max health
+  behaviors.combat.min_ammo_pct			75		// only grab ammo if bot has less than this pct of max ammo for current gun
+  behaviors.combat.min_armor_pct		95		// only grab armor if bot has less than this pct of max armor for their current armor type
+  behaviors.combat.grab_weapons			true	// is bot allowed to grab nearby weapons during combat?
+  behaviors.combat.allow_melee 			true 	// is bot allowed to do engage in melee combat?
+
+  behaviors.allow_check_six				true	// is bot allowed to periodically check behind itself for enemies?   
+  behaviors.allow_grab_items			true	// is bot allowed to grab items ( health/ammo/etc ) when not in combat?
+  behaviors.allow_grab_power_items		true	// is bot allowed to grab powerups ( quad, invis, Mega Health, Red Armor, etc )? 
+  behaviors.react_to_dangers			true	// is bot allowed to see & react to dangers in the world?
+  behaviors.defer_power_items_to_humans	true	// only relevant in team games - let a nearby human teammate pickup the power item instead
+  behaviors.min_respawn_time			0.7		// in seconds
+  behaviors.max_respawn_time			1.2		// in seconds
+  
+  movement.allow_jumping_in_combat		true	// is bot allowed to jump in combat?
+  movement.jump_chance					35		// chance ( 0 - 100 ), that the bot will jump in combat
+  movement.jump_cooldown				1		// in seconds - min time that must pass between checks to potentially jump
+  movement.walk_only					false	// bot will only walk when moving around the map
+  movement.allow_rocket_jumping			true	// bot will use rocket jumping to reach areas of the map  
+
+  senses.sight_time						0.10	// in seconds - how fast bot gains awareness of a visible enemy
+  senses.sight_decay_time				2		// in seconds - how fast bot loses awareness of a non-visible enemy
+  senses.invis_enemy_sight_scalar		1.5		// if enemy is invisible - scale 'senses.sight_time' by this amount
+  senses.max_invis_enemy_sight_dist		768		// if enemy is invisible - won't be able to see this beyond this distance.  
+  senses.fov_angle						170		// in degrees - the FOV the bot uses to determine if enemy is in front of bot or not
+  senses.forget_non_vis_enemy_time		5		// in seconds - how long until we "forget" about an enemy we can't currently see
+  senses.sound_range					1200	// in quake units - how far away can this bot hear an enemy
+  senses.sound_time						0.125	// in seconds - how fast bot gains awareness of an audible enemy
+  senses.sound_decay_time				4		// in seconds - how fast bot loses awareness of a non-audible enemy
+  senses.sound_persist_time				1		// in seconds - how long an individual sound event "lingers" in the bots memory
+	
+  weapons.sight_time					0.1		// in seconds - how fast can bot fire weapon on a visible enemy
+  weapons.decay_time					2		// in seconds - how fast bot will stop firing on a non-visible enemy
+  weapons.fov_scalar					1		// how much to scale the ideal FOV set by the bots current weapon
+}
+
+//=============================================
+
+skill nightmare // Bots are an utter nightmare, and nearly impossible to defeat
+{
+  aiming.max_acceleration				720		// max angle acceleration allowed per second
+  aiming.spring_stiffness				500		// stiffness of the spring used to track targets. Larger value = tighter spring
+  aiming.damping						30		// affects spring start/stop speed, and can be used to create oscillations
+  aiming.lead_targets					true	// can the bot lead targets when using projectiles weapons
+  aiming.velocity_offset				0.1		// apply this offset in seconds ( a positive number leads the target, a negative number lags the target )
+  aiming.modifier.max_angle				10		// if yaw/pitch angle difference of current and ideal is greater than this, will apply aim modifiers to catch up
+  aiming.modifier.apply_time			0.2		// how long, in seconds, to apply the aim modifiers if max angle condition is met. 0 = disabled
+  aiming.modifier.accel_scalar			2		// how much to scale the 'aiming.max_acceleration' value above if modifiers are active
+  aiming.modifier.spring_scalar			2		// how much to scale the 'aiming.spring_stiffness' value above if modifiers are active
+  aiming.modifier.damping_scalar		2		// how much to scale the 'aiming.damping' value above if modifiers are active
+  	
+  behaviors.allow_combat				true	// is bot allowed to use specific combat behaviors? False = bot fights stupidly
+  behaviors.combat.allow_grab_items		true	// is bot allowed to grab ANY items ( health/ammo/weapons/etc ) while in combat?
+  behaviors.combat.max_item_dist		560		// max dist bot can "see" items while in combat ( in game units )
+  behaviors.combat.min_health_pct		95		// only grab health if bot has less than this pct of max health
+  behaviors.combat.min_ammo_pct			75		// only grab ammo if bot has less than this pct of max ammo for current gun
+  behaviors.combat.min_armor_pct		95		// only grab armor if bot has less than this pct of max armor for their current armor type
+  behaviors.combat.grab_weapons			true	// is bot allowed to grab nearby weapons during combat?
+  behaviors.combat.allow_melee 			true 	// is bot allowed to do engage in melee combat?
+
+  behaviors.allow_check_six				true	// is bot allowed to periodically check behind itself for enemies?  
+  behaviors.allow_grab_items			true	// is bot allowed to grab items ( health/ammo/etc ) when not in combat?
+  behaviors.allow_grab_power_items		true	// is bot allowed to grab powerups ( quad, invis, Mega Health, Red Armor, etc )? 
+  behaviors.react_to_dangers			true	// is bot allowed to see & react to dangers in the world?
+  behaviors.defer_power_items_to_humans	false	// only relevant in team games - let a nearby human teammate pickup the power item instead
+  behaviors.min_respawn_time			0.7		// in seconds
+  behaviors.max_respawn_time			1		// in seconds
+  
+  movement.allow_jumping_in_combat		true	// is bot allowed to jump in combat?
+  movement.jump_chance					50		// chance ( 0 - 100 ), that the bot will jump in combat
+  movement.jump_cooldown				0.5		// in seconds - min time that must pass between checks to potentially jump
+  movement.walk_only					false	// bot will only walk when moving around the map
+  movement.allow_rocket_jumping			true	// bot will use rocket jumping to reach areas of the map  
+
+  senses.sight_time						0.05	// in seconds - how fast bot gains awareness of a visible enemy
+  senses.sight_decay_time				3		// in seconds - how fast bot loses awareness of a non-visible enemy
+  senses.invis_enemy_sight_scalar		1.25	// if enemy is invisible - scale 'senses.sight_time' by this amount
+  senses.max_invis_enemy_sight_dist		1024	// if enemy is invisible - won't be able to see this beyond this distance.  
+  senses.fov_angle						180		// in degrees - the FOV the bot uses to determine if enemy is in front of bot or not
+  senses.forget_non_vis_enemy_time		6		// in seconds - how long until we "forget" about an enemy we can't currently see
+  senses.sound_range					1600	// in quake units - how far away can this bot hear an enemy
+  senses.sound_time						0.1		// in seconds - how fast bot gains awareness of an audible enemy
+  senses.sound_decay_time				5		// in seconds - how fast bot loses awareness of a non-audible enemy
+  senses.sound_persist_time				1		// in seconds - how long an individual sound event "lingers" in the bots memory
+	
+  weapons.sight_time					0.1		// in seconds - how fast can bot fire weapon on a visible enemy
+  weapons.decay_time					2		// in seconds - how fast bot will stop firing on a non-visible enemy
+  weapons.fov_scalar					1		// how much to scale the ideal FOV set by the bots current weapon
+}
