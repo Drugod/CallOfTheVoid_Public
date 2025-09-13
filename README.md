@@ -12,7 +12,7 @@ All borrowed resources present in this repo belong ONLY to respective owners/cre
 ## CREDITS:
 - Drugod : Programmer, level designer.
 - 00_Zombie_00 : 3d/2d Artist.
-- Raton : Level designer / resource manager.
+- Raton : Level designer / resource manager / video.
 - NHT (Asciimov) : Music
 
 ## ADDITIONAL CREDITS:
