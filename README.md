@@ -13,10 +13,18 @@ All borrowed resources present in this repo belong ONLY to respective owners/cre
 - Drugod : Programmer, resource manager, level designer.
 - 00_Zombie_00 : 2d Artist.
 - Raton : 3d Artist, level designer.
+- NHT (Asciimov) : Music
 
 ## ADDITIONAL CREDITS:
 - Quake 1 monsters models taken from Quake 1 Remastered by Id Software/Nightdive Studios.
 - Quake 1 monsters code is a modified version of Decino infighter mod for Quake 2.
+- Vadrigar voice acting Freaky L. please visit https://www.youtube.com/@freakyl666
+
+## THANKS TO:
+- Sprony, Nahuel, Sixsik6, Lechum, map center discord server, boomer dimension discord server.
+
+## FOR MORE INFO PLEASE VISIT:
+https://www.moddb.com/mods/quake-ii-call-of-the-void
 
 ## EDITORS USED:
 - 7Zip : https://www.7-zip.org
