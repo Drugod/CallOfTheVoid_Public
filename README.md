@@ -10,9 +10,9 @@ You need just need Quake II Remaster to run this mod, please buy it on steam.
 All borrowed resources present in this repo belong ONLY to respective owners/creators.
 
 ## CREDITS:
-- Drugod : Programmer, resource manager, level designer.
-- 00_Zombie_00 : 2d Artist.
-- Raton : 3d Artist, level designer.
+- Drugod : Programmer, level designer.
+- 00_Zombie_00 : 3d/2d Artist.
+- Raton : Level designer / resource manager.
 - NHT (Asciimov) : Music
 
 ## ADDITIONAL CREDITS:
