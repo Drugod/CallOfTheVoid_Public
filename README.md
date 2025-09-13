@@ -3,7 +3,7 @@ Official # Quake 2 Call of the Void mod project repository for Quake II Remaster
 
 This repository belongs to Drugod, but this project was developed by members of Boomers Dimension Discord users, check credits section.
 
-Please join to or discord server asap:https://discord.gg/TUpN9mcg
+Please join to or discord server asap: https://discord.gg/7jaz2dXEbw
 
 You need just need Quake II Remaster to run this mod, please buy it on steam.
 
