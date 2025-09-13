@@ -13,6 +13,7 @@ All borrowed resources present in this repo belong ONLY to respective owners/cre
 - Drugod : Programmer, resource manager, level designer.
 - 00_Zombie_00 : 2d Artist.
 - Raton : 3d Artist, level designer.
+- NHT (Asciimov) : Music
 
 ## ADDITIONAL CREDITS:
 - Quake 1 monsters models taken from Quake 1 Remastered by Id Software/Nightdive Studios.
