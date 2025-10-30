@@ -31,7 +31,7 @@ static cached_soundindex sound_idle2;
 static cached_soundindex sound_pain;
 static cached_soundindex sound_sight;
 
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
 // Stand
 mframe_t wizard_strogg_frames_stand [] = {
@@ -160,9 +160,7 @@ void fire_spit_strogg(edict_t *self, vec3_t start, vec3_t dir, int damage, int s
 	if (!self->enemy || self->enemy == self)
 		return;
 
-	//VectorCopy(SightEndtToDir(self, dir)[0], dir);
-	dir = SightEndtToDir(self, dir)[0];
-	//VectorNormalize (dir);
+	dir = SightEndtToDir(self, dir);
 	dir.normalize();
 
 	spit = G_Spawn();
@@ -388,12 +386,12 @@ void SP_monster_wizard_strogg(edict_t *self)
 	}
 
 	sound_proj_hit.assign("wizard/hit.wav");
-	sound_attack.assign("wizard/wattack.wav");
-	sound_death.assign("wizard/wdeath.wav");
-	sound_idle1.assign("wizard/widle1.wav");
-	sound_idle2.assign("wizard/widle2.wav");
-	sound_pain.assign("wizard/wpain.wav");
-	sound_sight.assign("wizard/wsight.wav");
+	sound_attack.assign("wizard/wattack_s.wav");
+	sound_death.assign("wizard/wdeath_s.wav");
+	sound_idle1.assign("wizard/widle1_s.wav");
+	sound_idle2.assign("wizard/widle2_s.wav");
+	sound_pain.assign("wizard/wpain_s.wav");
+	sound_sight.assign("wizard/wsight_s.wav");
 
 	self->mins = {-16, -16, -24};	
 	self->maxs = {16, 16, 40};	

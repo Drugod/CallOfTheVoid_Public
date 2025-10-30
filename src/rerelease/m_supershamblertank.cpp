@@ -16,10 +16,13 @@ constexpr spawnflags_t SPAWNFLAG_supershamblertank_POWERSHIELD = 8_spawnflag;
 // n64
 constexpr spawnflags_t SPAWNFLAG_supershamblertank_LONG_DEATH = 16_spawnflag;
 
+constexpr spawnflags_t SPAWNFLAG_SHAMBLER_PRECISE = 1_spawnflag;
+
 //tesla
 constexpr gtime_t TESLA_TIME_TO_LIVE = 30_sec;
 constexpr float	  TESLA_DAMAGE_RADIUS = 128;
-constexpr int32_t TESLA_DAMAGE = 3;
+//constexpr int32_t TESLA_DAMAGE = 3;//DRUGOD: People dont stop crying about this 
+constexpr int32_t TESLA_DAMAGE = 1;
 constexpr int32_t TESLA_KNOCKBACK = 8;
 
 constexpr gtime_t TESLA_ACTIVATE_TIME = 3_sec;
@@ -49,7 +52,8 @@ void TreadSound_2(edict_t *self)
 
 constexpr gtime_t TESLA2_TIME_TO_LIVE = 30_sec;
 constexpr float	  TESLA2_DAMAGE_RADIUS = 128;
-constexpr int32_t TESLA2_DAMAGE = 3;
+//constexpr int32_t TESLA2_DAMAGE = 3;
+constexpr int32_t TESLA2_DAMAGE = 1;
 constexpr int32_t TESLA2_KNOCKBACK = 8;
 
 constexpr gtime_t TESLA2_ACTIVATE_TIME = 3_sec;
@@ -654,7 +658,8 @@ static void supershamblertankGrenade(edict_t *self)
 		if (!M_CalculatePitchToFire(self, aim_point, start, forward, speed, 2.5f, true))
 			continue;
 
-		monster_fire_tesla(self, start, forward, 50, speed, flash_number, 0.f, 0.f);
+		//monster_fire_tesla(self, start, forward, 50, speed, flash_number, 0.f, 0.f);//DRUGOD: People dont stop crying about this 
+		monster_fire_tesla(self, start, forward, 1, speed, flash_number, 0.f, 0.f);
 		break;
 	}
 }
@@ -944,7 +949,14 @@ void supershamblertankMachineGunner(edict_t* self, int type)
 		radius_damage /= 2;
 	}
 
-	fire_plasma(self, start, dir, damage, 725, radius_damage, radius_damage);
+	vec3_t aim = self->enemy->s.origin - start;
+	aim.normalize();
+	PredictAim(self, self->enemy, start, 800, false, frandom() * 0.3f, &aim, nullptr);
+	for (int i = 0; i < 3; i++)
+		aim[i] += crandom_open() * 0.025f;
+
+	//fire_plasma(self, start, dir, damage, 725, radius_damage, radius_damage);
+	fire_plasma(self, start, aim, damage, 725, radius_damage, radius_damage);
 
 	// save for aiming the shot
 	self->pos1 = self->enemy->s.origin;

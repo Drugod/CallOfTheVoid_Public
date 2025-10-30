@@ -30,7 +30,7 @@ static cached_soundindex sound_attack;
 static cached_soundindex sound_fire;
 static cached_soundindex sound_sight;
 
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
 // Stand
 mframe_t shalrath_frames_stand [] =
@@ -142,7 +142,7 @@ THINK(shalrath_pod_home) (edict_t* self) -> void
 		self->velocity[2] = 250 * dir[2];
 	}
 	gi.WriteByte(svc_temp_entity);
-	gi.WriteByte(TE_WELDING_SPARKS);
+	gi.WriteByte(TE_TUNNEL_SPARKS);
 	gi.WriteByte(15);
 	gi.WritePosition(self->s.origin);
 	gi.WriteDir(vec3_origin);
@@ -167,7 +167,7 @@ void fire_shalrath_pod(edict_t *self, vec3_t start, vec3_t dir, int damage, int 
 		return;
 
 	//VectorCopy(SightEndtToDir(self, dir)[0], dir);
-	dir = SightEndtToDir(self, dir)[0]; 
+	dir = SightEndtToDir(self, dir); 
 	//VectorNormalize(dir);
 	dir.normalize();
 
@@ -361,12 +361,12 @@ void SP_monster_shalrath(edict_t *self)
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;	
 	
-	sound_death.assign("quake1/shalrath/death.wav");
-	sound_search.assign("quake1/shalrath/idle.wav");
-	sound_pain.assign("quake1/shalrath/pain.wav");
-	sound_attack.assign("quake1/shalrath/attack.wav");
-	sound_fire.assign("quake1/shalrath/attack2.wav");
-	sound_sight.assign("quake1/shalrath/sight.wav");
+	sound_death.assign("shalrath/death.wav");
+	sound_search.assign("shalrath/idle.wav");
+	sound_pain.assign("shalrath/pain.wav");
+	sound_attack.assign("shalrath/attack.wav");
+	sound_fire.assign("shalrath/attack2.wav");
+	sound_sight.assign("shalrath/sight.wav");
 
 	self->health = 400;
 	self->gib_health = -90;

@@ -772,6 +772,8 @@ void DogStrLeaper(edict_t* self)
 	float length = (self->s.origin - self->enemy->s.origin).length();
 	float fwd_speed = length * 1.95f;
 
+	gi.sound(self, CHAN_VOICE, sound_melee, 1, ATTN_NORM, 0);
+
 	self->s.origin[2] += 1;
 	AngleVectors(self->s.angles, forward, NULL, NULL);
 	self->velocity = forward * fwd_speed;
@@ -1018,8 +1020,8 @@ PAIN(dog_str_pain) (edict_t *self, edict_t *other, float kick, int damage, const
 	if (level.time < self->pain_debounce_time)
 		return;
 
-	if (self->proboscus && self->proboscus->style != 2)
-		prodogcis_retract(self->proboscus);
+	/*if (self->proboscus && self->proboscus->style != 2)
+		prodogcis_retract(self->proboscus);*/
 
 	self->pain_debounce_time = level.time + 3_sec;
 

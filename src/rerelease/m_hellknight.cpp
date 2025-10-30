@@ -31,7 +31,7 @@ static cached_soundindex sound_search;
 static cached_soundindex sound_pain;
 
 void hellknight_run(edict_t* self);
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
 void SwingSword(edict_t* self)
 {
@@ -222,7 +222,7 @@ void fire_magic(edict_t *self, vec3_t start, vec3_t dir, int damage, int speed)
 		return;
 
 	//VectorCopy(SightEndtToDir(self, dir)[0], dir);
-	dir = SightEndtToDir(self, dir)[0];
+	dir = SightEndtToDir(self, dir);
 	//VectorNormalize(dir);
 	dir.normalize();
 

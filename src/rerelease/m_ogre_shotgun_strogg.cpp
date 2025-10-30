@@ -33,7 +33,6 @@ static cached_soundindex sound_idle;
 static cached_soundindex sound_idle2;
 static cached_soundindex sound_pain;
 
-// just in case you do't want to use the macros
 typedef float vec_t;
 
 void ogre2_idle(edict_t* self)
@@ -54,7 +53,6 @@ void ogre2_drag(edict_t* self)
 		gi.sound(self, CHAN_VOICE, sound_drag, 1, ATTN_NORM, 0);
 }
 
-// Stand
 mframe_t ogre2_frames_stand[] = {
 	{ai_stand},
 	{ai_stand},
@@ -73,7 +71,6 @@ MONSTERINFO_STAND(ogre2_stand) (edict_t* self) -> void
 	M_SetAnimation(self, &ogre2_move_stand);
 }
 
-// Run
 mframe_t ogre2_frames_run[] = {
 	{ai_run, 9,ogre2_idle2},
 	{ai_run, 12},
@@ -91,7 +88,6 @@ MONSTERINFO_RUN(ogre2_run) (edict_t* self) -> void
 	M_SetAnimation(self, &ogre2_move_run);
 }
 
-// Run
 mframe_t ogre2_frames_walk[] = {
 	{ai_walk, 3},
 	{ai_walk, 2},
@@ -135,7 +131,6 @@ void OgreStroggChainsaw(edict_t* self)
 	fire_hit(self, aim, damage, damage);
 }
 
-// Smash
 mframe_t ogre2_frames_smash[] = {
 	{ai_charge, 0},
 	{ai_charge, 0},
@@ -154,7 +149,6 @@ mframe_t ogre2_frames_smash[] = {
 };
 MMOVE_T(ogre2_move_smash) = { 47, 60, ogre2_frames_smash, ogre2_run };
 
-// Swing
 mframe_t ogre2_frames_swing[] = {
 	{ai_charge, 11,	NULL},
 	{ai_charge, 1,	NULL},
@@ -173,7 +167,6 @@ mframe_t ogre2_frames_swing[] = {
 };
 MMOVE_T(ogre2_move_swing) = { 33, 46, ogre2_frames_swing, ogre2_run };
 
-// Melee
 MONSTERINFO_MELEE(ogre2_melee) (edict_t* self) -> void
 {
 	if (frandom() > 0.5)
@@ -183,9 +176,6 @@ MONSTERINFO_MELEE(ogre2_melee) (edict_t* self) -> void
 	gi.sound(self, CHAN_WEAPON, sound_melee, 1, ATTN_NORM, 0);
 }
 
-// Grenade
-//void GunnerGrenade(edict_t* self);
-// Supershotgun
 void soldier_fire2(edict_t* self);
 
 mframe_t ogre2_frames_attack[] ={
@@ -203,28 +193,30 @@ MONSTERINFO_ATTACK(ogre2_attack) (edict_t* self) -> void
 	M_SetAnimation(self, &ogre2_move_attack);
 }
 
-// Pain (1)
+static void ogre2_pain_sound(edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
+}
+
 mframe_t ogre2_frames_pain1[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		ogre2_pain_sound},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL}
 };
 MMOVE_T(ogre2_move_pain1) = { 67, 71, ogre2_frames_pain1, ogre2_run };
 
-// Pain (2)
 mframe_t ogre2_frames_pain2[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		ogre2_pain_sound},
 	{ai_move, 0,		NULL}
 };
 MMOVE_T(ogre2_move_pain2) = { 72, 74, ogre2_frames_pain2, ogre2_run };
 
-// Pain (3)
 mframe_t ogre2_frames_pain3[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		ogre2_pain_sound},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -232,10 +224,9 @@ mframe_t ogre2_frames_pain3[] = {
 };
 MMOVE_T(ogre2_move_pain3) = { 75, 80, ogre2_frames_pain3, ogre2_run };
 
-// Pain (4)
 mframe_t ogre2_frames_pain4[] ={
 	{ai_move, 0,		NULL},
-	{ai_move, 10,	    NULL},
+	{ai_move, 10,	    ogre2_pain_sound},
 	{ai_move, 9,		NULL},
 	{ai_move, 4,		NULL},
 	{ai_move, 0,		NULL},
@@ -253,10 +244,9 @@ mframe_t ogre2_frames_pain4[] ={
 };
 MMOVE_T(ogre2_move_pain4) = { 81, 96, ogre2_frames_pain4, ogre2_run };
 
-// Pain (5)
 mframe_t ogre2_frames_pain5[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 10,	    NULL},
+	{ai_move, 10,	    ogre2_pain_sound},
 	{ai_move, 9,		NULL},
 	{ai_move, 4,		NULL},
 	{ai_move, 0,		NULL},
@@ -273,19 +263,14 @@ mframe_t ogre2_frames_pain5[] = {
 };
 MMOVE_T(ogre2_move_pain5) = { 97, 111, ogre2_frames_pain5, ogre2_run };
 
-// Pain
-//void ogre2_pain(edict_t* self)
 PAIN(ogre2_pain) (edict_t* self, edict_t* other, float kick, int damage, const mod_t& mod) -> void
 {
-	float r;
-
-	// decino: No pain animations in Nightmare mode
 	if (skill->value == 3)
 		return;
 	if (self->pain_debounce_time > level.time)
 		return;
-	r = frandom();
-	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
+
+	float r = frandom();
 
 	if (r < 0.25)
 	{
@@ -331,10 +316,14 @@ void ogre2_dead(edict_t* self)
 	gi.linkentity(self);
 }
 
-// Death (1)
+static void ogre2_dead_sound(edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
+}
+
 mframe_t ogre2_frames_death1[] ={
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		ogre2_dead_sound},
 	{ai_move, 0,		ogre2_dead},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -350,10 +339,9 @@ mframe_t ogre2_frames_death1[] ={
 };
 MMOVE_T(ogre2_move_death1) = { 112, 125, ogre2_frames_death1, ogre2_dead };
 
-// Death (2)
 mframe_t ogre2_frames_death2[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 5,		NULL},
+	{ai_move, 5,		ogre2_dead_sound},
 	{ai_move, 0,		ogre2_dead},
 	{ai_move, 1,		NULL},
 	{ai_move, 3,		NULL},
@@ -365,7 +353,6 @@ mframe_t ogre2_frames_death2[] = {
 };
 MMOVE_T(ogre2_move_death2) = { 126, 135, ogre2_frames_death2, ogre2_dead };
 
-// Death
 DIE(ogre2_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage, const vec3_t& point, const mod_t& mod) -> void
 {
 	if (self->health <= self->gib_health)
@@ -385,7 +372,6 @@ DIE(ogre2_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage
 	}
 	if (self->deadflag == true)
 		return;
-	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
 
 	self->deadflag = true;
 	self->takedamage = true;
@@ -403,13 +389,11 @@ DIE(ogre2_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage
 		M_SetAnimation(self, &ogre2_move_death2);
 }
 
-// Sight
 MONSTERINFO_SIGHT(ogre2_sight) (edict_t* self, edict_t* other) -> void
 {
 	gi.sound(self, CHAN_VOICE, sound_sight, 1, ATTN_NORM, 0);
 }
 
-// Search
 MONSTERINFO_SEARCH(ogre2_search) (edict_t* self) -> void
 {
 	gi.sound(self, CHAN_VOICE, sound_search, 1, ATTN_NORM, 0);
@@ -417,7 +401,6 @@ MONSTERINFO_SEARCH(ogre2_search) (edict_t* self) -> void
 
 void SP_monster_ogre2_strogg(edict_t* self)
 {
-
 	if (!M_AllowSpawn(self)) {
 		G_FreeEdict(self);
 		return;
@@ -440,12 +423,11 @@ void SP_monster_ogre2_strogg(edict_t* self)
 
 	self->health = 220 * st.health_multiplier;
 	self->gib_health = -80;
-
+	self->count = 3;//weapon shot type
 	self->mass = 200;
 
 	self->pain = ogre2_pain;
 	self->die = ogre2_die;
-
 	self->monsterinfo.stand = ogre2_stand;
 	self->monsterinfo.walk = ogre2_walk;
 	self->monsterinfo.run = ogre2_run;
@@ -453,22 +435,12 @@ void SP_monster_ogre2_strogg(edict_t* self)
 	self->monsterinfo.melee = ogre2_melee;
 	self->monsterinfo.sight = ogre2_sight;
 	self->monsterinfo.search = ogre2_search;
-	self->count = 3;
 	self->monsterinfo.setskin = ogre2_setskin;
-
-	/*if (irandom(2) == 0) {		//appear random skin
-		self->s.skinnum = 0;
-		self->s.modelindex = gi.modelindex("models/monsters/ogre2strogg/tris.md2");
-	}else{
-		self->s.skinnum = 2;
-		self->s.modelindex = gi.modelindex("models/monsters/ogre2strogg/tris2.md2");
-	}*/
 
 	self->s.modelindex = gi.modelindex("models/monsters/ogre2strogg/tris.md2");
 	gi.modelindex("models/monsters/ogre2strogg/gibs/g_arm.md2");
 	gi.modelindex("models/monsters/ogre2strogg/gibs/g_leg.md2");
 	gi.modelindex("models/monsters/ogre2strogg/gibs/g_head.md2");
-
 
 	gi.linkentity(self);
 

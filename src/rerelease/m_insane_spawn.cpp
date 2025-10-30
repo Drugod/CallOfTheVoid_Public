@@ -593,6 +593,7 @@ MONSTERINFO_RUN(insane_spawn_run) (edict_t* self) -> void
 PAIN(insane_spawn_pain) (edict_t *self, edict_t *other, float kick, int damage, const mod_t &mod) -> void
 {
 	int l, r;
+	gi.sound(self, CHAN_VOICE, sound_hit, 1, ATTN_NORM, 0);
 
 	if (level.time < self->pain_debounce_time)
 		return;
@@ -608,7 +609,7 @@ PAIN(insane_spawn_pain) (edict_t *self, edict_t *other, float kick, int damage, 
 		l = 75;
 	else
 		l = 100;
-	gi.sound(self, CHAN_VOICE, gi.soundindex(G_Fmt("player/male/pain{}_{}.wav", l, r).data()), 1, ATTN_IDLE, 0);
+
 
 	if (((self->s.frame >= FRAME_crawl1) && (self->s.frame <= FRAME_crawl9)) || ((self->s.frame >= FRAME_stand99) && (self->s.frame <= FRAME_stand160)) || ((self->s.frame >= FRAME_stand1 && self->s.frame <= FRAME_stand40)))
 	{
@@ -686,17 +687,23 @@ void SP_monster_insane_spawn(edict_t *self)
 		return;
 	}
 
-	sound_fist.assign("insane/insane11.wav");
-	sound_shake.assign("insane/insane5.wav");
-	sound_moan.assign("insane/insane7.wav");
-	sound_scream[0].assign("insane/insane1.wav");
-	sound_scream[1].assign("insane/insane2.wav");
-	sound_scream[2].assign("insane/insane3.wav");
-	sound_scream[3].assign("insane/insane4.wav");
-	sound_scream[4].assign("insane/insane6.wav");
-	sound_scream[5].assign("insane/insane8.wav");
-	sound_scream[6].assign("insane/insane9.wav");
-	sound_scream[7].assign("insane/insane10.wav");
+	sound_fist.assign("insanespawn/insane11.wav");
+	sound_hit.assign("insanespawn/hit1.wav");
+	sound_shake.assign("insanespawn/insane5.wav");
+	sound_moan.assign("insanespawn/insane7.wav");
+	sound_scream[0].assign("insanespawn/insane1.wav");
+	sound_scream[1].assign("insanespawn/insane2.wav");
+	sound_scream[2].assign("insanespawn/insane3.wav");
+	sound_scream[3].assign("insanespawn/insane4.wav");
+	sound_scream[4].assign("insanespawn/insane6.wav");
+	sound_scream[5].assign("insanespawn/insane8.wav");
+	sound_scream[6].assign("insanespawn/insane9.wav");
+	sound_scream[7].assign("insanespawn/insane10.wav");
+	sound_death.assign("insanespawn/insane12.wav");
+	sound_thud.assign("mutant/thud1.wav");
+	sound_explod.assign("world/explod2.wav");
+	sound_jump.assign("berserk/jump.wav");
+
 
 	self->mins = { -16, -16, -24 };
 	self->maxs = { 16, 16, 32 };

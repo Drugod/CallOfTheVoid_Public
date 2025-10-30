@@ -184,9 +184,17 @@ MONSTERINFO_ATTACK(ogrestrogg_attack) (edict_t* self) -> void
 	M_SetAnimation(self, &ogrestrogg_move_attack_gun);
 }
 
+static void ogrestrogg_pain_sound(edict_t* self)
+{
+	if (self->health < (self->max_health / 2))
+		gi.sound(self, CHAN_VOICE, sound_pain2, 1, ATTN_NORM, 0);
+	else
+		gi.sound(self, CHAN_VOICE, sound_pain1, 1, ATTN_NORM, 0);
+}
+
 mframe_t ogrestrogg_frames_pain[] = {
 	{ ai_move },
-	{ ai_move },
+	{ ai_move, 0, ogrestrogg_pain_sound },
 	{ ai_move },
 	{ ai_move }
 };
@@ -194,7 +202,7 @@ MMOVE_T(ogrestrogg_move_pain) = { FRAME_pain2, FRAME_pain5, ogrestrogg_frames_pa
 
 mframe_t ogrestrogg_frames_pain_air[] = {
 	{ ai_move },
-	{ ai_move },
+	{ ai_move, 0, ogrestrogg_pain_sound },
 	{ ai_move },
 	{ ai_move },
 	{ ai_move }
@@ -212,13 +220,8 @@ PAIN(ogrestrogg_pain) (edict_t* self, edict_t* other, float kick, int damage, co
 
 	self->pain_debounce_time = level.time + 3_sec;
 
-	if (frandom() < 0.5f)
-		gi.sound(self, CHAN_VOICE, sound_pain1, 1, ATTN_NORM, 0);
-	else
-		gi.sound(self, CHAN_VOICE, sound_pain2, 1, ATTN_NORM, 0);
-
 	if (!M_ShouldReactToPain(self, mod))
-		return; // no pain anims in nightmare
+		return;
 
 	if (self->velocity[2] > 100)
 		M_SetAnimation(self, &ogrestrogg_move_pain_air);
@@ -248,9 +251,14 @@ static void ogrestrogg_shrink(edict_t* self)
 	gi.linkentity(self);
 }
 
+static void ogrestrogg_death_sound(edict_t* self)
+{
+	gi.sound(self, CHAN_BODY, sound_die, 1, ATTN_NORM, 0);
+}
+
 mframe_t ogrestrogg_frames_death[] = {
 	{ ai_move },
-	{ ai_move },
+	{ ai_move, 0, ogrestrogg_death_sound },
 	{ ai_move, 0, ogrestrogg_shrink },
 	{ ai_move, 0, monster_footstep },
 	{ ai_move },
@@ -299,14 +307,11 @@ DIE(ogrestrogg_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int d
 	if (self->deadflag)
 		return;
 
-	// regular death
-	gi.sound(self, CHAN_BODY, sound_die, 1, ATTN_NORM, 0);
+	self->deadflag = true;
+	self->takedamage = true;
 
 	if (brandom())
 		gi.sound(self, CHAN_VOICE, sound_die2, 1, ATTN_NORM, 0);
-
-	self->deadflag = true;
-	self->takedamage = true;
 
 	if (frandom() < 0.5) {
 		gitem_t* item2 = FindItemByClassname("ammo_mini_grenades");
@@ -320,13 +325,12 @@ DIE(ogrestrogg_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int d
 
 MONSTERINFO_BLOCKED(ogrestrogg_blocked) (edict_t* self, float dist) -> bool
 {
-	if (blocked_checkplat(self, dist))
+	if (blocked_checkplat(self, dist)) {
 		return true;
-
+	}
 	return false;
 }
 
-/*QUAKED monster_ogre_strogg (1 .5 0) (-32 -32 -24) (32 32 64) Ambush Trigger_Spawn Sight */
 void SP_monster_ogre_strogg(edict_t* self)
 {
 	if (!M_AllowSpawn(self)) {
@@ -334,45 +338,38 @@ void SP_monster_ogre_strogg(edict_t* self)
 		return;
 	}
 
-	sound_pain1.assign("ogrestrogg/pain.wav");
-	sound_pain2.assign("ogrestrogg/gldpain2.wav");
-	sound_die.assign("ogrestrogg/glddeth2.wav");
-	sound_die2.assign("ogrestrogg/death.wav");
-	sound_cleaver_swing.assign("ogrestrogg/melee1.wav");
-	sound_cleaver_hit.assign("ogrestrogg/melee2.wav");
-	sound_cleaver_miss.assign("ogrestrogg/melee3.wav");
-	sound_idle.assign("ogrestrogg/gldidle1.wav");
-	sound_search.assign("ogrestrogg/gldsrch1.wav");
-	sound_sight.assign("ogrestrogg/sight.wav");
-
-	self->movetype = MOVETYPE_STEP;
-	self->solid = SOLID_BBOX;
-	self->s.modelindex = gi.modelindex("models/monsters/ogrestrogg/tris.md2");
+	sound_pain1.assign("ogre/ogpain1_s.wav");
+	sound_pain2.assign("ogre/ogpain1_s.wav");
+	sound_die.assign("ogre/ogdth_s.wav");
+	sound_die2.assign("ogre/ogdth_s.wav");
+	sound_cleaver_swing.assign("gladiator/melee1.wav");
+	sound_cleaver_hit.assign("gladiator/melee2.wav");
+	sound_cleaver_miss.assign("gladiator/melee3.wav");
+	sound_idle.assign("ogre/ogidle_s.wav");
+	sound_idle.assign("ogre/ogidle2_s.wav");
+	sound_search.assign("ogre/gldsrch1.wav");
+	sound_sight.assign("ogre/ogwake_s.wav");
 
 	gi.modelindex("models/monsters/gladiatr/gibs/chest.md2");
 	gi.modelindex("models/monsters/gladiatr/gibs/head.md2");
 	gi.modelindex("models/monsters/gladiatr/gibs/larm.md2");
 	gi.modelindex("models/monsters/gladiatr/gibs/rarm.md2");
 	gi.modelindex("models/monsters/gladiatr/gibs/thigh.md2");
-
 	gi.modelindex("models/monsters/ogrestrogg/gibs/g_arm.md2");
 	gi.modelindex("models/monsters/ogrestrogg/gibs/g_leg.md2");
 	gi.modelindex("models/monsters/ogrestrogg/gibs/g_head.md2");
 
-
-	sound_gun.assign("ogrestrogg/railgun.wav");
+	self->s.modelindex = gi.modelindex("models/monsters/ogrestrogg/tris.md2");
+	self->movetype = MOVETYPE_STEP;
+	self->solid = SOLID_BBOX;
 	self->health = 450 * st.health_multiplier;
 	self->mass = 400;
-	self->monsterinfo.weapon_sound = gi.soundindex("weapons/rg_hum.wav");
-
 	self->gib_health = -175;
-
 	self->mins = { -32, -32, -24 };
 	self->maxs = { 32, 32, 42 };
 
 	self->pain = ogrestrogg_pain;
 	self->die = ogrestrogg_die;
-
 	self->monsterinfo.stand = ogrestrogg_stand;
 	self->monsterinfo.walk = ogrestrogg_walk;
 	self->monsterinfo.run = ogrestrogg_run;
@@ -382,7 +379,7 @@ void SP_monster_ogre_strogg(edict_t* self)
 	self->monsterinfo.sight = ogrestrogg_sight;
 	self->monsterinfo.idle = ogrestrogg_idle;
 	self->monsterinfo.search = ogrestrogg_search;
-	self->monsterinfo.blocked = ogrestrogg_blocked; // PGM
+	self->monsterinfo.blocked = ogrestrogg_blocked;
 	self->monsterinfo.setskin = ogrestrogg_setskin;
 
 	gi.linkentity(self);

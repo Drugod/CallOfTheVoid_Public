@@ -301,10 +301,10 @@ void SP_monster_knight_strogg(edict_t *self)
 
 	sound_melee1.assign("knight/sword1.wav");
 	sound_melee2.assign("knight/sword2.wav");
-	sound_death.assign("knight/kdeath.wav");
-	sound_pain.assign("knight/khurt.wav");
-	sound_sight.assign("knight/ksight.wav");
-	sound_search.assign("knight/idle.wav");
+	sound_death.assign("knight/kdeath_s.wav");
+	sound_pain.assign("knight/khurt_s.wav");
+	sound_sight.assign("knight/ksight_s.wav");
+	sound_search.assign("knight/idle_s.wav");
 	
 	self->mins = {-16,-16,-24};
 	self->maxs = {16,16,40};	

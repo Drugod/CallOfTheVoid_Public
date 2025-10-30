@@ -901,6 +901,19 @@ THINK(bfg_laser_update) (edict_t *self) -> void
 	gi.linkentity(self);
 }
 
+THINK(bfg_shama_laser_update) (edict_t *self) -> void
+{
+	if (level.time > self->timestamp || !self->owner->inuse)
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	self->s.origin = self->owner->s.origin;
+	self->nextthink = level.time + 1_ms;
+	gi.linkentity(self);
+}
+
 static void bfg_spawn_laser(edict_t *self)
 {
 	vec3_t end = bfg_laser_pos(self->s.origin, 256);
@@ -919,6 +932,30 @@ static void bfg_spawn_laser(edict_t *self)
 	laser->s.old_origin = tr.endpos;
 	laser->s.skinnum = 0xD0D0D0D0;
 	laser->think = bfg_laser_update;
+	laser->nextthink = level.time + 1_ms;
+	laser->timestamp = level.time + 300_ms;
+	laser->owner = self;
+	gi.linkentity(laser);
+}
+
+static void bfg_shama_spawn_laser(edict_t *self)
+{
+	vec3_t end = bfg_laser_pos(self->s.origin, 256);
+	trace_t tr = gi.traceline(self->s.origin, end, self, MASK_OPAQUE);
+
+	if (tr.fraction == 1.0f)
+		return;
+
+	edict_t *laser = G_Spawn();
+	laser->s.frame = 3;
+	laser->s.renderfx = RF_BEAM_LIGHTNING;
+	laser->movetype = MOVETYPE_NONE;
+	laser->solid = SOLID_NOT;
+	laser->s.modelindex = MODELINDEX_WORLD; // must be non-zero
+	laser->s.origin = self->s.origin;
+	laser->s.old_origin = tr.endpos;
+	laser->s.skinnum = 0xE0E0E0E0;
+	laser->think = bfg_shama_laser_update;
 	laser->nextthink = level.time + 1_ms;
 	laser->timestamp = level.time + 300_ms;
 	laser->owner = self;
@@ -1166,6 +1203,147 @@ void fire_bfg(edict_t *self, const vec3_t &start, const vec3_t &dir, int damage,
 	bfg->think = bfg_think;
 	bfg->nextthink = level.time + FRAME_TIME_S;
 	bfg->teammaster = bfg;
+	bfg->teamchain = nullptr;
+
+	gi.linkentity(bfg);
+}
+
+TOUCH(bfg_touch_shama) (edict_t* self, edict_t* other, const trace_t& tr, bool other_touching_self) -> void
+{
+	if (other == self->owner) return;
+
+	if (tr.surface && (tr.surface->flags & SURF_SKY)) {
+		G_FreeEdict(self);
+		return;
+	}
+
+	if (self->owner->client)
+		PlayerNoise(self->owner, self->s.origin, PNOISE_IMPACT);
+
+	if (other->takedamage)
+		T_Damage(other, self, self->owner, self->velocity, self->s.origin, tr.plane.normal,
+			200, 0, DAMAGE_ENERGY, MOD_BFG_BLAST);
+
+	T_RadiusDamage(self, self->owner, 200, other, 100, DAMAGE_ENERGY, MOD_BFG_BLAST);
+
+	gi.sound(self, CHAN_VOICE, gi.soundindex("weapons/bfg__x1b.wav"), 1, ATTN_NORM, 0);
+	self->solid = SOLID_NOT;
+	self->touch = nullptr;
+	self->s.origin += self->velocity * (-1 * gi.frame_time_s);
+	self->velocity = {};
+
+	self->s.modelindex = gi.modelindex("sprites/s_bfx3.sp2");
+
+	self->s.frame = 0;
+	self->s.sound = 0;
+	self->s.effects &= ~EF_ANIM_ALLFAST;
+	self->think = bfg_explode;
+	self->nextthink = level.time + 10_hz;
+	self->enemy = other;
+
+	gi.WriteByte(svc_temp_entity);
+	gi.WriteByte(TE_BFG_BIGEXPLOSION);
+	gi.WritePosition(self->s.origin);
+	gi.multicast(self->s.origin, MULTICAST_PHS, false);
+}
+
+THINK(bfg_think_shama) (edict_t* self) -> void
+{
+	edict_t* ent;
+	vec3_t	 point;
+	vec3_t	 dir;
+	vec3_t	 start;
+	vec3_t	 end;
+	int		 dmg;
+	trace_t	 tr;
+
+	if (deathmatch->integer)
+		dmg = 5;
+	else
+		dmg = 10;
+
+	bfg_shama_spawn_laser(self);
+
+	ent = nullptr;
+	while ((ent = findradius(ent, self->s.origin, 256)) != nullptr)
+	{
+		if (ent == self)
+			continue;
+
+		if (ent == self->owner)
+			continue;
+
+		if (!ent->takedamage)
+			continue;
+
+		if (!(ent->svflags & SVF_MONSTER) && !(ent->flags & FL_DAMAGEABLE) && (!ent->client) && (strcmp(ent->classname, "misc_explobox") != 0))
+			continue;
+
+		if (CheckTeamDamage(ent, self->owner))
+			continue;
+
+		point = (ent->absmin + ent->absmax) * 0.5f;
+
+		dir = point - self->s.origin;
+		dir.normalize();
+
+		start = self->s.origin;
+		end = start + (dir * 2048);
+
+		tr = gi.traceline(start, point, nullptr, MASK_SOLID);
+
+		if (tr.fraction < 1.0f)
+			continue;
+
+		self->s.skinnum = 0xE0E0E0E0;
+
+		bfg_laser_pierce_t args{
+			self,
+			dir,
+			dmg
+		};
+
+		pierce_trace(start, end, self, args, CONTENTS_SOLID | CONTENTS_MONSTER | CONTENTS_PLAYER | CONTENTS_DEADMONSTER);
+
+		gi.WriteByte(svc_temp_entity);
+		gi.WriteByte(TE_BFG_LASER);
+		gi.WritePosition(self->s.origin);
+		gi.WritePosition(tr.endpos);
+		gi.multicast(self->s.origin, MULTICAST_PHS, false);
+	}
+
+	self->nextthink = level.time + 10_hz;
+}
+
+void fire_bfg_shama(edict_t* self, const vec3_t& start, const vec3_t& dir, int damage, int speed, float damage_radius)
+{
+	edict_t* bfg;
+
+	bfg = G_Spawn();
+	bfg->s.origin = start;
+	bfg->s.angles = vectoangles(dir);
+	bfg->velocity = dir * speed;
+	bfg->movetype = MOVETYPE_FLYMISSILE;
+	bfg->clipmask = MASK_PROJECTILE;
+	bfg->svflags = SVF_PROJECTILE;
+
+	if (self->client && !G_ShouldPlayersCollide(true))
+		bfg->clipmask &= ~CONTENTS_PLAYER;
+	bfg->solid = SOLID_BBOX;
+	bfg->s.effects |= EF_BFG | EF_ANIM_ALLFAST;
+	bfg->s.modelindex = gi.modelindex("sprites/s_bfx1.sp2");
+	bfg->owner = self;
+	bfg->touch = bfg_touch_shama;
+	//bfg->nextthink = level.time + gtime_t::from_sec(8000.f / speed);
+	//bfg->think = G_FreeEdict;
+	bfg->radius_dmg = damage;
+	bfg->dmg_radius = damage_radius;
+	bfg->classname = "bfg shama blast";
+	bfg->s.sound = gi.soundindex("weapons/bfg__l1a.wav");
+
+	bfg->think = bfg_think_shama;
+	bfg->nextthink = level.time + FRAME_TIME_S;
+	//bfg->teammaster = bfg;
 	bfg->teamchain = nullptr;
 
 	gi.linkentity(bfg);

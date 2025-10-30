@@ -730,6 +730,354 @@ void T_Damage(edict_t *targ, edict_t *inflictor, edict_t *attacker, const vec3_t
 			else if ((targ->svflags & SVF_MONSTER) || (client))
 			{
 				// XATRIX
+				if ((strcmp(targ->classname, "monster_gekk") == 0) || (strcmp(targ->classname, "monster_wizarcuda_strogg") == 0) || (strcmp(targ->classname, "monster_shamacudda") == 0))
+					SpawnDamage(TE_GREENBLOOD, point, normal, take);
+				// XATRIX
+				// ROGUE
+				else if (mod.id == MOD_CHAINFIST)
+					SpawnDamage(TE_MOREBLOOD, point, normal, 255);
+				// ROGUE
+				else
+					SpawnDamage(TE_BLOOD, point, normal, take);
+			}
+			else
+				SpawnDamage(te_sparks, point, normal, take);
+		}
+
+		if (!CTFMatchSetup())
+			targ->health = targ->health - take;
+
+		if ((targ->flags & FL_IMMORTAL) && targ->health <= 0)
+			targ->health = 1;
+
+		// PGM - spheres need to know who to shoot at
+		if (client && client->owned_sphere)
+		{
+			sphere_notified = true;
+			if (client->owned_sphere->pain)
+				client->owned_sphere->pain(client->owned_sphere, attacker, 0, 0, mod);
+		}
+		// PGM
+
+		if (targ->health <= 0)
+		{
+			if ((targ->svflags & SVF_MONSTER) || (client))
+			{
+				targ->flags |= FL_ALIVE_KNOCKBACK_ONLY;
+				targ->dead_time = level.time;
+			}
+			targ->monsterinfo.damage_blood += take;
+			targ->monsterinfo.damage_attacker = attacker;
+			targ->monsterinfo.damage_inflictor = inflictor;
+			targ->monsterinfo.damage_from = point;
+			targ->monsterinfo.damage_mod = mod;
+			targ->monsterinfo.damage_knockback += knockback;
+			Killed(targ, inflictor, attacker, take, point, mod);
+			return;
+		}
+	}
+
+	// PGM - spheres need to know who to shoot at
+	if (!sphere_notified)
+	{
+		if (client && client->owned_sphere)
+		{
+			sphere_notified = true;
+			if (client->owned_sphere->pain)
+				client->owned_sphere->pain(client->owned_sphere, attacker, 0, 0, mod);
+		}
+	}
+	// PGM
+
+	if ( targ->client ) {
+		targ->client->last_attacker_time = level.time;
+	}
+
+	if (targ->svflags & SVF_MONSTER)
+	{
+		if (damage > 0)
+		{
+			M_ReactToDamage(targ, attacker, inflictor);
+
+			targ->monsterinfo.damage_attacker = attacker;
+			targ->monsterinfo.damage_inflictor = inflictor;
+			targ->monsterinfo.damage_blood += take;
+			targ->monsterinfo.damage_from = point;
+			targ->monsterinfo.damage_mod = mod;
+			targ->monsterinfo.damage_knockback += knockback;
+		}
+
+		if (targ->monsterinfo.setskin)
+			targ->monsterinfo.setskin(targ);
+	}
+	else if (take && targ->pain)
+		targ->pain(targ, attacker, (float) knockback, take, mod);
+
+	// add to the damage inflicted on a player this frame
+	// the total will be turned into screen blends and view angle kicks
+	// at the end of the frame
+	if (client)
+	{
+		client->damage_parmor += psave;
+		client->damage_armor += asave;
+		client->damage_blood += take;
+		client->damage_knockback += knockback;
+		client->damage_from = point;
+		client->last_damage_time = level.time + COOP_DAMAGE_RESPAWN_TIME;
+
+		if (!(dflags & DAMAGE_NO_INDICATOR) && inflictor != world && attacker != world && (take || psave || asave))
+		{
+			damage_indicator_t *indicator = nullptr;
+			size_t i;
+
+			for (i = 0; i < client->num_damage_indicators; i++)
+			{
+				if ((point - client->damage_indicators[i].from).length() < 32.f)
+				{
+					indicator = &client->damage_indicators[i];
+					break;
+				}
+			}
+
+			if (!indicator && i != MAX_DAMAGE_INDICATORS)
+			{
+				indicator = &client->damage_indicators[i];
+				// for projectile direct hits, use the attacker; otherwise
+				// use the inflictor (rocket splash should point to the rocket)
+				indicator->from = (dflags & DAMAGE_RADIUS) ? inflictor->s.origin : attacker->s.origin;
+				indicator->health = indicator->armor = indicator->power = 0;
+				client->num_damage_indicators++;
+			}
+
+			if (indicator)
+			{
+				indicator->health += take;
+				indicator->power += psave;
+				indicator->armor += asave;
+			}
+		}
+	}
+}
+
+/*
+============
+T_DamageChton
+============
+*/
+static inline bool IsChthonMonster(const edict_t* e) {
+	return e && (e->svflags & SVF_MONSTER) && e->classname && strcmp(e->classname, "monster_chthon") == 0;
+}
+
+void T_DamageChthon(edict_t *targ, edict_t *inflictor, edict_t *attacker, const vec3_t &dir, const vec3_t &point,
+			  const vec3_t &normal, int damage, int knockback, damageflags_t dflags, mod_t mod)
+{
+	gclient_t *client;
+	int		   take;
+	int		   save;
+	int		   asave;
+	int		   psave;
+	int		   te_sparks;
+	bool	   sphere_notified; // PGM
+
+	//if (!targ->takedamage)
+		//return;
+
+	// >>> Solo hacemos algo si es Chthon. Si golpea cualquier otra cosa, no hacemos nada.
+	if (!IsChthonMonster(targ))
+		return;
+
+	if (g_instagib->integer && attacker->client && targ->client)
+	{
+		// [Kex] always kill no matter what on instagib
+		damage = 9999;
+	}
+
+	sphere_notified = false; // PGM
+
+	// friendly fire avoidance
+	// if enabled you can't hurt teammates (but you can hurt yourself)
+	// knockback still occurs
+	if ((targ != attacker) && !(dflags & DAMAGE_NO_PROTECTION))
+	{
+		// mark as friendly fire
+		if (OnSameTeam(targ, attacker))
+		{
+			mod.friendly_fire = true;
+
+			// if we're not a nuke & friendly fire is disabled, just kill the damage
+			if (!g_friendly_fire->integer && (mod.id != MOD_NUKE))
+				damage = 0;
+		}
+	}
+
+	// ROGUE
+	//  allow the deathmatch game to change values
+	if (deathmatch->integer && gamerules->integer)
+	{
+		if (DMGame.ChangeDamage)
+			damage = DMGame.ChangeDamage(targ, attacker, damage, mod);
+		if (DMGame.ChangeKnockback)
+			knockback = DMGame.ChangeKnockback(targ, attacker, knockback, mod);
+
+		if (!damage)
+			return;
+	}
+	// ROGUE
+
+	// easy mode takes half damage
+	if (skill->integer == 0 && deathmatch->integer == 0 && targ->client && damage)
+	{
+		damage /= 2;
+		if (!damage)
+			damage = 1;
+	}
+
+	if ( ( targ->svflags & SVF_MONSTER ) != 0 ) {
+		damage *= ai_damage_scale->integer;
+	} else {
+		damage *= g_damage_scale->integer;
+	} // mal: just for debugging...
+
+	client = targ->client;
+
+	// PMM - defender sphere takes half damage
+	if (damage && (client) && (client->owned_sphere) && (client->owned_sphere->spawnflags == SPHERE_DEFENDER))
+	{
+		damage /= 2;
+		if (!damage)
+			damage = 1;
+	}
+
+	if (dflags & DAMAGE_BULLET)
+		te_sparks = TE_BULLET_SPARKS;
+	else
+		te_sparks = TE_SPARKS;
+
+	// bonus damage for surprising a monster
+	if (!(dflags & DAMAGE_RADIUS) && (targ->svflags & SVF_MONSTER) && (attacker->client) &&
+		(!targ->enemy || targ->monsterinfo.surprise_time == level.time) && (targ->health > 0))
+	{
+		damage *= 2;
+		targ->monsterinfo.surprise_time = level.time;
+	}
+
+	// ZOID
+	// strength tech
+	damage = CTFApplyStrength(attacker, damage);
+	// ZOID
+
+	if ((targ->flags & FL_NO_KNOCKBACK) ||
+		((targ->flags & FL_ALIVE_KNOCKBACK_ONLY) && (!targ->deadflag || targ->dead_time != level.time)))
+		knockback = 0;
+
+	// figure momentum add
+	if (!(dflags & DAMAGE_NO_KNOCKBACK))
+	{
+		if ((knockback) && (targ->movetype != MOVETYPE_NONE) && (targ->movetype != MOVETYPE_BOUNCE) &&
+			(targ->movetype != MOVETYPE_PUSH) && (targ->movetype != MOVETYPE_STOP))
+		{
+			vec3_t normalized = dir.normalized();
+			vec3_t kvel;
+			float  mass;
+
+			if (targ->mass < 50)
+				mass = 50;
+			else
+				mass = (float) targ->mass;
+
+			if (targ->client && attacker == targ)
+				kvel = normalized * (1600.0f * knockback / mass); // the rocket jump hack...
+			else
+				kvel = normalized * (500.0f * knockback / mass);
+
+			targ->velocity += kvel;
+		}
+	}
+
+	take = damage;
+	save = 0;
+
+	// check for godmode
+	if ((targ->flags & FL_GODMODE) && !(dflags & DAMAGE_NO_PROTECTION))
+	{
+		take = 0;
+		save = damage;
+		SpawnDamage(te_sparks, point, normal, save);
+	}
+
+	// check for invincibility
+	// ROGUE
+	if (!(dflags & DAMAGE_NO_PROTECTION) &&
+		(((client && client->invincible_time > level.time)) ||
+		 ((targ->svflags & SVF_MONSTER) && targ->monsterinfo.invincible_time > level.time)))
+	// ROGUE
+	{
+		if (targ->pain_debounce_time < level.time)
+		{
+			gi.sound(targ, CHAN_ITEM, gi.soundindex("items/protect4.wav"), 1, ATTN_NORM, 0);
+			targ->pain_debounce_time = level.time + 2_sec;
+		}
+		take = 0;
+		save = damage;
+	}
+
+	// ZOID
+	// team armor protect
+	if (G_TeamplayEnabled() && targ->client && attacker->client &&
+		targ->client->resp.ctf_team == attacker->client->resp.ctf_team && targ != attacker &&
+		g_teamplay_armor_protect->integer)
+	{
+		psave = asave = 0;
+	}
+	else
+	{
+		// ZOID
+		psave = CheckPowerArmor(targ, point, normal, take, dflags);
+		take -= psave;
+
+		asave = CheckArmor(targ, point, normal, take, te_sparks, dflags);
+		take -= asave;
+	}
+
+	// treat cheat/powerup savings the same as armor
+	asave += save;
+
+	// ZOID
+	// resistance tech
+	take = CTFApplyResistance(targ, take);
+	// ZOID
+
+	// ZOID
+	CTFCheckHurtCarrier(targ, attacker);
+	// ZOID
+
+	// ROGUE - this option will do damage both to the armor and person. originally for DPU rounds
+	if (dflags & DAMAGE_DESTROY_ARMOR)
+	{
+		if (!(targ->flags & FL_GODMODE) && !(dflags & DAMAGE_NO_PROTECTION) &&
+			!(client && client->invincible_time > level.time))
+		{
+			take = damage;
+		}
+	}
+	// ROGUE
+
+	// [Paril-KEX] player hit markers
+	if (targ != attacker && attacker->client && targ->health > 0 && !((targ->svflags & SVF_DEADMONSTER) || (targ->flags & FL_NO_DAMAGE_EFFECTS)) && mod.id != MOD_TARGET_LASER)
+		attacker->client->ps.stats[STAT_HIT_MARKER] += take + psave + asave;
+
+	// do the damage
+	if (take)
+	{
+		if (!(targ->flags & FL_NO_DAMAGE_EFFECTS))
+		{
+			// ROGUE
+			if (targ->flags & FL_MECHANICAL)
+				SpawnDamage(TE_ELECTRIC_SPARKS, point, normal, take);
+			// ROGUE
+			else if ((targ->svflags & SVF_MONSTER) || (client))
+			{
+				// XATRIX
 				if ((strcmp(targ->classname, "monster_gekk") == 0) || (strcmp(targ->classname, "monster_wizarcuda_strogg") == 0))
 					SpawnDamage(TE_GREENBLOOD, point, normal, take);
 				// XATRIX
@@ -858,6 +1206,8 @@ void T_Damage(edict_t *targ, edict_t *inflictor, edict_t *attacker, const vec3_t
 		}
 	}
 }
+
+
 
 /*
 ============

@@ -168,7 +168,7 @@ MONSTERINFO_STAND(chtjor_stand) (edict_t *self) -> void
 	chtjor_attack1_end_sound(self);
 }
 
-void chtjorstep(edict_t* self) {
+/*void chtjorstep(edict_t* self) {
 	uint32_t i;
 	edict_t* e;
 
@@ -195,19 +195,20 @@ void chtjorstep(edict_t* self) {
 			angles.y += crandom_open() * factor * 100;
 		}
 	}
-}
+}*/
+
 mframe_t chtjor_frames_run[] = {
 	{ ai_run, 17, chtjor_step_left },
-	{ ai_run, 0, chtjorstep},
+	{ ai_run, 0},
 	{ ai_run },
-	{ ai_run, 0, chtjorstep},
+	{ ai_run, 0},
 	{ ai_run, 12 },
 	{ ai_run, 8 },
 	{ ai_run, 10 },
 	{ ai_run, 33, chtjor_step_right },
-	{ ai_run, 0, chtjorstep},
+	{ ai_run, 0},
 	{ ai_run },
-	{ ai_run, 0, chtjorstep},
+	{ ai_run, 0},
 	{ ai_run, 9 },
 	{ ai_run, 9 },
 	{ ai_run, 9 }
@@ -230,16 +231,16 @@ MMOVE_T(chtjor_move_start_walk) = { FRAME_walk01, FRAME_walk05, chtjor_frames_st
 
 mframe_t chtjor_frames_walk[] = {
 	{ ai_walk, 17 },
-	{ ai_walk, 0, chtjorstep },
+	{ ai_walk, 0 },
 	{ ai_walk },
-	{ ai_walk, 0, chtjorstep },
+	{ ai_walk, 0 },
 	{ ai_walk, 12 },
 	{ ai_walk, 8 },
 	{ ai_walk, 10 },
 	{ ai_walk, 33 },
-	{ ai_walk, 0, chtjorstep },
+	{ ai_walk, 0 },
 	{ ai_walk },
-	{ ai_walk, 0, chtjorstep },
+	{ ai_walk, 0 },
 	{ ai_walk, 9 },
 	{ ai_walk, 9 },
 	{ ai_walk, 9 }

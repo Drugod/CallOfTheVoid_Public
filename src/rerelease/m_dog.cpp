@@ -110,6 +110,7 @@ void DogLeaper(edict_t *self)
 	vec3_t forward;
 	float length = (self->s.origin - self->enemy->s.origin).length();
 	float fwd_speed = length * 1.95f;
+	gi.sound(self, CHAN_VOICE, sound_melee, 1, ATTN_NORM, 0);
 
 	self->s.origin[2] += 1;
 	AngleVectors(self->s.angles, forward, NULL, NULL);
@@ -185,10 +186,15 @@ MONSTERINFO_SETSKIN(dog_setskin) (edict_t* self) -> void
 		self->s.skinnum = 0;
 }
 
+static void dog_pain_sound (edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
+}
+
 // Pain (1)
 mframe_t dog_frames_pain1[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		dog_pain_sound},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -199,7 +205,7 @@ MMOVE_T(dog_move_pain1) = { 26, 31, dog_frames_pain1, dog_run };
 // Pain (2)
 mframe_t dog_frames_pain2[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		dog_pain_sound},
 	{ai_move, -4,		NULL},
 	{ai_move, -12,		NULL},
 	{ai_move, -12,		NULL},
@@ -230,7 +236,6 @@ PAIN(dog_pain) (edict_t* self, edict_t* other, float kick, int damage, const mod
 	}else{
 		M_SetAnimation(self, &dog_move_pain2);	
 	}
-	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);			
 }
 
 void dog_dead(edict_t* self)
@@ -323,11 +328,11 @@ void SP_monster_dog(edict_t* self)
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
 
-	sound_melee.assign("dog/dattack1_s.wav");
-	sound_death.assign("dog/ddeath_s.wav");
-	sound_pain.assign("dog/dpain1_s.wav");
-	sound_sight.assign("dog/dsight_s.wav");
-	sound_search.assign("dog/idle_s.wav");
+	sound_melee.assign("dog/dattack1.wav");
+	sound_death.assign("dog/ddeath.wav");
+	sound_pain.assign("dog/dpain1.wav");
+	sound_sight.assign("dog/dsight.wav");
+	sound_search.assign("dog/idle.wav");
 
 	self->health = 50;
 	self->gib_health = -35;

@@ -121,7 +121,6 @@ bool CheckfiendJump(edict_t *self)
 	return true;
 };
 
-
 TOUCH (fiendJumpTouch) (edict_t* self, edict_t* other, const trace_t& tr, bool other_touching_self) -> void
 {
 	vec3_t vel;
@@ -142,9 +141,10 @@ TOUCH (fiendJumpTouch) (edict_t* self, edict_t* other, const trace_t& tr, bool o
 			damage = (int)frandom(0, 10) + 10;
 			T_Damage(other, self, self, self->velocity, point, normal, damage, damage, DAMAGE_NONE, MOD_UNKNOWN);
 		}
-	}
-	else
+	}else{
 		gi.sound(self, CHAN_WEAPON, sound_land, 1, ATTN_NORM, 0);
+	}
+
 	self->touch = NULL;
 
 	if (!M_CheckBottom(self))
@@ -184,8 +184,8 @@ void fiend_roar(edict_t *self)
 // Attack
 mframe_t fiend_frames_jump [] =
 {
-	{ai_charge,	0,	fiend_roar},
 	{ai_charge,	0,	NULL},
+	{ai_charge,	0,	fiend_roar},
 	{ai_charge,	0,	NULL},
 	{ai_charge,	0,	fiendJump},
 	{ai_move,	0,	NULL},
@@ -248,11 +248,16 @@ MONSTERINFO_MELEE(fiend_melee) (edict_t *self) -> void
 	M_SetAnimation(self, &fiend_move_melee);
 }
 
+static void fiendPainSound(edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
+}
+
 // Pain
 mframe_t fiend_frames_pain [] =
 {
 	{ai_move, 0, NULL},
-	{ai_move, 0, NULL},
+	{ai_move, 0, fiendPainSound},
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL},
@@ -269,7 +274,6 @@ PAIN (fiend_pain)  (edict_t* self, edict_t* other, float kick, int damage, const
 	if (self->pain_debounce_time > level.time)
 		return;
 	self->pain_debounce_time = level.time + 1_sec;
-    gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
 
 	if (frandom() * 200 > damage)
 		return;
@@ -332,14 +336,11 @@ DIE(fiend_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage
 	M_SetAnimation(self, &fiend_move_die);
 }
 
-// Sight
 MONSTERINFO_SIGHT(fiend_sight) (edict_t* self, edict_t* other) -> void
 {
-	
 	gi.sound (self, CHAN_VOICE, sound_sight, 1, ATTN_NORM, 0);
 }
 
-// Search
 MONSTERINFO_SEARCH(fiend_search) (edict_t *self) -> void
 {
 	gi.sound (self, CHAN_VOICE, sound_search, 1, ATTN_NORM, 0);
@@ -347,7 +348,6 @@ MONSTERINFO_SEARCH(fiend_search) (edict_t *self) -> void
 
 void SP_monster_fiend(edict_t *self)
 {
-
 	if (!M_AllowSpawn(self)) {
 		G_FreeEdict(self);
 		return;
@@ -364,16 +364,13 @@ void SP_monster_fiend(edict_t *self)
 	if (self->solid == SOLID_NOT)
 		return;
 
-	sound_death.assign("demon/ddeath_s.wav");
+	sound_death.assign("demon/ddeath.wav");
 	sound_hit.assign("demon/dhit2.wav");
-	sound_jump.assign("demon/djump_s.wav");
+	sound_jump.assign("demon/djump.wav");
 	sound_land.assign("demon/dland2.wav");
-	sound_pain.assign("demon/dpain1_s.wav");
-	sound_search.assign("demon/idle1_s.wav");
-	sound_sight.assign("demon/sight2_s.wav");
-	sound_thud.assign("mutant/thud1.wav");
-	sound_explod.assign("world/explod2.wav");
-
+	sound_pain.assign("demon/dpain1.wav");
+	sound_search.assign("demon/idle1.wav");
+	sound_sight.assign("demon/sight2.wav");
 
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;

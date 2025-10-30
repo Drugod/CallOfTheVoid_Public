@@ -31,7 +31,7 @@ static cached_soundindex sound_search;
 static cached_soundindex sound_pain;
 
 void hknight_prototype_run(edict_t* self);
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
 void SwingSword_Prototype(edict_t* self)
 {
@@ -217,7 +217,7 @@ void fire_magic_prototype(edict_t *self, vec3_t start, vec3_t dir, int damage, i
 	if (!self->enemy || self->enemy == self)
 		return;
 
-	dir = SightEndtToDir(self, dir)[0];
+	dir = SightEndtToDir(self, dir);
 	dir.normalize();
 
 	magic = G_Spawn();
@@ -486,11 +486,11 @@ void SP_monster_hknight_prototype(edict_t *self)
 
 	sound_attack.assign("hknight/attack1.wav");
 	sound_melee.assign("hknight/slash1.wav");
-	sound_death.assign("hknight/death1.wav");
+	sound_death.assign("hknight/death1_s.wav");
 	sound_proj_hit.assign("hknight/hit.wav");
-	sound_sight.assign("hknight/sight1.wav");
-	sound_search.assign("hknight/idle.wav");
-	sound_pain.assign("hknight/pain1.wav");
+	sound_sight.assign("hknight/sight1_s.wav");
+	sound_search.assign("hknight/idle_s.wav");
+	sound_pain.assign("hknight/pain1_S.wav");
 
 	self->mins = {-16,-16,-24};
 	self->maxs = {16,16,40};	

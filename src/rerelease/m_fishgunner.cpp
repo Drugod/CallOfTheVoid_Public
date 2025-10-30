@@ -697,7 +697,8 @@ MONSTERINFO_ATTACK(fishgunner_attack) (edict_t *self) -> void
 		if (fishgunner_grenade_check(self))
 		{
 			// if the check passes, go for the attack
-			M_SetAnimation(self, brandom() ? &fishgunner_move_attack_grenade2 : &fishgunner_move_attack_grenade);
+			//M_SetAnimation(self, brandom() ? &fishgunner_move_attack_grenade2 : &fishgunner_move_attack_grenade);
+			M_SetAnimation(self, &fishgunner_move_attack_grenade);
 			self->monsterinfo.attack_finished = level.time + random_time(2_sec);
 		}
 		else
@@ -720,7 +721,8 @@ MONSTERINFO_ATTACK(fishgunner_attack) (edict_t *self) -> void
 	{
 		if (self->timestamp <= level.time && frandom() <= 0.5f && fishgunner_grenade_check(self))
 		{
-			M_SetAnimation(self, brandom() ? &fishgunner_move_attack_grenade2 : &fishgunner_move_attack_grenade);
+			//M_SetAnimation(self, brandom() ? &fishgunner_move_attack_grenade2 : &fishgunner_move_attack_grenade);
+			M_SetAnimation(self, &fishgunner_move_attack_grenade);
 			self->timestamp = level.time + random_time(2_sec, 3_sec);
 		}
 		else if (M_CheckClearShot(self, monster_flash_offset[MZ2_GUNNER_MACHINEGUN_1]))
@@ -899,13 +901,13 @@ void SP_monster_fishgunner(edict_t *self)
 		return;
 	}
 
-	sound_death.assign("fishgunner/death1.wav");
-	sound_pain.assign("fishgunner/gunpain2.wav");
-	sound_pain2.assign("fishgunner/gunpain1.wav");
-	sound_idle.assign("fishgunner/gunidle1.wav");
-	sound_open.assign("fishgunner/gunatck1.wav");
-	sound_search.assign("fishgunner/gunsrch1.wav");
-	sound_sight.assign("fishgunner/sight1.wav");
+	sound_death.assign("deepones/deepone11.wav");
+	sound_pain.assign("deepones/deepone10.wav");
+	sound_pain2.assign("deepones/deepone9.wav");
+	sound_idle.assign("deepones/deepone8.wav");
+	sound_open.assign("deepones/deepone7.wav");
+	sound_search.assign("deepones/deepone6.wav");
+	sound_sight.assign("deepones/deepone2.wav");
 
 	gi.soundindex("fishgunner/gunatck2.wav");
 	gi.soundindex("fishgunner/gunatck3.wav");

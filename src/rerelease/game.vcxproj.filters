@@ -117,6 +117,15 @@
     <ClInclude Include="m_wizard_barracuda_strogg.h" />
     <ClInclude Include="m_soldier_grunt_double.h" />
     <ClInclude Include="m_rotflyer.h" />
+    <ClInclude Include="m_chthon.h" />
+    <ClInclude Include="m_shalrath.h" />
+    <ClInclude Include="m_mutantspawn.h" />
+    <ClInclude Include="m_shamacudda.h" />
+    <ClInclude Include="m_hknight_hyper.h" />
+    <ClInclude Include="m_fish.h" />
+    <ClInclude Include="m_spawn.h" />
+    <ClInclude Include="m_shamjorg.h" />
+    <ClInclude Include="m_ironvore.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cg_main.cpp" />
@@ -329,6 +338,14 @@
     <ClCompile Include="m_wizard_barracuda_strogg.cpp" />
     <ClCompile Include="m_soldier_grunt_double.cpp" />
     <ClCompile Include="m_rotflyer.cpp" />
+    <ClCompile Include="m_chthon.cpp" />
+    <ClCompile Include="m_mutantspawn.cpp" />
+    <ClCompile Include="m_shamacudda.cpp" />
+    <ClCompile Include="m_hknight_hyper.cpp" />
+    <ClCompile Include="m_fish.cpp" />
+    <ClCompile Include="m_spawn.cpp" />
+    <ClCompile Include="m_shamjorg.cpp" />
+    <ClCompile Include="m_ironvore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="bots">

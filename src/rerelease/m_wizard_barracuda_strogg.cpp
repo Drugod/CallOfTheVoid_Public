@@ -24,16 +24,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_flash.h"
 
 static cached_soundindex sound_proj_hit;
+static cached_soundindex sound_null;
 static cached_soundindex sound_attack;
+static cached_soundindex sound_attack2;
 static cached_soundindex sound_death;
 static cached_soundindex sound_idle1;
 static cached_soundindex sound_idle2;
 static cached_soundindex sound_pain;
 static cached_soundindex sound_sight;
 
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
-// Stand
 mframe_t wizarcuda_strogg_frames_stand [] = {
 	{ai_stand, 0, NULL},
 	{ai_stand, 0, NULL},
@@ -51,7 +52,6 @@ MONSTERINFO_STAND(wizarcuda_strogg_stand) (edict_t *self) -> void
 	M_SetAnimation(self, &wizarcuda_strogg_move_stand);	
 }
 
-// Walk
 mframe_t wizarcuda_strogg_frames_walk[] =
 {
 	{ai_walk, 8, NULL},
@@ -70,7 +70,6 @@ MONSTERINFO_WALK(wizarcuda_strogg_walk) (edict_t *self) -> void
 	M_SetAnimation(self, &wizarcuda_strogg_move_walk);
 }
 
-// Run
 mframe_t wizarcuda_strogg_frames_run [] ={
 	{ai_run, 16, NULL},
 	{ai_run, 16, NULL},
@@ -120,10 +119,9 @@ void wizarcuda_strogg_finish_attack(edict_t *self)
 	M_SetAnimation(self, &wizarcuda_strogg_move_finish);
 }
 
-void scraggacudaSpit_checker(edict_t* self)
+void wizarcudaspit_checker(edict_t* self)
 {
 	self->heatbeam_time = level.time + 2.0_sec;
-
 	self->locked_angles = self->s.angles;
 
 	vec3_t start, dir, forward, right;
@@ -149,9 +147,8 @@ void scraggacudaSpit_checker(edict_t* self)
 	self->locked_dir = dir;
 }
 
-void scraggacudaSpit(edict_t* self)
+void wizarcudaspit(edict_t* self)
 {
-	// Forzar que el ángulo se mantenga fijo
 	self->s.angles = self->locked_angles;
 
 	vec3_t start = self->locked_start;
@@ -163,20 +160,18 @@ void scraggacudaSpit(edict_t* self)
 		self->s.frame = 25;
 }
 
-
-void wizarcuda_strogg_prespit(edict_t *self)
+static void wizarcuda_beamfire_sound(edict_t* self)
 {
-	gi.sound(self, CHAN_WEAPON, sound_attack, 1, ATTN_NORM, 0);
+	gi.sound(self, CHAN_WEAPON, sound_attack2, 1, ATTN_NORM, 0);
 }
 
-void wicarus_fire_blaster(edict_t* self);
 mframe_t wizarcuda_strogg_frames_attack [] =
 {
 	{ai_charge, 0, NULL},
 	{ai_charge, 0, NULL},
-	{ai_charge, 0, NULL},
-	{ai_charge, 0, scraggacudaSpit_checker},
-	{ai_charge, 0, scraggacudaSpit},
+	{ai_charge, 0, wizarcuda_beamfire_sound},
+	{ai_charge, 0, wizarcudaspit_checker},
+	{ai_charge, 0, wizarcudaspit},
 	{ai_charge, 0, NULL}
 };
 MMOVE_T(wizarcuda_strogg_move_attack) = {22, 27, wizarcuda_strogg_frames_attack, wizarcuda_strogg_run };
@@ -186,7 +181,6 @@ MONSTERINFO_ATTACK (wizarcuda_strogg_attack) (edict_t *self) -> void
 	M_SetAnimation(self, &wizarcuda_strogg_move_attack);	
 }
 
-// Pain
 mframe_t wizarcuda_strogg_frames_pain [] ={
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL},
@@ -197,6 +191,7 @@ MMOVE_T(wizarcuda_strogg_move_pain) = {42, 45, wizarcuda_strogg_frames_pain, wiz
 
 PAIN (wizarcuda_strogg_pain) (edict_t* self, edict_t* other, float kick, int damage, const mod_t& mod) -> void
 {
+	gi.sound(self, CHAN_WEAPON, sound_null, 1, ATTN_NORM, 0);
 	self->heatbeam_time = 0.0_sec;
 	if (skill->value == 3)
 		return;
@@ -218,7 +213,6 @@ void wizarcuda_strogg_fling(edict_t* self)
 	self->maxs = {16, 16, 8};
 	self->movetype = MOVETYPE_TOSS;
 	self->svflags |= SVF_DEADMONSTER;
-
 }
 
 void wizarcuda_strogg_dead(edict_t *self)
@@ -227,7 +221,6 @@ void wizarcuda_strogg_dead(edict_t *self)
 	gi.linkentity(self);
 }
 
-// Death
 mframe_t wizarcuda_strogg_frames_death [] ={
 	{ai_move, 0, wizarcuda_strogg_fling},
 	{ai_move, 0, NULL},
@@ -242,7 +235,7 @@ MMOVE_T(wizarcuda_strogg_move_death) = {46, 53, wizarcuda_strogg_frames_death, w
 
 DIE (wizarcuda_strogg_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage, const vec3_t& point, const mod_t& mod) -> void
 {
-
+	gi.sound(self, CHAN_WEAPON, sound_null, 1, ATTN_NORM, 0);
 	if (self->health <= self->gib_health)
 	{
 		gi.sound(self, CHAN_VOICE, gi.soundindex("misc/udeath.wav"), 1, ATTN_NORM, 0);
@@ -289,7 +282,6 @@ MONSTERINFO_SETSKIN(wizarcuda_strogg_setskin) (edict_t* self) -> void
 		self->s.skinnum = 0;
 }
 
-
 void SP_monster_wizarcuda_strogg(edict_t *self)
 {
 	if (!M_AllowSpawn(self)) {
@@ -298,12 +290,14 @@ void SP_monster_wizarcuda_strogg(edict_t *self)
 	}
 
 	sound_proj_hit.assign("wizard/hit.wav");
-	sound_attack.assign("wizard/wattack.wav");
-	sound_death.assign("wizard/wdeath.wav");
-	sound_idle1.assign("wizard/widle1.wav");
-	sound_idle2.assign("wizard/widle2.wav");
-	sound_pain.assign("wizard/wpain.wav");
-	sound_sight.assign("wizard/wsight.wav");
+	sound_attack.assign("wizard/wattack_s.wav");
+	sound_attack2.assign("army/bfgbeam.wav");
+	sound_death.assign("wizard/wdeath_s.wav");
+	sound_idle1.assign("wizard/widle1_s.wav");
+	sound_idle2.assign("wizard/widle2_s.wav");
+	sound_pain.assign("wizard/wpain_s.wav");
+	sound_sight.assign("wizard/wsight_s.wav");
+	sound_null.assign("ambience/null.wav");
 
 	self->mins = {-16, -16, -24};	
 	self->maxs = {16, 16, 40};	
@@ -317,7 +311,6 @@ void SP_monster_wizarcuda_strogg(edict_t *self)
 
 	self->health = 120 * st.health_multiplier;
 	self->gib_health = -40;
-
 	self->mass = 80;
 
 	self->pain = wizarcuda_strogg_pain;

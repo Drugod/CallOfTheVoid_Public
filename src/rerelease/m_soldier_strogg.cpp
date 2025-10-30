@@ -29,6 +29,7 @@ static cached_soundindex sound_pain1;
 static cached_soundindex sound_pain2;
 static cached_soundindex sound_attack;
 static cached_soundindex sound_sight;
+static cached_soundindex sound_null;
 
 void fire_heatbeam(edict_t* self, const vec3_t& start, const vec3_t& aimdir, const vec3_t& offset, int damage, int kick,
 	bool monster);
@@ -140,10 +141,15 @@ void soldier_fire_strogg(edict_t* self)
 		self->s.frame = 84;
 }
 
+static void soldier_beamfire_sound(edict_t* self)
+{
+	gi.sound(self, CHAN_WEAPON, sound_attack, 1, ATTN_NORM, 0);
+}
+
 mframe_t stroggsoldier_frames_attack[] ={
 	{ai_charge, 0,	NULL},
 	{ai_charge, 0,	NULL},
-	{ai_charge, 0,	NULL},
+	{ai_charge, 0,	soldier_beamfire_sound},
 	{ai_charge, 0,	soldier_fire_checker},
 	
 	{ai_charge, 0,	soldier_fire_strogg},
@@ -223,9 +229,9 @@ mframe_t stroggsoldier_frames_pain3[] = {
 };
 MMOVE_T(stroggsoldier_move_pain3) = { 60, 72, stroggsoldier_frames_pain3, stroggsoldier_run };
 
-// Pain
 PAIN(stroggsoldier_pain) (edict_t* self, edict_t* other, float kick, int damage, const mod_t& mod) -> void
 {
+	gi.sound(self, CHAN_WEAPON, sound_null, 1, ATTN_NORM, 0);
 	float r;
 	self->heatbeam_time = 0_sec;
 
@@ -264,7 +270,6 @@ void stroggsoldier_dead(edict_t* self)
 	gi.linkentity(self);
 }
 
-// Death (1)
 mframe_t stroggsoldier_frames_death1[] ={
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -281,7 +286,6 @@ mframe_t stroggsoldier_frames_death1[] ={
 };
 MMOVE_T(stroggsoldier_move_death1) = { 8, 17, stroggsoldier_frames_death1, stroggsoldier_dead };
 
-// Death (2)
 mframe_t stroggsoldier_frames_death2[] = {
 	{ai_move, 0,		NULL},
 	{ai_move, -5,		NULL},
@@ -299,9 +303,9 @@ mframe_t stroggsoldier_frames_death2[] = {
 };
 MMOVE_T(stroggsoldier_move_death2) = { 18, 28, stroggsoldier_frames_death2, stroggsoldier_dead };
 
-// Death
 DIE(stroggsoldier_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage, const vec3_t& point, const mod_t& mod) -> void
 {
+	gi.sound(self, CHAN_WEAPON, sound_null, 1, ATTN_NORM, 0);
 	if (self->health <= self->gib_health)
 	{
 		gi.sound(self, CHAN_VOICE, gi.soundindex("misc/udeath.wav"), 1, ATTN_NORM, 0);
@@ -337,13 +341,11 @@ DIE(stroggsoldier_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, in
 		M_SetAnimation(self, &stroggsoldier_move_death2);
 }
 
-// Sight
 MONSTERINFO_SIGHT(stroggsoldier_sight) (edict_t* self, edict_t* other) -> void
 {
 	gi.sound(self, CHAN_VOICE, sound_sight, 1, ATTN_NORM, 0);
 }
 
-// Search
 MONSTERINFO_SEARCH(stroggsoldier_search) (edict_t* self) -> void
 {
 	gi.sound(self, CHAN_VOICE, sound_search, 1, ATTN_NORM, 0);
@@ -376,8 +378,9 @@ void SP_monster_soldier_strogg(edict_t* self)
 	sound_search.assign("army/idle_s.wav");
 	sound_pain1.assign("army/pain1_s.wav");
 	sound_pain2.assign("army/pain2_s.wav");
-	sound_attack.assign("army/sattck1.wav");
+	sound_attack.assign("army/bfgbeam.wav");
 	sound_sight.assign("army/sight1_s.wav");
+	sound_null.assign("ambience/null.wav");
 
 	self->health = 30 * st.health_multiplier;
 	self->gib_health = -35;

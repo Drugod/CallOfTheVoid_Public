@@ -177,7 +177,7 @@ void DemonJump(edict_t *self)
 	self->touch = DemonJumpTouch;
 }
 
-void demon_roar(edict_t *self)
+static void demon_roar(edict_t *self)
 {
 	gi.sound(self, CHAN_VOICE, sound_jump, 1, ATTN_NORM, 0);
 }
@@ -370,8 +370,8 @@ void demon_check_landing(edict_t* self)
 
 mframe_t demon_frames_jump [] =
 {
-	{ai_charge,	0,	demon_roar},
 	{ai_charge,	0,	NULL},
+	{ai_charge,	0,	demon_roar},
 	{ai_charge,	0,	NULL},
 	{ai_charge,	0,	demon_jump_takeoff}, //DemonJump},
 	{ai_move,	0,	demon_high_gravity},
@@ -400,11 +400,15 @@ MONSTERINFO_ATTACK(demon_attack) (edict_t *self) -> void
 	}
 }
 
-// Pain
+static void fiend_strogg_pain_sound(edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
+}
+
 mframe_t demon_frames_pain [] =
 {
 	{ai_move, 0, NULL},
-	{ai_move, 0, NULL},
+	{ai_move, 0, fiend_strogg_pain_sound},
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL},
@@ -421,7 +425,6 @@ PAIN (demon_pain)  (edict_t* self, edict_t* other, float kick, int damage, const
 	if (self->pain_debounce_time > level.time)
 		return;
 	self->pain_debounce_time = level.time + 1_sec;
-    gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
 
 	if (frandom() * 200 > damage)
 		return;
@@ -445,18 +448,22 @@ void demon_dead(edict_t *self)
 	gi.linkentity(self);
 }
 
-// Death
+static void demon_death_sound(edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
+}
+
 mframe_t demon_frames_die [] =
 {
-	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL}
+	{ai_move, 0, NULL},
+	{ai_move, 0, demon_death_sound},
+	{ai_move, 0, NULL},
+	{ai_move, 0, NULL},
+	{ai_move, 0, NULL},
+	{ai_move, 0, NULL},
+	{ai_move, 0, NULL},
+	{ai_move, 0, NULL},
+	{ai_move, 0, NULL}
 };
 MMOVE_T(demon_move_die) = {45, 53, demon_frames_die, demon_dead};
 
@@ -480,7 +487,6 @@ DIE(demon_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage
 	}
 	if (self->deadflag == true)
 		return;
-	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
 
 	self->deadflag = true;
 	self->takedamage = true;
@@ -521,9 +527,6 @@ void SP_monster_fiend_strogg(edict_t *self)
 
 	self->health = 300 * st.health_multiplier;
 
-	if (self->solid == SOLID_NOT)
-		return;
-
 	sound_death.assign("demon/ddeath_s.wav");
 	sound_hit.assign("demon/dhit2.wav");
 	sound_jump.assign("demon/djump_s.wav");
@@ -533,7 +536,6 @@ void SP_monster_fiend_strogg(edict_t *self)
 	sound_sight.assign("demon/sight2_s.wav");
 	sound_thud.assign("mutant/thud1.wav");
 	sound_explod.assign("world/explod2.wav");
-
 
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;

@@ -1,54 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_supershamblertank.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_supershamblertank.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_mutant.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_mutant.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 306,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "m_supershamblertank.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_supershamblertank.cpp",
-              "RelativeDocumentMoniker": "m_supershamblertank.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_supershamblertank.cpp",
-              "RelativeToolTip": "m_supershamblertank.cpp",
-              "ViewState": "AQIAALoDAAAAAAAAAAAvwOQDAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-07-24T21:14:35.391Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "m_mutant.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_mutant.cpp",
-              "RelativeDocumentMoniker": "m_mutant.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_mutant.cpp",
-              "RelativeToolTip": "m_mutant.cpp",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAABsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-07-24T21:12:40.858Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

@@ -321,12 +321,12 @@ void SP_monster_soldier_grunt(edict_t* self)
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
 
-	sound_death.assign("army/death1_s.wav");
-	sound_search.assign("army/idle_s.wav");
-	sound_pain1.assign("army/pain1_s.wav");
-	sound_pain2.assign("army/pain2_s.wav");
+	sound_death.assign("army/death1.wav");
+	sound_search.assign("army/idle.wav");
+	sound_pain1.assign("army/pain1.wav");
+	sound_pain2.assign("army/pain2.wav");
 	sound_attack.assign("army/sattck1.wav");
-	sound_sight.assign("army/sight1_s.wav");
+	sound_sight.assign("army/sight1.wav");
 
 	self->health = 60;
 	self->gib_health = -35;

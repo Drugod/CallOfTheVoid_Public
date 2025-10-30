@@ -607,6 +607,43 @@ constexpr spawnflags_t SPAWNFLAG_PUSH_CLIP = 0x10_spawnflag;
 
 static cached_soundindex windsound;
 
+static void pusher(edict_t* self, edict_t* who)
+{
+	// Punto de inicio: centro/“ojos” del que toca
+	vec3_t start = who->s.origin;
+
+	// Añadimos altura razonable: eye height si es jugador; si no, centro del bbox
+	float zoffset = 0.0f;
+	if (who->client) {
+		zoffset = who->viewheight; // suele ser ~22 en Q2
+	}
+	else {
+		zoffset = 0.5f * (who->mins.z + who->maxs.z);
+	}
+	start.z += zoffset;
+
+	if (self->target && self->target[0])
+	{
+		if (edict_t* dest = G_PickTarget(self->target))//entidad que esta siendo apuntada por trigger_push
+		{
+			// Dirección 3D completa hacia el info_notnull (incluye Z)
+			vec3_t dir = dest->s.origin - start;
+
+			if (dir.length() > 0.0001f)
+			{
+				dir.normalize();
+				//who->velocity = dir * (self->speed * 10.0f);
+				who->jumperflag = true; // para que no se aplique daño por caida
+				who->velocity = dir * (self->speed * 2.0f);
+				return;
+			}
+		}
+	}
+
+	// Fallback clásico
+	who->velocity = self->movedir * (self->speed * 10.0f);
+}
+
 TOUCH(trigger_push_touch) (edict_t *self, edict_t *other, const trace_t &tr, bool other_touching_self) -> void
 {
 	if (self->spawnflags.has(SPAWNFLAG_PUSH_CLIP))
@@ -619,11 +656,14 @@ TOUCH(trigger_push_touch) (edict_t *self, edict_t *other, const trace_t &tr, boo
 
 	if (strcmp(other->classname, "grenade") == 0)
 	{
-		other->velocity = self->movedir * (self->speed * 10);
+		//other->velocity = self->movedir * (self->speed * 10);
+		pusher(self, other); //entidad trigger, entidad que toca
+
 	}
 	else if (other->health > 0)
 	{
-		other->velocity = self->movedir * (self->speed * 10);
+		//other->velocity = self->movedir * (self->speed * 10);
+		pusher(self, other);
 
 		if (other->client)
 		{
@@ -722,7 +762,53 @@ If targeted, it will toggle on and off when used.
 START_OFF - toggled trigger_push begins in off setting
 SILENT - doesn't make wind noise
 */
-void SP_trigger_push(edict_t *self)
+//DRUGOD TRIGGER
+/*void SP_trigger_push(edict_t* self)
+{
+	InitTrigger(self);
+	if (!(self->spawnflags & SPAWNFLAG_PUSH_SILENT))
+		windsound.assign("misc/windfly.wav");
+	self->touch = trigger_push_touch;
+
+	// RAFAEL
+	if (self->spawnflags.has(SPAWNFLAG_PUSH_PLUS))
+	{
+		if (!self->wait)
+			self->wait = 10;
+
+		self->think = trigger_push_active;
+		self->nextthink = level.time + 100_ms;
+		self->delay = (self->nextthink + gtime_t::from_sec(self->wait)).seconds();
+	}
+	// RAFAEL
+
+	if (!self->speed)
+		self->speed = 1000;
+
+	// PGM
+	if (self->targetname) // toggleable
+	{
+		self->use = trigger_push_use;
+		if (self->spawnflags.has(SPAWNFLAG_PUSH_START_OFF))
+			self->solid = SOLID_NOT;
+	}
+	else if (self->spawnflags.has(SPAWNFLAG_PUSH_START_OFF))
+	{
+		gi.Com_Print("trigger_push is START_OFF but not targeted.\n");
+		self->svflags = SVF_NONE;
+		self->touch = nullptr;
+		self->solid = SOLID_BSP;
+		self->movetype = MOVETYPE_PUSH;
+	}
+	// PGM
+
+	gi.linkentity(self);
+
+	if (self->spawnflags.has(SPAWNFLAG_PUSH_CLIP))
+		self->svflags |= SVF_HULL;
+}*/
+
+void SP_trigger_push(edict_t* self)
 {
 	InitTrigger(self);
 	if (!(self->spawnflags & SPAWNFLAG_PUSH_SILENT))

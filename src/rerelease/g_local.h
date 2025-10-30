@@ -258,6 +258,7 @@ SPAWNFLAG_RESERVED1 = spawnflags_t(0x00002000),
 SPAWNFLAG_COOP_ONLY = spawnflags_t(0x00004000),
 SPAWNFLAG_RESERVED2 = spawnflags_t(0x00008000);
 
+
 constexpr spawnflags_t SPAWNFLAG_EDITOR_MASK = (SPAWNFLAG_NOT_EASY | SPAWNFLAG_NOT_MEDIUM | SPAWNFLAG_NOT_HARD | SPAWNFLAG_NOT_DEATHMATCH |
 	SPAWNFLAG_NOT_COOP | SPAWNFLAG_RESERVED1 | SPAWNFLAG_COOP_ONLY | SPAWNFLAG_RESERVED2);
 
@@ -966,7 +967,16 @@ enum item_id_t : int32_t {
 	IT_AMMO_MINI_ROCKETS,
 	IT_AMMO_MINI_FLECHETTES,
 	IT_AMMO_MINI_GRENADES,
-
+	IT_KEY_Q1_RUNE_END1,
+	IT_KEY_Q1_RUNE_END2,
+	IT_KEY_Q1_RUNE_END3,
+	IT_KEY_Q1_RUNE_END4,
+	IT_KEY_Q1_BASE_GOLD_KEY,
+	IT_KEY_Q1_BASE_SILVER_KEY,
+	IT_KEY_Q1_MEDIEVAL_GOLD_KEY,
+	IT_KEY_Q1_MEDIEVAL_SILVER_KEY,
+	IT_KEY_Q1_RUNIC_GOLD_KEY,
+	IT_KEY_Q1_RUNIC_SILVER_KEY,
 	IT_TOTAL
 };
 
@@ -2012,7 +2022,7 @@ constexpr spawnflags_t SPAWNFLAG_ITEM_TARGETS_USED = 0x00040000_spawnflag;
 
 //DRUGOD
 //extern gitem_t itemlist[IT_TOTAL];
-extern gitem_t itemlist[90];
+extern gitem_t itemlist[100];
 
 //
 // g_cmds.c
@@ -2200,6 +2210,8 @@ void monster_fire_railgun(edict_t* self, const vec3_t& start, const vec3_t& aimd
 	monster_muzzleflash_id_t flashtype);
 void monster_fire_bfg(edict_t* self, const vec3_t& start, const vec3_t& aimdir, int damage, int speed, int kick,
 	float damage_radius, monster_muzzleflash_id_t flashtype);
+void monster_fire_bfg_shama(edict_t* self, const vec3_t& start, const vec3_t& aimdir, int damage, int speed, int kick,
+	float damage_radius, monster_muzzleflash_id_t flashtype);
 bool M_CheckClearShot(edict_t* self, const vec3_t& offset);
 bool M_CheckClearShot(edict_t* self, const vec3_t& offset, vec3_t& start);
 vec3_t M_ProjectFlashSource(edict_t* self, const vec3_t& offset, const vec3_t& forward, const vec3_t& right);
@@ -2341,6 +2353,7 @@ edict_t* fire_rocket(edict_t* self, const vec3_t& start, const vec3_t& dir, int 
 	int radius_damage);
 void fire_rail(edict_t* self, const vec3_t& start, const vec3_t& aimdir, int damage, int kick);
 void fire_bfg(edict_t* self, const vec3_t& start, const vec3_t& dir, int damage, int speed, float damage_radius);
+void fire_bfg_shama(edict_t* self, const vec3_t& start, const vec3_t& dir, int damage, int speed, float damage_radius);
 // RAFAEL
 void fire_ionripper(edict_t* self, const vec3_t& start, const vec3_t& aimdir, int damage, int speed, effects_t effect);
 void fire_heat(edict_t* self, const vec3_t& start, const vec3_t& dir, int damage, int speed, float damage_radius,
@@ -3253,6 +3266,7 @@ struct edict_t
 	vec3_t locked_dir;
 	vec3_t locked_start;
 	vec3_t locked_angles;
+	bool	jumperflag;
 };
 
 //=============

@@ -31,9 +31,8 @@ static cached_soundindex sound_idle2;
 static cached_soundindex sound_pain;
 static cached_soundindex sound_sight;
 
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
-// Stand
 mframe_t wizard_prototype_frames_stand [] = {
 	{ai_stand, 0, NULL},
 	{ai_stand, 0, NULL},
@@ -51,7 +50,6 @@ MONSTERINFO_STAND(wizard_prototype_stand) (edict_t *self) -> void
 	M_SetAnimation(self, &wizard_prototype_move_stand);	
 }
 
-// Walk
 mframe_t wizard_prototype_frames_walk[] =
 {
 	{ai_walk, 8, NULL},
@@ -70,7 +68,6 @@ MONSTERINFO_WALK(wizard_prototype_walk) (edict_t *self) -> void
 	M_SetAnimation(self, &wizard_prototype_move_walk);
 }
 
-// Run
 mframe_t wizard_prototype_frames_run [] ={
 	{ai_run, 16, NULL},
 	{ai_run, 16, NULL},
@@ -115,23 +112,23 @@ mframe_t wizard_prototype_frames_finish [] =
 };
 MMOVE_T(wizard_prototype_move_finish) = {22, 26, wizard_prototype_frames_finish, wizard_prototype_run};
 
-void wizard_prototype_finish_attack(edict_t *self)
+void wizard_prototype_finish_attack(edict_t* self)
 {
 	M_SetAnimation(self, &wizard_prototype_move_finish);
 }
 
-TOUCH(spit_prototype_touch) (edict_t* self, edict_t* other, const trace_t& tr, bool other_touching_self) -> void
+TOUCH(spit_proto_touch) (edict_t* self, edict_t* other, const trace_t& tr, bool other_touching_self) -> void
 {
 
 	if (other == self->owner)
 		return;
 	if (tr.surface && (tr.surface->flags & SURF_SKY))
 	{
-		G_FreeEdict (self);
+		G_FreeEdict(self);
 		return;
 	}
 	if (other->takedamage)
-		T_Damage (other, self, self->owner, self->velocity, self->s.origin, tr.plane.normal, self->dmg, 1, DAMAGE_ENERGY, MOD_UNKNOWN);
+		T_Damage(other, self, self->owner, self->velocity, self->s.origin, tr.plane.normal, self->dmg, 1, DAMAGE_ENERGY, MOD_UNKNOWN);
 	else
 	{
 		gi.WriteByte(svc_temp_entity);
@@ -142,110 +139,170 @@ TOUCH(spit_prototype_touch) (edict_t* self, edict_t* other, const trace_t& tr, b
 		gi.WriteByte(209);
 		gi.multicast(self->s.origin, MULTICAST_PVS, false);
 
-		gi.sound (self, CHAN_WEAPON, sound_proj_hit, 1, ATTN_NORM, 0);
+		gi.sound(self, CHAN_WEAPON, sound_proj_hit, 1, ATTN_NORM, 0);
 	}
 	G_FreeEdict(self);
 }
 
-DIE(fire_spit_prototype_die) (edict_t* self, edict_t* other, edict_t* inflictor, int damage, const vec3_t& point, const mod_t& mod) -> void
+DIE(fire_spit_proto_die) (edict_t* self, edict_t* other, edict_t* inflictor, int damage, const vec3_t& point, const mod_t& mod) -> void
 {
 	if (mod.id == MOD_CRUSH)
 		CTFResetGrapple(self);
 }
 
-void fire_spit_prototype(edict_t *self, vec3_t start, vec3_t dir, int damage, int speed)
+void fire_spit_proto(edict_t* self, vec3_t start, vec3_t dir, int damage, int speed, int value)
 {
-	edict_t	*spit;
+	edict_t* spit;
 
 	if (!self->enemy || self->enemy == self)
 		return;
 
-	//VectorCopy(SightEndtToDir(self, dir)[0], dir);
-	dir = SightEndtToDir(self, dir)[0];
-	//VectorNormalize (dir);
-	dir.normalize();
-
 	spit = G_Spawn();
-	//VectorCopy(start, spit->s.origin);
 	spit->s.origin = start;
-
-	//VectorCopy(start, spit->s.old_origin);0
-	spit->s.old_origin = start;	
-
-	//vectoangles(dir, spit->s.angles);
+	spit->s.old_origin = start;
 	spit->s.angles = vectoangles(dir);
-
-	//VectorScale(dir, speed, spit->velocity);
-	spit->velocity[0] = speed * dir[0];
-	spit->velocity[1] = speed * dir[1];
-	spit->velocity[2] = speed * dir[2];
-
+	if (sv_maxvelocity->value > speed) {
+		spit->velocity = dir * speed;
+	}
+	else {
+		spit->velocity = dir * sv_maxvelocity->value;
+	}
+	spit->mins = { -1, -1, -1 };
+	spit->maxs = { 1,  1,  1 };
 	spit->movetype = MOVETYPE_FLYMISSILE;
-	spit->clipmask = MASK_PROJECTILE;
+	spit->flags |= FL_DODGE;
+	spit->clipmask = MASK_SHOT;
 	spit->solid = SOLID_BBOX;
-	spit->s.effects |= (EF_BLASTER|EF_TRACKER);
-
-	spit->mins = {0, 0, 0};
-	spit->maxs = {0, 0, 0};
-
-	spit->s.modelindex = gi.modelindex ("models/monsters/spitstrogg/tris.md2");
+	spit->s.effects |= (EF_BLASTER | EF_TRACKER);
+	spit->s.modelindex = gi.modelindex("models/monsters/spitstrogg/tris.md2");
 	spit->owner = self;
-	spit->touch = spit_prototype_touch;
+	spit->touch = spit_proto_touch;
+	spit->nextthink = level.time + 10.0_sec;
+	spit->think = G_FreeEdict;
 	spit->dmg = damage;
-	spit->die = fire_spit_prototype_die;
-	spit->enemy = self->enemy;
 	gi.linkentity(spit);
-}	
+}
 
-void WizardPrototypeSpit(edict_t *self)
+static void WizardSpitleft(edict_t* self)
 {
 	vec3_t	forward, right;
 	vec3_t	start;
 	vec3_t	dir;
 	vec3_t	vec;
-	vec3_t	offset = {0, 0, 30};
 
-	AngleVectors (self->s.angles, forward, right, NULL);
-	//G_ProjectSource(self->s.origin, offset, forward, right, start);
-	start = G_ProjectSource(self->s.origin, offset, forward, right);
+	AngleVectors(self->s.angles, forward, right, NULL);
+	start = self->s.origin;
+	start[0] += forward[0] * 14.0f;
+	start[1] += forward[1] * 14.0f;
+	start[2] = self->s.origin[2] + 45;
+	start[0] += right[0] * 14.0f;
+	start[1] += right[1] * 14.0f;
 
-	//VectorCopy(self->enemy->s.origin, vec);
+	/*char buffer[256];
+	snprintf(buffer, sizeof(buffer), "WizardSpitleft start = (\"%.2f\",\"%.2f\",\"%.2f\"\n", start[0], start[1], start[2]);
+	gi.Com_PrintFmt("{}", buffer);*/
+
 	vec = self->enemy->s.origin;
 	vec[2] += self->enemy->viewheight;
 
-	//VectorSubtract(vec, start, dir);
 	dir = vec - start;
-
-	//VectorNormalize(dir);
 	dir.normalize();
 
-	fire_spit_prototype(self, start, dir, 9, 600);
+	fire_spit_proto(self, start, dir, 9, 600, 0);
 }
 
-void wizard_prototype_prespit(edict_t *self)
+static void WizardSpitRight(edict_t* self)
+{
+	vec3_t	forward, right;
+	vec3_t	start;
+	vec3_t	dir;
+	vec3_t	vec;
+
+	AngleVectors(self->s.angles, forward, right, NULL);
+	right[2] = 0;
+	right.normalize();
+
+	start = self->s.origin;
+	start[0] += forward[0] * 14.0f;
+	start[1] += forward[1] * 14.0f;
+	start[2] = self->s.origin[2] + 25;
+	start[0] += right[0] * -14.0f;
+	start[1] += right[1] * -14.0f;
+
+	/*char buffer[256];
+	snprintf(buffer, sizeof(buffer), "WizardSpitright start = (\"%.2f\",\"%.2f\",\"%.2f\"\n", start[0], start[1], start[2]);
+	gi.Com_PrintFmt("{}", buffer);*/
+
+	vec = self->enemy->s.origin;
+	vec[2] += self->enemy->viewheight;
+
+	dir = vec - start;
+	dir.normalize();
+
+	fire_spit_proto(self, start, dir, 9, 600, 1);
+}
+
+THINK(WizardPrototypeSpitManager)(edict_t* self) -> void
+{
+	edict_t* wiz = self->owner;
+	if (!wiz || !wiz->inuse || wiz->deadflag || wiz->health <= 0) {
+		G_FreeEdict(self);
+		return;
+	}
+
+	if (self->count == 0) {
+		WizardSpitleft(wiz);
+	}
+	else {
+		WizardSpitRight(wiz);
+	}
+	self->think = G_FreeEdict;
+	self->nextthink = level.time + 1.0_sec;
+}
+
+static void wizard_prototype_prespit(edict_t* self)
 {
 	gi.sound(self, CHAN_WEAPON, sound_attack, 1, ATTN_NORM, 0);
+
+	edict_t* spitleft;
+	spitleft = G_Spawn();
+	spitleft->s.origin = self->s.origin;
+	spitleft->s.angles = self->s.angles;
+	spitleft->enemy = self->enemy;
+	spitleft->owner = self;
+	spitleft->think = WizardPrototypeSpitManager;
+	spitleft->count = 0;
+	spitleft->nextthink = level.time + 0.3_sec;
+	gi.linkentity(spitleft);
+
+	edict_t* spitright;
+	spitright = G_Spawn();
+	spitright->s.origin = self->s.origin;
+	spitright->s.angles = self->s.angles;
+	spitright->enemy = self->enemy;
+	spitright->owner = self;
+	spitright->think = WizardPrototypeSpitManager;
+	spitright->count = 1;
+	spitright->nextthink = level.time + 0.8_sec;
+	gi.linkentity(spitright);
 }
 
-// Attack
-mframe_t wizard_prototype_frames_attack [] =
+mframe_t wizard_prototype_frames_attack[] =
 {
 	{ai_charge, 0, wizard_prototype_prespit},
-	{ai_charge, 0, WizardPrototypeSpit},
 	{ai_charge, 0, NULL},
 	{ai_charge, 0, NULL},
-	{ai_charge, 0, WizardPrototypeSpit},
+	{ai_charge, 0, NULL},
+	{ai_charge, 0, NULL},
 	{ai_charge, 0, NULL}
 };
-//MMOVE_T(wizard_prototype_move_attack) = {22, 27, wizard_prototype_frames_attack, wizard_prototype_finish_attack};
-MMOVE_T(wizard_prototype_move_attack) = {22, 27, wizard_prototype_frames_attack, wizard_prototype_run };
+MMOVE_T(wizard_prototype_move_attack) = { 22, 27, wizard_prototype_frames_attack, wizard_prototype_run };
 
 MONSTERINFO_ATTACK (wizard_prototype_attack) (edict_t *self) -> void
 {
 	M_SetAnimation(self, &wizard_prototype_move_attack);	
 }
 
-// Pain
 mframe_t wizard_prototype_frames_pain [] ={
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL},
@@ -276,7 +333,6 @@ void wizard_prototype_fling(edict_t* self)
 	self->maxs = {16, 16, 8};
 	self->movetype = MOVETYPE_TOSS;
 	self->svflags |= SVF_DEADMONSTER;
-
 }
 
 void wizard_prototype_dead(edict_t *self)
@@ -285,7 +341,6 @@ void wizard_prototype_dead(edict_t *self)
 	gi.linkentity(self);
 }
 
-// Death
 mframe_t wizard_prototype_frames_death [] ={
 	{ai_move, 0, wizard_prototype_fling},
 	{ai_move, 0, NULL},
@@ -346,7 +401,6 @@ MONSTERINFO_SETSKIN(wizard_prototype_setskin) (edict_t* self) -> void
 		self->s.skinnum = 0;
 }
 
-
 void SP_monster_wizard_prototype(edict_t *self)
 {
 	if (!M_AllowSpawn(self)) {
@@ -355,12 +409,12 @@ void SP_monster_wizard_prototype(edict_t *self)
 	}
 
 	sound_proj_hit.assign("wizard/hit.wav");
-	sound_attack.assign("wizard/wattack.wav");
-	sound_death.assign("wizard/wdeath.wav");
-	sound_idle1.assign("wizard/widle1.wav");
-	sound_idle2.assign("wizard/widle2.wav");
-	sound_pain.assign("wizard/wpain.wav");
-	sound_sight.assign("wizard/wsight.wav");
+	sound_attack.assign("wizard/wattack_s.wav");
+	sound_death.assign("wizard/wdeath_s.wav");
+	sound_idle1.assign("wizard/widle1_s.wav");
+	sound_idle2.assign("wizard/widle2_s.wav");
+	sound_pain.assign("wizard/wpain_s.wav");
+	sound_sight.assign("wizard/wsight_s.wav");
 
 	self->mins = {-16, -16, -24};	
 	self->maxs = {16, 16, 40};	

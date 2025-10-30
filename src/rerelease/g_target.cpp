@@ -44,6 +44,7 @@ constexpr spawnflags_t SPAWNFLAG_SPEAKER_LOOPED_ON = 1_spawnflag;
 constexpr spawnflags_t SPAWNFLAG_SPEAKER_LOOPED_OFF = 2_spawnflag;
 constexpr spawnflags_t SPAWNFLAG_SPEAKER_RELIABLE = 4_spawnflag;
 constexpr spawnflags_t SPAWNFLAG_SPEAKER_NO_STEREO = 8_spawnflag;
+constexpr spawnflags_t SPAWNFLAGS_KEEP_IN_DM = 32_spawnflag;//Drugod
 
 USE(Use_Target_Speaker) (edict_t *ent, edict_t *other, edict_t *activator) -> void
 {
@@ -597,11 +598,12 @@ speed	default is 1000
 
 constexpr spawnflags_t SPAWNFLAG_BLASTER_NOTRAIL = 1_spawnflag;
 constexpr spawnflags_t SPAWNFLAG_BLASTER_NOEFFECTS = 2_spawnflag;
+constexpr spawnflags_t SPAWNFLAG_BLASTER_QUAKE1NAILS = 16_spawnflag;
 
 USE(use_target_blaster) (edict_t *self, edict_t *other, edict_t *activator) -> void
 {
 	effects_t effect;
-
+	
 	if (self->spawnflags.has(SPAWNFLAG_BLASTER_NOEFFECTS))
 		effect = EF_NONE;
 	else if (self->spawnflags.has(SPAWNFLAG_BLASTER_NOTRAIL))
@@ -613,11 +615,28 @@ USE(use_target_blaster) (edict_t *self, edict_t *other, edict_t *activator) -> v
 	gi.sound(self, CHAN_VOICE, self->noise_index, 1, ATTN_NORM, 0);
 }
 
+void fire_nails(edict_t* self, const vec3_t& start, const vec3_t& dir, int damage, int speed, int kick);
+
+USE(use_target_quake1nails) (edict_t* self, edict_t* other, edict_t* activator) -> void
+{
+	fire_nails(self, self->s.origin, self->movedir, self->dmg, (int)self->speed, 0);
+	gi.sound(self, CHAN_VOICE, self->noise_index, 1, ATTN_NORM, 0);
+}
+
+
 void SP_target_blaster(edict_t *self)
 {
-	self->use = use_target_blaster;
+
+	if (self->spawnflags.has(SPAWNFLAG_BLASTER_QUAKE1NAILS)) {
+		self->use = use_target_quake1nails;
+		self->noise_index = gi.soundindex("weapons/spike2.wav");
+	}
+	else {
+		self->use = use_target_blaster;
+		self->noise_index = gi.soundindex("weapons/laser2.wav");
+	}
+
 	G_SetMovedir(self->s.angles, self->movedir);
-	self->noise_index = gi.soundindex("weapons/laser2.wav");
 
 	if (!self->dmg)
 		self->dmg = 15;
@@ -974,8 +993,13 @@ void SP_target_lightramp(edict_t *self)
 		G_FreeEdict(self);
 		return;
 	}
-
-	if (deathmatch->integer)
+	/*DRUGOD*/
+	//if (deathmatch->integer)
+	//{
+	//	G_FreeEdict(self);
+	//	return;
+	//}
+	if (deathmatch->integer && !self->spawnflags.has(SPAWNFLAGS_KEEP_IN_DM))
 	{
 		G_FreeEdict(self);
 		return;

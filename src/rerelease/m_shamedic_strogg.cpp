@@ -720,7 +720,8 @@ void ShamedicCastLightningWithOffset(edict_t* self, float y_adjustment, float z_
 	gi.WritePosition(tr.endpos);
 	gi.multicast(start, MULTICAST_PVS, false);
 
-	fire_bullet(self, start, dir, irandom(8, 12), 15, 0, 0, MOD_TESLA);
+	//fire_bullet(self, start, dir, irandom(8, 12), 15, 0, 0, MOD_TESLA);//DRUGOD: People dont stop crying about this 
+	fire_bullet(self, start, dir, irandom(1, 4), 15, 0, 0, MOD_TESLA);
 }
 
 // Función de ataque doble usando entidades separadas para cada rayo

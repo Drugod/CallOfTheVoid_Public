@@ -36,7 +36,7 @@ static cached_soundindex sound_explod;
 static cached_soundindex sound_jump;
 
 void hknight_bsk_run(edict_t* self);
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
 void SwingSword2(edict_t* self)
 {
@@ -561,11 +561,11 @@ void SP_monster_hknight_bsk_strogg(edict_t *self)
 
 	sound_attack.assign("hknight/attack1.wav");
 	sound_melee.assign("hknight/slash1.wav");
-	sound_death.assign("hknight/death1.wav");
+	sound_death.assign("hknight/death1_s.wav");
 	sound_proj_hit.assign("hknight/hit.wav");
-	sound_sight.assign("hknight/sight1.wav");
-	sound_search.assign("hknight/idle.wav");
-	sound_pain.assign("hknight/pain1.wav");
+	sound_sight.assign("hknight/sight1_s.wav");
+	sound_search.assign("hknight/idle_s.wav");
+	sound_pain.assign("hknight/pain1_s.wav");
 	sound_thud.assign("mutant/thud1.wav");
 	sound_explod.assign("world/explod2.wav");
 	sound_jump.assign("berserk/jump.wav");

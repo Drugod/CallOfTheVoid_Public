@@ -914,6 +914,7 @@ constexpr spawnflags_t SPAWNFLAGS_EXPLOSIVE_ANIMATED = 2_spawnflag;
 constexpr spawnflags_t SPAWNFLAGS_EXPLOSIVE_ANIMATED_FAST = 4_spawnflag;
 constexpr spawnflags_t SPAWNFLAGS_EXPLOSIVE_INACTIVE = 8_spawnflag;
 constexpr spawnflags_t SPAWNFLAGS_EXPLOSIVE_ALWAYS_SHOOTABLE = 16_spawnflag;
+constexpr spawnflags_t SPAWNFLAGS_KEEP_IN_DM = 32_spawnflag;//Drugod
 
 DIE(func_explosive_explode) (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, const vec3_t &point, const mod_t &mod) -> void
 {
@@ -1036,9 +1037,14 @@ USE(func_explosive_spawn) (edict_t *self, edict_t *other, edict_t *activator) ->
 
 void SP_func_explosive(edict_t *self)
 {
-	if (deathmatch->integer)
+	//DRUGOD
+	/*if (deathmatch->integer)
 	{ // auto-remove for deathmatch
 		G_FreeEdict(self);
+		return;
+	}*/
+	if (deathmatch->integer && !self->spawnflags.has(SPAWNFLAGS_KEEP_IN_DM))
+	{	G_FreeEdict(self);
 		return;
 	}
 

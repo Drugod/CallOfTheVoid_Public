@@ -30,14 +30,25 @@ static cached_soundindex sound_attack;
 static cached_soundindex sound_fire;
 static cached_soundindex sound_sight;
 
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
 // Stand
 mframe_t shalrath_strogg_frames_stand [] =
 {
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
+	{ai_stand, 0, NULL},
 	{ai_stand, 0, NULL}
 };
-MMOVE_T(shalrath_strogg_move_stand) = {0, 0, shalrath_strogg_frames_stand, NULL};
+MMOVE_T(shalrath_strogg_move_stand) = {126, 137, shalrath_strogg_frames_stand, NULL};
 
 MONSTERINFO_STAND(shalrath_strogg_stand) (edict_t *self) -> void
 {
@@ -165,7 +176,7 @@ void fire_shalrath_strogg_pod(edict_t *self, vec3_t start, vec3_t dir, int damag
 		return;
 
 	//VectorCopy(SightEndtToDir(self, dir)[0], dir);
-	dir = SightEndtToDir(self, dir)[0]; 
+	dir = SightEndtToDir(self, dir); 
 	//VectorNormalize(dir);
 	dir.normalize();
 
@@ -426,7 +437,7 @@ void SP_monster_shalrath_strogg(edict_t *self)
 	sound_pain.assign("shalrath/pain_s.wav");
 	sound_attack.assign("shalrath/attack_s.wav");
 	sound_fire.assign("shalrath/attack2_s.wav");
-	sound_sight.assign("shalrath/sight_S.wav");
+	sound_sight.assign("shalrath/sight_s.wav");
 
 	self->health = 400 * st.health_multiplier;
 	self->gib_health = -90;

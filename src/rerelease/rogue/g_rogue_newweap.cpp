@@ -77,6 +77,81 @@ void fire_flechette(edict_t *self, const vec3_t &start, const vec3_t &dir, int d
 	}
 }
 
+/*
+========================
+fire_nails (Drugod)
+========================
+*/
+TOUCH(nails_touch) (edict_t* self, edict_t* other, const trace_t& tr, bool other_touching_self) -> void
+{
+	if (other == self->owner)
+		return;
+
+	if (tr.surface && (tr.surface->flags & SURF_SKY))
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	if (self->client)
+		PlayerNoise(self->owner, self->s.origin, PNOISE_IMPACT);
+
+	if (other->takedamage)
+	{
+		T_Damage(other, self, self->owner, self->velocity, self->s.origin, tr.plane.normal,
+			self->dmg, (int)self->dmg_radius, DAMAGE_NO_REG_ARMOR, MOD_ETF_RIFLE);
+	}
+	else
+	{
+		gi.WriteByte(svc_temp_entity);
+		gi.WriteByte(TE_GUNSHOT);
+		gi.WritePosition(self->s.origin);
+		gi.WriteDir(tr.plane.normal);
+		gi.multicast(self->s.origin, MULTICAST_PHS, false);
+		gi.sound(self, CHAN_AUTO, gi.soundindex("weapons/tink1.wav"), 1, ATTN_NORM, 0);
+	}
+
+	G_FreeEdict(self);
+}
+
+void fire_nails(edict_t* self, const vec3_t& start, const vec3_t& dir, int damage, int speed, int kick)
+{
+	edict_t* nails;
+
+	nails = G_Spawn();
+	nails->s.origin = start;
+	nails->s.old_origin = start;
+	nails->s.angles = vectoangles(dir);
+	nails->velocity = dir * speed;
+	nails->svflags |= SVF_PROJECTILE;
+	nails->movetype = MOVETYPE_FLYMISSILE;
+	nails->clipmask = MASK_PROJECTILE;
+	nails->flags |= FL_DODGE;
+
+	if (self->client && !G_ShouldPlayersCollide(true))
+		nails->clipmask &= ~CONTENTS_PLAYER;
+
+	nails->solid = SOLID_BBOX;
+	nails->s.renderfx = RF_FULLBRIGHT;
+	nails->s.modelindex = gi.modelindex("models/objects/spike/tris.md2");
+
+	nails->owner = self;
+	nails->touch = nails_touch;
+	nails->nextthink = level.time + gtime_t::from_sec(8000.f / speed);
+	nails->think = G_FreeEdict;
+	nails->dmg = damage;
+	nails->dmg_radius = (float)kick;
+
+	gi.linkentity(nails);
+
+	trace_t tr = gi.traceline(self->s.origin, nails->s.origin, nails, nails->clipmask);
+	if (tr.fraction < 1.0f)
+	{
+		nails->s.origin = tr.endpos + (tr.plane.normal * 1.f);
+		nails->touch(nails, tr.ent, tr, false);
+	}
+}
+
 // **************************
 // PROX
 // **************************

@@ -34,7 +34,7 @@ static cached_soundindex sound_sight2;
 static cached_soundindex sound_sight3;
 static cached_soundindex sound_sight4;
 
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
 // Stand
 mframe_t enforcer_frames_stand[] = {
@@ -139,7 +139,7 @@ void fire_enfbolt(edict_t* self, vec3_t start, vec3_t dir, int damage, int speed
 	if (!self->enemy || self->enemy == self)
 		return;
 
-	//VectorCopy(SightEndtToDir(self, dir)[0], dir);
+	/*//VectorCopy(SightEndtToDir(self, dir)[0], dir);
 	dir = SightEndtToDir(self, dir)[0];
 	
 	//VectorNormalize(dir);
@@ -180,6 +180,27 @@ void fire_enfbolt(edict_t* self, vec3_t start, vec3_t dir, int damage, int speed
 	bolt->dmg = damage;
 	gi.linkentity(bolt);
 	gi.sound(self, CHAN_WEAPON, sound_attack, 1, ATTN_NORM, 0);
+	*/	
+
+	bolt = G_Spawn();
+	bolt->s.origin = start;
+	bolt->s.old_origin = start;
+	bolt->s.angles = vectoangles(dir);
+	bolt->velocity = dir * speed;
+	bolt->movetype = MOVETYPE_FLYMISSILE;
+	bolt->flags |= FL_DODGE;
+	bolt->clipmask = MASK_PROJECTILE;
+	bolt->solid = SOLID_BBOX;
+	bolt->s.effects |= EF_HYPERBLASTER;
+	bolt->s.modelindex = gi.modelindex("models/monsters/laserstrogg/tris.md2");
+	bolt->owner = self;
+	bolt->touch = enfbolt_touch;
+	bolt->nextthink = level.time + 2_sec;
+	bolt->think = G_FreeEdict;
+	bolt->dmg = damage;
+	gi.linkentity(bolt);
+	gi.sound(self, CHAN_WEAPON, sound_attack, 1, ATTN_NORM, 0);
+
 }
 
 void FireEnforcerBolt(edict_t* self)
@@ -188,11 +209,18 @@ void FireEnforcerBolt(edict_t* self)
 	vec3_t	start;
 	vec3_t	dir;
 	vec3_t	vec;
-	vec3_t	offset = { 30, 8.5, 16 };
+	//vec3_t	offset = { 30, 8.5, 16 };
 
 	AngleVectors(self->s.angles, forward, right, NULL);
 	//G_ProjectSource(self->s.origin, offset, forward, right, start);
-	start = G_ProjectSource(self->s.origin, offset, forward, right);
+	//start = G_ProjectSource(self->s.origin, offset, forward, right);
+
+	start = self->s.origin;
+	start[0] += forward[0] * 12.72f;
+	start[1] += forward[1] * 12.72f;
+	start[2] += 11.36f;
+	start[0] += right[0] * 9.24f;
+	start[1] += right[1] * 9.24f;
 
 	//VectorCopy(self->enemy->s.origin, vec);
 	vec = self->enemy->s.origin;
@@ -478,7 +506,7 @@ void SP_monster_enforcer(edict_t* self)
 	self->health = 80;
 	self->gib_health = -35;
 
-	self->mass = 30;
+	self->mass = 120;
 
 	self->pain = enforcer_pain;
 	self->die = enforcer_die;

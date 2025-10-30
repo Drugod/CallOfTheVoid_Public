@@ -54,7 +54,6 @@ void ogre_prototype_drag(edict_t* self)
 		gi.sound(self, CHAN_VOICE, sound_drag, 1, ATTN_NORM, 0);
 }
 
-// Stand
 mframe_t ogre_prototype_frames_stand[] = {
 	{ai_stand},
 	{ai_stand},
@@ -73,7 +72,6 @@ MONSTERINFO_STAND(ogre_prototype_stand) (edict_t* self) -> void
 	M_SetAnimation(self, &ogre_prototype_move_stand);
 }
 
-// Run
 mframe_t ogre_prototype_frames_run[] = {
 	{ai_run, 9,ogre_prototype_idle2},
 	{ai_run, 12},
@@ -91,7 +89,6 @@ MONSTERINFO_RUN(ogre_prototype_run) (edict_t* self) -> void
 	M_SetAnimation(self, &ogre_prototype_move_run);
 }
 
-// Run
 mframe_t ogre_prototype_frames_walk[] = {
 	{ai_walk, 3},
 	{ai_walk, 2},
@@ -135,7 +132,6 @@ void OgrePrototypeChainsaw(edict_t* self)
 	fire_hit(self, aim, damage, damage);
 }
 
-// Smash
 mframe_t ogre_prototype_frames_smash[] = {
 	{ai_charge, 0},
 	{ai_charge, 0},
@@ -154,7 +150,6 @@ mframe_t ogre_prototype_frames_smash[] = {
 };
 MMOVE_T(ogre_prototype_move_smash) = { 47, 60, ogre_prototype_frames_smash, ogre_prototype_run };
 
-// Swing
 mframe_t ogre_prototype_frames_swing[] = {
 	{ai_charge, 11,	NULL},
 	{ai_charge, 1,	NULL},
@@ -173,7 +168,6 @@ mframe_t ogre_prototype_frames_swing[] = {
 };
 MMOVE_T(ogre_prototype_move_swing) = { 33, 46, ogre_prototype_frames_swing, ogre_prototype_run };
 
-// Melee
 MONSTERINFO_MELEE(ogre_prototype_melee) (edict_t* self) -> void
 {
 	if (frandom() > 0.5)
@@ -183,8 +177,8 @@ MONSTERINFO_MELEE(ogre_prototype_melee) (edict_t* self) -> void
 	gi.sound(self, CHAN_WEAPON, sound_melee, 1, ATTN_NORM, 0);
 }
 
-// Grenade
 void GunnerGrenade(edict_t* self);
+
 mframe_t ogre_prototype_frames_attack[] ={
 	{ai_charge, 0,	NULL},
 	{ai_charge, 0,	NULL},
@@ -200,29 +194,30 @@ MONSTERINFO_ATTACK(ogre_prototype_attack) (edict_t* self) -> void
 	M_SetAnimation(self, &ogre_prototype_move_attack);
 }
 
+static void ogre_prototype_pain_sound(edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
+}
 
-// Pain (1)
 mframe_t ogre_prototype_frames_pain1[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		ogre_prototype_pain_sound},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL}
 };
 MMOVE_T(ogre_prototype_move_pain1) = { 67, 71, ogre_prototype_frames_pain1, ogre_prototype_run };
 
-// Pain (2)
 mframe_t ogre_prototype_frames_pain2[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		ogre_prototype_pain_sound},
 	{ai_move, 0,		NULL}
 };
 MMOVE_T(ogre_prototype_move_pain2) = { 72, 74, ogre_prototype_frames_pain2, ogre_prototype_run };
 
-// Pain (3)
 mframe_t ogre_prototype_frames_pain3[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		ogre_prototype_pain_sound},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -230,10 +225,9 @@ mframe_t ogre_prototype_frames_pain3[] = {
 };
 MMOVE_T(ogre_prototype_move_pain3) = { 75, 80, ogre_prototype_frames_pain3, ogre_prototype_run };
 
-// Pain (4)
 mframe_t ogre_prototype_frames_pain4[] ={
 	{ai_move, 0,		NULL},
-	{ai_move, 10,	    NULL},
+	{ai_move, 10,	    ogre_prototype_pain_sound},
 	{ai_move, 9,		NULL},
 	{ai_move, 4,		NULL},
 	{ai_move, 0,		NULL},
@@ -251,10 +245,9 @@ mframe_t ogre_prototype_frames_pain4[] ={
 };
 MMOVE_T(ogre_prototype_move_pain4) = { 81, 96, ogre_prototype_frames_pain4, ogre_prototype_run };
 
-// Pain (5)
 mframe_t ogre_prototype_frames_pain5[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 10,	    NULL},
+	{ai_move, 10,	    ogre_prototype_pain_sound},
 	{ai_move, 9,		NULL},
 	{ai_move, 4,		NULL},
 	{ai_move, 0,		NULL},
@@ -271,19 +264,14 @@ mframe_t ogre_prototype_frames_pain5[] = {
 };
 MMOVE_T(ogre_prototype_move_pain5) = { 97, 111, ogre_prototype_frames_pain5, ogre_prototype_run };
 
-// Pain
-//void ogre_prototype_pain(edict_t* self)
 PAIN(ogre_prototype_pain) (edict_t* self, edict_t* other, float kick, int damage, const mod_t& mod) -> void
 {
-	float r;
-
-	// decino: No pain animations in Nightmare mode
 	if (skill->value == 3)
 		return;
 	if (self->pain_debounce_time > level.time)
 		return;
-	r = frandom();
-	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
+
+	float r = frandom();
 
 	if (r < 0.25)
 	{
@@ -331,10 +319,14 @@ void ogre_prototype_dead(edict_t* self)
 	gi.linkentity(self);
 }
 
-// Death (1)
+static void ogre_prototype_dead_sound (edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
+}
+
 mframe_t ogre_prototype_frames_death1[] ={
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		ogre_prototype_dead_sound},
 	{ai_move, 0,		ogre_prototype_dead},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -350,10 +342,9 @@ mframe_t ogre_prototype_frames_death1[] ={
 };
 MMOVE_T(ogre_prototype_move_death1) = { 112, 125, ogre_prototype_frames_death1, ogre_prototype_dead };
 
-// Death (2)
 mframe_t ogre_prototype_frames_death2[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 5,		NULL},
+	{ai_move, 5,		ogre_prototype_dead_sound},
 	{ai_move, 0,		ogre_prototype_dead},
 	{ai_move, 1,		NULL},
 	{ai_move, 3,		NULL},
@@ -365,7 +356,6 @@ mframe_t ogre_prototype_frames_death2[] = {
 };
 MMOVE_T(ogre_prototype_move_death2) = { 126, 135, ogre_prototype_frames_death2, ogre_prototype_dead };
 
-// Death
 DIE(ogre_prototype_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage, const vec3_t& point, const mod_t& mod) -> void
 {
 	if (self->health <= self->gib_health)
@@ -382,7 +372,6 @@ DIE(ogre_prototype_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, i
 	}
 	if (self->deadflag == true)
 		return;
-	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
 
 	self->deadflag = true;
 	self->takedamage = true;
@@ -393,13 +382,11 @@ DIE(ogre_prototype_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, i
 		M_SetAnimation(self, &ogre_prototype_move_death2);
 }
 
-// Sight
 MONSTERINFO_SIGHT(ogre_prototype_sight) (edict_t* self, edict_t* other) -> void
 {
 	gi.sound(self, CHAN_VOICE, sound_sight, 1, ATTN_NORM, 0);
 }
 
-// Search
 MONSTERINFO_SEARCH(ogre_prototype_search) (edict_t* self) -> void
 {
 	gi.sound(self, CHAN_VOICE, sound_search, 1, ATTN_NORM, 0);
@@ -407,13 +394,11 @@ MONSTERINFO_SEARCH(ogre_prototype_search) (edict_t* self) -> void
 
 void SP_monster_ogre_prototype(edict_t* self)
 {
-
 	if (!M_AllowSpawn(self)) {
 		G_FreeEdict(self);
 		return;
 	}
 
-	
 	self->mins = { -32, -32, -24 };
 	self->maxs = { 32, 32, 64 };
 	self->movetype = MOVETYPE_STEP;
@@ -446,7 +431,7 @@ void SP_monster_ogre_prototype(edict_t* self)
 	self->monsterinfo.search = ogre_prototype_search;
 	self->monsterinfo.setskin = ogre_prototype_setskin;
 
-	if (irandom(2) == 0) {		//appear random skin
+	if (irandom(2) == 0) {
 		self->s.skinnum = 0;
 		self->s.modelindex = gi.modelindex("models/monsters/ogre_prototype/tris.md2");
 	}else{

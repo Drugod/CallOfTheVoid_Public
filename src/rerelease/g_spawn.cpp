@@ -219,8 +219,8 @@ void SP_misc_nuke_core(edict_t *self);
 void SP_trigger_ctf_teleport(edict_t *self);
 void SP_info_ctf_teleport_destination(edict_t *self);
 
-// DRUGOD
-void SP_misc_chtondead(edict_t* self);
+void SP_misc_chtondead(edict_t* self);// DRUGOD
+void SP_event_lighting(edict_t* self);// DRUGOD
 
 void SP_monster_shambler(edict_t* self);
 void SP_monster_shambler_strogg(edict_t* self);
@@ -246,6 +246,7 @@ void SP_monster_zombie_strogg(edict_t* self);
 void SP_monster_zombie(edict_t* self);
 void SP_monster_zombie_prototype(edict_t* self);
 void SP_monster_shalrath_strogg(edict_t* self);
+void SP_monster_shamacudda(edict_t* self);
 void SP_monster_shalrath(edict_t* self);
 void SP_monster_shalrath_prototype(edict_t* self);
 void SP_monster_wizarcuda_strogg(edict_t* self);
@@ -255,15 +256,22 @@ void SP_monster_wizard_prototype(edict_t* self);
 void SP_monster_hknight_bsk_strogg(edict_t* self);
 void SP_monster_hellknight(edict_t* self);
 void SP_monster_hknight_prototype(edict_t* self);
+void SP_monster_hknight_hyper(edict_t* self);
 void SP_monster_knight_strogg(edict_t* self);
 void SP_monster_knight(edict_t* self);
 void SP_monster_knight_prototype(edict_t* self);
 void SP_monster_chtjor(edict_t* self);
+void SP_monster_shamjorg(edict_t* self);
+void SP_monster_chthon(edict_t* self);
 void SP_monster_supershamblertank(edict_t* self);
 void SP_monster_fishgunner(edict_t* self);
 void SP_monster_rotflyer(edict_t* self);
+void SP_monster_ironvore(edict_t* self);
 void SP_monster_shamedic(edict_t* self);
 void SP_monster_insane_spawn(edict_t* self);
+void SP_monster_fish(edict_t* self);
+void SP_monster_spawn(edict_t* self);
+void SP_monster_mutantspawn(edict_t* self);
 
 
 // clang-format off
@@ -487,8 +495,9 @@ static const std::initializer_list<spawn_t> spawns = {
 	{ "info_player_team2", SP_info_player_team2 },
 
 	{ "monster_shambler", SP_monster_shambler },
-	// DRUGOD
-	{ "misc_chtondead", SP_misc_chtondead },
+	{ "misc_chtondead", SP_misc_chtondead },	// DRUGOD
+	{ "event_lighting", SP_event_lighting },	// DRUGOD
+
 	{ "monster_shambler_strogg", SP_monster_shambler_strogg },
 	{ "monster_shambler_prototype", SP_monster_shambler_prototype },
 	{ "monster_soldier_strogg", SP_monster_soldier_strogg },
@@ -509,6 +518,7 @@ static const std::initializer_list<spawn_t> spawns = {
 	{ "monster_zombie", SP_monster_zombie },
 	{ "monster_zombie_prototype", SP_monster_zombie_prototype },
 	{ "monster_shalrath_strogg", SP_monster_shalrath_strogg },
+	{ "monster_shamacudda", SP_monster_shamacudda },
 	{ "monster_shalrath", SP_monster_shalrath },
 	{ "monster_shalrath_prototype", SP_monster_shalrath_prototype },
 	{ "monster_wizarcuda_strogg", SP_monster_wizarcuda_strogg },
@@ -518,6 +528,7 @@ static const std::initializer_list<spawn_t> spawns = {
 	{ "monster_hknight_bsk_strogg", SP_monster_hknight_bsk_strogg },
 	{ "monster_hellknight", SP_monster_hellknight },
 	{ "monster_hknight_prototype", SP_monster_hknight_prototype },
+	{ "monster_hknight_hyper", SP_monster_hknight_hyper },
 	{ "monster_knight_strogg", SP_monster_knight_strogg },
 	{ "monster_knight", SP_monster_knight },
 	{ "monster_knight_prototype", SP_monster_knight_prototype },
@@ -525,10 +536,16 @@ static const std::initializer_list<spawn_t> spawns = {
 	{ "monster_enforcer", SP_monster_enforcer },
 	{ "monster_enforcer_prototype", SP_monster_enforcer_prototype },
 	{ "monster_chtjor", SP_monster_chtjor },
+	{ "monster_shamjorg", SP_monster_shamjorg },
+	{ "monster_chthon", SP_monster_chthon },
 	{ "monster_supershamblertank", SP_monster_supershamblertank },
 	{ "monster_fishgunner", SP_monster_fishgunner },
 	{ "monster_rotflyer", SP_monster_rotflyer },
 	{ "monster_insane_spawn", SP_monster_insane_spawn },
+	{ "monster_mutantspawn", SP_monster_mutantspawn },
+	{ "monster_fish", SP_monster_fish },
+	{ "monster_spawn", SP_monster_spawn },
+	{ "monster_ironvore", SP_monster_ironvore },
 	{ "monster_shamedic", SP_monster_shamedic }
 };
 // clang-format on

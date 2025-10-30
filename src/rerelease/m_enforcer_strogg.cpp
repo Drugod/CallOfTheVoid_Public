@@ -34,7 +34,7 @@ static cached_soundindex sound_sight2;
 static cached_soundindex sound_sight3;
 static cached_soundindex sound_sight4;
 
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
 // Stand
 mframe_t enforcer_strogg_frames_stand[] = {
@@ -140,7 +140,7 @@ void fire_enfbolt_strogg(edict_t* self, vec3_t start, vec3_t dir, int damage, in
 		return;
 
 	//VectorCopy(SightEndtToDir(self, dir)[0], dir);
-	dir = SightEndtToDir(self, dir)[0];
+	dir = SightEndtToDir(self, dir);
 	
 	//VectorNormalize(dir);
 	dir.normalize();
@@ -165,18 +165,11 @@ void fire_enfbolt_strogg(edict_t* self, vec3_t start, vec3_t dir, int damage, in
 	bolt->clipmask = MASK_PROJECTILE;
 	bolt->solid = SOLID_BBOX;
 	bolt->s.effects |= EF_HYPERBLASTER;
-	
-	//VectorClear(bolt->mins);
-	bolt->mins = { 0, 0, 0 };
-
-	//VectorClear(bolt->maxs);
-	bolt->maxs = { 0, 0, 0 };
-
 	bolt->s.modelindex = gi.modelindex("models/monsters/laserstrogg/tris.md2");
 	bolt->owner = self;
 	bolt->touch = enfbolt_strogg_touch;
-	//bolt->nextthink = level.time + 5_ms;
-	//bolt->think = G_FreeEdict;
+	bolt->nextthink = level.time + 2_sec;
+	bolt->think = G_FreeEdict;
 	bolt->dmg = damage;
 	gi.linkentity(bolt);
 	gi.sound(self, CHAN_WEAPON, sound_attack, 1, ATTN_NORM, 0);
@@ -251,7 +244,7 @@ void StroggerCmdrFired(edict_t* self, int type)
 		aim[i] += crandom_open() * 0.025f;
 
 	monster_fire_flechette(self, start, aim, 4, 800, MZ2_WIDOW2_BEAM_SWEEP_1);
-
+	gi.sound(self, CHAN_WEAPON, sound_attack, 1, ATTN_NORM, 0);
 }
 
 void StroggerCmdrFire1(edict_t* self)
@@ -536,21 +529,21 @@ void SP_monster_enforcer_strogg(edict_t* self)
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
 
-	sound_death.assign("enforcer/death1.wav");
+	sound_death.assign("enforcer/death1_s.wav");
 	sound_hit.assign("enforcer/enfstop.wav");
-	sound_attack.assign("enforcer/enfire.wav");
-	sound_search.assign("enforcer/idle1.wav");
-	sound_pain1.assign("enforcer/pain1.wav");
-	sound_pain2.assign("enforcer/pain2.wav");
-	sound_sight1.assign("enforcer/sight1.wav");
-	sound_sight2.assign("enforcer/sight2.wav");
-	sound_sight3.assign("enforcer/sight3.wav");
-	sound_sight4.assign("enforcer/sight4.wav");
+	sound_attack.assign("weapons/nail1b.wav");
+	sound_search.assign("enforcer/idle1_s.wav");
+	sound_pain1.assign("enforcer/pain1_s.wav");
+	sound_pain2.assign("enforcer/pain2_s.wav");
+	sound_sight1.assign("enforcer/sight1_s.wav");
+	sound_sight2.assign("enforcer/sight2_s.wav");
+	sound_sight3.assign("enforcer/sight3_s.wav");
+	sound_sight4.assign("enforcer/sight4_s.wav");
 
 	self->health = 100 * st.health_multiplier;;
 	self->gib_health = -35;
 
-	self->mass = 30;
+	self->mass = 120;
 
 	self->pain = enforcer_strogg_pain;
 	self->die = enforcer_strogg_die;

@@ -29,12 +29,9 @@ static cached_soundindex sound_land;
 static cached_soundindex sound_pain;
 static cached_soundindex sound_sight;
 static cached_soundindex sound_search;
-static cached_soundindex sound_thud;
-static cached_soundindex sound_explod;
 
-// just in case you do't want to use the macros
 typedef float vec_t;
-// Stand
+
 mframe_t fiend_prototype_frames_stand [] =
 {
 	{ai_stand},
@@ -58,7 +55,6 @@ MONSTERINFO_STAND(fiend_prototype_stand) (edict_t *self) -> void
 	M_SetAnimation(self, &fiend_prototype_move_stand);
 }
 
-// Run
 mframe_t fiend_prototype_frames_run [] =
 {
 	{ai_run, 20, NULL},
@@ -75,7 +71,6 @@ MONSTERINFO_RUN(fiend_prototype_run) (edict_t *self) -> void
 	M_SetAnimation(self, &fiend_prototype_move_run);	
 }
 
-// Walk
 mframe_t fiend_prototype_frames_walk[] =
 {
 	{ai_walk, 8, NULL},
@@ -120,7 +115,6 @@ bool CheckfiendPrototypeJump(edict_t *self)
 	}
 	return true;
 };
-
 
 TOUCH (fiendPrototypeJumpTouch) (edict_t* self, edict_t* other, const trace_t& tr, bool other_touching_self) -> void
 {
@@ -181,11 +175,10 @@ void fiend_prototype_roar(edict_t *self)
 	gi.sound(self, CHAN_VOICE, sound_jump, 1, ATTN_NORM, 0);
 }
 
-// Attack
 mframe_t fiend_prototype_frames_jump [] =
 {
-	{ai_charge,	0,	fiend_prototype_roar},
 	{ai_charge,	0,	NULL},
+	{ai_charge,	0,	fiend_prototype_roar},
 	{ai_charge,	0,	NULL},
 	{ai_charge,	0,	fiendPrototypeJump},
 	{ai_move,	0,	NULL},
@@ -248,11 +241,15 @@ MONSTERINFO_MELEE(fiend_prototype_melee) (edict_t *self) -> void
 	M_SetAnimation(self, &fiend_prototype_move_melee);
 }
 
-// Pain
+static void fiend_prototype_sound_pain(edict_t *self)
+{
+	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
+}
+
 mframe_t fiend_prototype_frames_pain [] =
 {
 	{ai_move, 0, NULL},
-	{ai_move, 0, NULL},
+	{ai_move, 0, fiend_prototype_sound_pain},
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL},
 	{ai_move, 0, NULL},
@@ -269,8 +266,7 @@ PAIN (fiend_prototype_pain)  (edict_t* self, edict_t* other, float kick, int dam
 	if (self->pain_debounce_time > level.time)
 		return;
 	self->pain_debounce_time = level.time + 1_sec;
-    gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
-
+    
 	if (frandom() * 200 > damage)
 		return;
 	M_SetAnimation(self, &fiend_prototype_move_pain);
@@ -293,11 +289,15 @@ void fiend_prototype_dead(edict_t *self)
 	gi.linkentity(self);
 }
 
-// Death
+static void fiend_prototype_sound_death(edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
+}
+
 mframe_t fiend_prototype_frames_die [] =
 {
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		fiend_prototype_sound_death},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -324,7 +324,6 @@ DIE(fiend_prototype_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, 
 	}
 	if (self->deadflag == true)
 		return;
-	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
 
 	self->deadflag = true;
 	self->takedamage = true;
@@ -332,14 +331,12 @@ DIE(fiend_prototype_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, 
 	M_SetAnimation(self, &fiend_prototype_move_die);
 }
 
-// Sight
 MONSTERINFO_SIGHT(fiend_prototype_sight) (edict_t* self, edict_t* other) -> void
 {
 	
 	gi.sound (self, CHAN_VOICE, sound_sight, 1, ATTN_NORM, 0);
 }
 
-// Search
 MONSTERINFO_SEARCH(fiend_prototype_search) (edict_t *self) -> void
 {
 	gi.sound (self, CHAN_VOICE, sound_search, 1, ATTN_NORM, 0);
@@ -361,9 +358,6 @@ void SP_monster_fiend_prototype(edict_t *self)
 	self->s.modelindex = gi.modelindex("models/monsters/fiend_prototype/tris.md2");
 	self->health = 300 * st.health_multiplier;
 
-	if (self->solid == SOLID_NOT)
-		return;
-
 	sound_death.assign("demon/ddeath_s.wav");
 	sound_hit.assign("demon/dhit2.wav");
 	sound_jump.assign("demon/djump_s.wav");
@@ -371,9 +365,6 @@ void SP_monster_fiend_prototype(edict_t *self)
 	sound_pain.assign("demon/dpain1_s.wav");
 	sound_search.assign("demon/idle1_s.wav");
 	sound_sight.assign("demon/sight2_s.wav");
-	sound_thud.assign("mutant/thud1.wav");
-	sound_explod.assign("world/explod2.wav");
-
 
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
@@ -381,6 +372,8 @@ void SP_monster_fiend_prototype(edict_t *self)
 	self->gib_health = -80;
 	self->mass = 300;
 
+	self->pain = fiend_prototype_pain;
+	self->die = fiend_prototype_die;
 	self->monsterinfo.stand = fiend_prototype_stand;
 	self->monsterinfo.walk = fiend_prototype_walk;
 	self->monsterinfo.run = fiend_prototype_run;
@@ -389,9 +382,6 @@ void SP_monster_fiend_prototype(edict_t *self)
 	self->monsterinfo.sight = fiend_prototype_sight;
 	self->monsterinfo.search = fiend_prototype_search;
 	self->monsterinfo.setskin = fiend_prototype_setskin;
-
-	self->pain = fiend_prototype_pain;
-	self->die = fiend_prototype_die;
 
 	gi.linkentity(self);
 

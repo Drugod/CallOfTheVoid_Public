@@ -200,8 +200,6 @@ MONSTERINFO_ATTACK(ogre_attack) (edict_t* self) -> void
 	M_SetAnimation(self, &ogre_move_attack);
 }
 
-
-// Pain (1)
 mframe_t ogre_frames_pain1[] = {
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -211,7 +209,6 @@ mframe_t ogre_frames_pain1[] = {
 };
 MMOVE_T(ogre_move_pain1) = { 67, 71, ogre_frames_pain1, ogre_run };
 
-// Pain (2)
 mframe_t ogre_frames_pain2[] = {
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -219,7 +216,6 @@ mframe_t ogre_frames_pain2[] = {
 };
 MMOVE_T(ogre_move_pain2) = { 72, 74, ogre_frames_pain2, ogre_run };
 
-// Pain (3)
 mframe_t ogre_frames_pain3[] = {
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -230,7 +226,6 @@ mframe_t ogre_frames_pain3[] = {
 };
 MMOVE_T(ogre_move_pain3) = { 75, 80, ogre_frames_pain3, ogre_run };
 
-// Pain (4)
 mframe_t ogre_frames_pain4[] ={
 	{ai_move, 0,		NULL},
 	{ai_move, 10,	    NULL},
@@ -251,7 +246,6 @@ mframe_t ogre_frames_pain4[] ={
 };
 MMOVE_T(ogre_move_pain4) = { 81, 96, ogre_frames_pain4, ogre_run };
 
-// Pain (5)
 mframe_t ogre_frames_pain5[] = {
 	{ai_move, 0,		NULL},
 	{ai_move, 10,	    NULL},
@@ -271,17 +265,15 @@ mframe_t ogre_frames_pain5[] = {
 };
 MMOVE_T(ogre_move_pain5) = { 97, 111, ogre_frames_pain5, ogre_run };
 
-// Pain
-//void ogre_pain(edict_t* self)
 PAIN(ogre_pain) (edict_t* self, edict_t* other, float kick, int damage, const mod_t& mod) -> void
 {
 	float r;
 
-	// decino: No pain animations in Nightmare mode
 	if (skill->value == 3)
 		return;
 	if (self->pain_debounce_time > level.time)
 		return;
+
 	r = frandom();
 	gi.sound(self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
 
@@ -331,10 +323,14 @@ void ogre_dead(edict_t* self)
 	gi.linkentity(self);
 }
 
-// Death (1)
+static void ogre_death_sound (edict_t* self)
+{
+	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
+}
+
 mframe_t ogre_frames_death1[] ={
 	{ai_move, 0,		NULL},
-	{ai_move, 0,		NULL},
+	{ai_move, 0,		ogre_death_sound},
 	{ai_move, 0,		ogre_dead},
 	{ai_move, 0,		NULL},
 	{ai_move, 0,		NULL},
@@ -350,10 +346,9 @@ mframe_t ogre_frames_death1[] ={
 };
 MMOVE_T(ogre_move_death1) = { 112, 125, ogre_frames_death1, ogre_dead };
 
-// Death (2)
 mframe_t ogre_frames_death2[] = {
 	{ai_move, 0,		NULL},
-	{ai_move, 5,		NULL},
+	{ai_move, 5,		ogre_death_sound},
 	{ai_move, 0,		ogre_dead},
 	{ai_move, 1,		NULL},
 	{ai_move, 3,		NULL},
@@ -365,7 +360,6 @@ mframe_t ogre_frames_death2[] = {
 };
 MMOVE_T(ogre_move_death2) = { 126, 135, ogre_frames_death2, ogre_dead };
 
-// Death
 DIE(ogre_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage, const vec3_t& point, const mod_t& mod) -> void
 {
 	if (self->health <= self->gib_health)
@@ -382,7 +376,6 @@ DIE(ogre_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage,
 	}
 	if (self->deadflag == true)
 		return;
-	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
 
 	self->deadflag = true;
 	self->takedamage = true;
@@ -393,13 +386,11 @@ DIE(ogre_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage,
 		M_SetAnimation(self, &ogre_move_death2);
 }
 
-// Sight
 MONSTERINFO_SIGHT(ogre_sight) (edict_t* self, edict_t* other) -> void
 {
 	gi.sound(self, CHAN_VOICE, sound_sight, 1, ATTN_NORM, 0);
 }
 
-// Search
 MONSTERINFO_SEARCH(ogre_search) (edict_t* self) -> void
 {
 	gi.sound(self, CHAN_VOICE, sound_search, 1, ATTN_NORM, 0);
@@ -412,21 +403,20 @@ void SP_monster_ogre(edict_t* self)
 		G_FreeEdict(self);
 		return;
 	}
-
 	
 	self->mins = { -32, -32, -24 };
 	self->maxs = { 32, 32, 64 };
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
 
-	sound_death.assign("ogre/ogdth_s.wav");
+	sound_death.assign("ogre/ogdth.wav");
 	sound_attack.assign("ogre/grenade.wav");
 	sound_melee.assign("ogre/ogsawatk.wav");
-	sound_sight.assign("ogre/ogwake_s.wav");
-	sound_search.assign("ogre/ogidle2_s.wav");
-	sound_idle2.assign("ogre/ogidle2_s.wav");
-	sound_idle.assign("ogre/ogidle_s.wav");
-	sound_pain.assign("ogre/ogpain1_s.wav");
+	sound_sight.assign("ogre/ogwake.wav");
+	sound_search.assign("ogre/ogidle2.wav");
+	sound_idle2.assign("ogre/ogidle2.wav");
+	sound_idle.assign("ogre/ogidle.wav");
+	sound_pain.assign("ogre/ogpain1.wav");
 	sound_drag.assign("ogre/ogdrag.wav");
 
 	self->health = 200;

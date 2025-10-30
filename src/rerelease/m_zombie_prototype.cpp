@@ -30,10 +30,11 @@ static cached_soundindex sound_pain2;
 static cached_soundindex sound_fall;
 static cached_soundindex sound_miss;
 static cached_soundindex sound_hit;
+static cached_soundindex sound_gib;
 
 void zombie_prototype_down(edict_t *self);
 void zombie_prototype_get_up_attempt(edict_t *self);
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir);
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir);
 
 // Stand
 mframe_t zombie_prototype_frames_stand [] =
@@ -177,7 +178,7 @@ void fire_zombie_prototype_gib(edict_t *self, vec3_t start, vec3_t aimdir, int d
 	dir.normalize();
 
 	//VectorCopy(SightEndtToDir(self, aimdir)[0], aimdir);
-	aimdir = SightEndtToDir(self, aimdir)[0];
+	aimdir = SightEndtToDir(self, aimdir);
 	//VectorNormalize(aimdir);
 	aimdir.normalize();
 
@@ -575,7 +576,7 @@ PAIN (zombie_prototype_pain) (edict_t* self, edict_t* other, float kick, int dam
 // Death
 DIE (zombie_prototype_die) (edict_t* self, edict_t* inflictor, edict_t* attacker, int damage, const vec3_t& point, const mod_t& mod) -> void
 {
-	gi.sound(self, CHAN_VOICE, gi.soundindex("misc/udeath.wav"), 1, ATTN_NORM, 0);
+	gi.sound(self, CHAN_VOICE, sound_gib, 1, ATTN_NORM, 0);
 
 	ThrowGibs(self, damage, {
 		{ "models/objects/gibs/bone/tris.md2" },
@@ -612,12 +613,13 @@ void SP_monster_zombie_prototype(edict_t *self)
 	sound_fall.assign("zombie/z_fall.wav");
 	sound_miss.assign("zombie/z_miss.wav");
 	sound_hit.assign("zombie/z_hit.wav");
+	sound_gib.assign("zombie/z_gib_s.wav");
 
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
-
 	self->gib_health = -5;
 	self->mass = 60;
+	self->flags |= FL_DEEPONE;
 
 	self->monsterinfo.stand = zombie_prototype_stand;
 	self->monsterinfo.walk = zombie_prototype_walk;

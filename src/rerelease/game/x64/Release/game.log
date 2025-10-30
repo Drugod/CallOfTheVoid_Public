@@ -1,0 +1,8 @@
+﻿  m_mutantspawn.cpp
+     Creando biblioteca ../game_x64.lib y objeto ../game_x64.exp
+  Generando código
+  2967 of 12363 functions (24.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    144 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  game.vcxproj -> C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\game_x64.dll

@@ -463,6 +463,7 @@
         1 : "Trigger Spawn" : 0
         2 : "Animated" : 0
         4 : "Animated Fast" : 0
+		32 : "Keep for DM" : 0 //Exclusive for COTV
     ]
     health(float) : "Health" : "100"
     mass(float) : "Mass (debris)" : "75"
@@ -1088,12 +1089,21 @@ Using a 'wait' value of -1 on a path corner causes a func_train to go silent bet
     ]
 ]
 
-@PointClass base(EditorFlags, Targetable, Angleable) color(255 0 0) size(-8 -8 -8, 8 8 8) model({"path":"models/objects/laser/tris.md2"}) = target_blaster : "Blaster (use angles to point it)"
+@PointClass base(EditorFlags, Targetable, Angleable)
+    color(255 0 0)
+    size(-8 -8 -8, 8 8 8)
+    model({{
+        (spawnflags & 4) != 0 -> "models/objects/spike/tris.md2",   // Quake 1 Nail Shooter
+        (spawnflags & 2) != 0 -> "models/objects/laser/tris.md2",   // No Effects
+        { "path": "models/objects/laser/tris.md2", "skin": 0 } // por defecto
+    }})
+= target_blaster : "Blaster (use angles to point it)"
 [
     spawnflags(Flags) =
     [
         1 : "No Trail" : 0
         2 : "No Effects" : 0
+        16 : "Quake 1 Nail Shooter" : 0
     ]
     dmg(float) : "Damage" : "15"
     speed(float) : "Speed" : "1000"
@@ -1259,6 +1269,7 @@ Set 'map' value to 'mapname$playername' where playername equals the targetname o
     spawnflags(Flags) =
     [
         1 : "Toggle" : 0
+		32 : "Keep for DM" : 0 //Exclusive for COTV		
     ]
     speed(float) : "Speed"
     message(string) : "start/end light level"
@@ -1423,7 +1434,7 @@ Set 'map' value to 'mapname$playername' where playername equals the targetname o
     wait(float) : "Seconds between triggers" : "0"
 ]
 
-@SolidClass base(EditorFlags) color(128 128 128) = trigger_push : "Push trigger"
+@SolidClass base(Target,EditorFlags) color(128 128 128) = trigger_push : "Push trigger"
 [
     spawnflags(Flags) =
     [
@@ -1610,6 +1621,7 @@ spawnflags == 0 -> 	{"path": "models/ctf/banner/small.md2", "scale":"1.0"},
 //CALL OF THE VOID
 //HYBRID MONSTERS
 @PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/shamblerstrogg/tris.md2" }) = monster_shambler_strogg : "Shambler strogg"[]
+@PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/shamacudda/tris.md2" }) = monster_shamacudda : "Shamacudda"[]
 @PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/ogrestrogg/tris.md2" }) = monster_ogre_strogg : "Ogre strogg"[]
 @PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/ogre2strogg/tris.md2" }) = monster_ogre2_strogg : "Ogre Shotgunner strogg"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/grunt_strogg/tris.md2" }) = monster_soldier_strogg : "Soldier strogg"[]
@@ -1621,6 +1633,7 @@ spawnflags == 0 -> 	{"path": "models/ctf/banner/small.md2", "scale":"1.0"},
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/shalrathstrogg/tris.md2" }) = monster_shalrath_strogg : "Shalrath strogg"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/wizardstrogg/tris.md2" }) = monster_wizard_strogg : "Wizard strogg"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/scraggacuda/tris.md2" }) = monster_wizarcuda_strogg : "Scraggacuda"[]
+@PointClass base(Monsters) size(-100 -100 -0, 100 100 325) model({ "path": ":models/monsters/shamjorg/tris.md2" }) = monster_shamjorg : "Shamjorg"[]
 @PointClass base(Monsters) size(-100 -100 -0, 100 100 325) model({ "path": ":models/monsters/chtjor/tris.md2" }) = monster_chtjor : "Chtjor"[]
 @PointClass base(Monsters) size(-64 -64 0, 64 64 72) model({ "path": ":models/monsters/shamblertank/tris.md2" }) = monster_supershamblertank : "Shambler Tank"[]
 @PointClass base(Monsters) size(-32 -32 0, 32 32 96) model({ "path": ":models/monsters/shamblerthunder/tris.md2" }) = monster_shamedic : "Shamedic"[]
@@ -1628,7 +1641,13 @@ spawnflags == 0 -> 	{"path": "models/ctf/banner/small.md2", "scale":"1.0"},
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/insane_spawn/tris.md2" }) = monster_insane_spawn : "Insane Spawn"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/fishgunner/tris.md2"}) = monster_fishgunner : "Fishgunner"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/rotflyer/tris.md2"}) = monster_rotflyer : "Rotflyer"[]
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/ironvore/tris.md2"}) = monster_ironvore : "Iron Vore"[]
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/hyperknight/tris.md2" }) = monster_hknight_hyper : "HyperKnight"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/hellberserkerstrogg/tris.md2" }) = monster_hknight_bsk_strogg : "Hellzerker strogg"
+[
+    spawnflags(Flags) =    [        8 : "No jumping" : 0    ]
+]
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/mutantspawn/tris.md2" }) = monster_mutantspawn : "Mutant Spawn"
 [
     spawnflags(Flags) =    [        8 : "No jumping" : 0    ]
 ]
@@ -1647,6 +1666,8 @@ spawnflags == 0 -> 	{"path": "models/ctf/banner/small.md2", "scale":"1.0"},
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/shalrath_prototype/tris.md2" }) = monster_shalrath_prototype : "Shalrath Prototype"[]
 
 //Q1 VANILLA 
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/spawn/tris.md2" }) = monster_spawn : "Spawn Q1"[]
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/fish/tris.md2" }) = monster_fish : "Fish Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/hellknight/tris.md2" }) = monster_hellknight : "Hellknight Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/dog/tris.md2" }) = monster_dog : "Dog Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/enforcer/tris.md2" }) = monster_enforcer : "Enforcer Q1"[]
@@ -1657,14 +1678,16 @@ spawnflags == 0 -> 	{"path": "models/ctf/banner/small.md2", "scale":"1.0"},
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/fiend/tris.md2" }) = monster_fiend : "Fiend Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/knight/tris.md2" }) = monster_knight : "Knight Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/shalrath/tris.md2" }) = monster_shalrath : "Shalrath Q1"[]
+@PointClass base(Monsters) size(-128 -128 -24, 128 128 256) model({ "path": ":models/monsters/chthon/tris.md2", "frame": "57"}) = monster_chthon : "Chthon"[]
 
 //OTHER STUFF
+@PointClass base(Targetable) = event_lighting : "Chthon's lightning" []
 @PointClass base(Targetable) size(-16 -16 -16, 16 16 16)
 	color(255 128 64) studio({ 
     "path" : model,
-    "skin" : pos2,
-    "modelscale" : modelscale,
-    "frame": pos1
+    "skin" : skin,
+    "scale" : scale,
+    "frame": frame
 }) = misc_model : "Misc Models" [
 	spawnflags(Flags) = [
 		 1 : "Toggles the model casting shadows on the map surfaces." : 0
@@ -1675,14 +1698,16 @@ spawnflags == 0 -> 	{"path": "models/ctf/banner/small.md2", "scale":"1.0"},
 		 6 : "Spawnflag 2 plus Spawnflag 4." : 0
 		 7 : "Spawnflag 1 plus Spawnflag 2 plus Spawnflag 4." : 0
 	]
+	mins(string): "size mins" : "-16 -16 -16"
+	maxs(string): "size maxs" : "16 16 16"
 	model(string) : "Model to load (progs/model.mdl)"
 	angles(string) : "pitch roll yaw" : : "up/down, angle, tilt left/right "
 	ideal_yaw(choices) : "Y axis rotation" = [
 		0 : "No rotation"
 		1 : "Random"
 	]
-	pos1(string) : "Frame Selection" : : "X=0, Y=0, Z=exact frame number, X->Y, Z=0 : will randomly pick a frame from the X,Y range, X->Y, Z=-1 : will animate between the X,Y range, can forward or backward setup"
-	pos2(string) : "Skin Selection" : : "X=0, Y=0, Z=exact skin number, X->Y, Z=0 : will randomly pick a skin from the X,Y range"
+	frame(integer) : "Frame": 0
+	skin(integer) : "Skin Selection" : 0
 ]
 
 @PointClass base(EditorFlags, Targetable, FX) color(255 128 0) size(-64 -64 0, 64 64 128)
@@ -1734,9 +1759,21 @@ misc_fiend_craft : "Fiend Crafting"
     [
         1 : "NO Message if you dont have the item or key" : 0
         2 : "NO Activation Sound" : 0		
-        4 : "NO Item/Key  Remove" : 0		
+        4 : "NO Item/Key Remove" : 0		
     ]	
 ]
+
+@PointClass base(Keys) model({ "path": ":models/items/keys/base/b_g_key.md2" }) = key_q1_base_gold_key : "Quake 1 Base Gold Key" []
+@PointClass base(Keys) model({ "path": ":models/items/keys/base/b_s_key.md2" }) = key_q1_base_silver_key : "Quake 1 Base Silver Key" []
+@PointClass base(Keys) model({ "path": ":models/items/keys/medieval/m_g_key.md2" }) = key_q1_medieval_gold_key : "Quake 1 Medieval Gold Key" []
+@PointClass base(Keys) model({ "path": ":models/items/keys/medieval/m_s_key.md2" }) = key_q1_medieval_silver_key : "Quake 1 Medieval Silver Key" []
+@PointClass base(Keys) model({ "path": ":models/items/keys/wizard/w_g_key.md2" }) = key_q1_runic_gold_key : "Quake 1 Runic Gold Key" []
+@PointClass base(Keys) model({ "path": ":models/items/keys/wizard/w_s_key.md2" }) = key_q1_runic_silver_key : "Quake 1 Runic Silver Key" []
+
+@PointClass base(Keys) model({ "path": ":models/items/keys/end1/end1.md2" }) = key_q1_rune_end1 : "Quake 1 Rune End 1" []
+@PointClass base(Keys) model({ "path": ":models/items/keys/end2/end2.md2" }) = key_q1_rune_end2 : "Quake 1 Rune End 2" []
+@PointClass base(Keys) model({ "path": ":models/items/keys/end3/end3.md2" }) = key_q1_rune_end3 : "Quake 1 Rune End 3" []
+@PointClass base(Keys) model({ "path": ":models/items/keys/end4/end4.md2" }) = key_q1_rune_end4 : "Quake 1 Rune End 4" []
 
 @PointClass base(EditorFlags, Targetable, Target, EWT_base_PointLight) color(0 255 0) size(-2 -2 -12, 2 2 12) model({ "path": ":models/props/flame/tris.md2" }) = light_flame_small : "Q1 Light flame Small"   
 [

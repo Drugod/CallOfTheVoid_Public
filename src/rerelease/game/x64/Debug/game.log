@@ -1,2 +1,7 @@
-﻿  m_supershamblertank.cpp
+﻿  g_monster.cpp
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_monster.cpp(1656,51): warning C4101: 'endposic': variable local sin referencia
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_monster.cpp(1656,23): warning C4101: 'dir': variable local sin referencia
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_monster.cpp(1698,1): warning C4172: devolución de dirección de la variable local o temporal: dir
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_monster.cpp(1683,1): warning C4172: devolución de dirección de la variable local o temporal: out
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_monster.cpp(1708,1): warning C4172: devolución de dirección de la variable local o temporal: dir
   game.vcxproj -> C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\game_x64.dll

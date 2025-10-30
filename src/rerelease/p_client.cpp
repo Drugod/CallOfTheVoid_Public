@@ -3023,7 +3023,6 @@ void P_FallingDamage(edict_t *ent, const pmove_t &pm)
 	int	   damage;
 	vec3_t dir;
 
-	// dead stuff can't crater
 	if (ent->health <= 0 || ent->deadflag)
 		return;
 
@@ -3091,6 +3090,12 @@ void P_FallingDamage(edict_t *ent, const pmove_t &pm)
 		if (damage < 1)
 			damage = 1;
 		dir = { 0, 0, 1 };
+
+		//DRUGOD
+		if (ent->jumperflag) {//USING JUMPERPAD
+			ent->jumperflag = false;
+			return;
+		}
 
 		if (!deathmatch->integer || !g_dm_no_fall_damage->integer)
 			T_Damage(ent, world, world, dir, ent->s.origin, vec3_origin, damage, 0, DAMAGE_NONE, MOD_FALLING);

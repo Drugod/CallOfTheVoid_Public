@@ -1651,53 +1651,40 @@ void SP_trigger_health_relay(edict_t *self)
 	self->use = trigger_health_relay_use;
 }
 
-vec3_t *SightToVector(edict_t* self)
+static vec3_t SightToVector(edict_t* self)
 {
-	vec3_t	forward, end, dir, right, start, offset, *endposic;
+	vec3_t	forward, right, start, end, offset;
 
 	AngleVectors(self->s.angles, forward, right, NULL);
-	//VectorSet(offset, 0, 0, 0);
-	offset[0] = 0;
-	offset[1] = 0;
-	offset[2] = 0;
 
-	//G_ProjectSource(self->s.origin, offset, forward, right, start);
-	start = G_ProjectSource(self->s.origin, offset, forward, right);
-	//VectorMA(start, 256, forward, end);
+	start = G_ProjectSource(self->s.origin, {0,0,0}, forward, right);
+
 	end[0] = start[0] + 256 * forward[0];
 	end[1] = start[1] + 256 * forward[1];
 	end[2] = start[2] + 256 * forward[2];
 
-	// decino: Update pitch (THIS BREAKS STUFF!!!)
-	if (self->enemy)
-		end[2] = self->enemy->s.origin[2];
-
-	//tr = gi.trace(start, end, self, MASK_SHOT);
 	trace_t tr = gi.traceline(start, end, self, MASK_SHOT);
-	return &tr.endpos;
+
+	vec3_t out;
+	out[0] = tr.endpos[0];
+	out[1] = tr.endpos[1];
+	out[2] = tr.endpos[2];
+	return out;
 }
 
-vec3_t* SightEndtToDir(edict_t* self, vec3_t orig_dir)
+vec3_t SightEndtToDir(edict_t* self, vec3_t orig_dir)
 {
-	vec3_t	p_end;
-	vec3_t	dir;
-
-	//VectorCopy(SightToVector(self)[0], p_end);
-	p_end = SightToVector(self)[0];
-
-	//VectorCopy(orig_dir, dir);
-	dir = orig_dir;
+	vec3_t p_end = SightToVector(self);
+	vec3_t dir = orig_dir;
 
 	if (infront(self, self->enemy))
-		return &dir;
+		return dir;
 
-	//VectorSubtract(p_end, self->s.origin, dir);
 	dir = self->s.origin - p_end;
 	dir.normalize();
 
-	// decino: Can't aim at this monster, so stop attacking and make some room
 	self->monsterinfo.run(self);
 	M_walkmove(self, self->s.angles[YAW], -4);
 
-	return &dir;
+	return dir;
 }
