@@ -14,6 +14,8 @@ All borrowed resources present in this repo belong ONLY to respective owners/cre
 - 00_Zombie_00 : 3d/2d Artist.
 - Raton : Level designer / resource manager / video.
 - NHT (Asciimov) : Music
+- Konig : Call of the Doomed (Q1 Shareware mod)
+- Rolls3d : Vortex texture for Voidhub
 
 ## ADDITIONAL CREDITS:
 - Quake 1 monsters models taken from Quake 1 Remastered by Id Software/Nightdive Studios.
