@@ -43,7 +43,7 @@ mframe_t wizard_prototype_frames_stand [] = {
 	{ai_stand, 0, NULL},
 	{ai_stand, 0, NULL}
 };
-MMOVE_T(wizard_prototype_move_stand) = {0, 7, wizard_prototype_frames_stand, NULL};
+MMOVE_T(wizard_prototype_move_stand) = {0, 7, wizard_prototype_frames_stand, nullptr };
 
 MONSTERINFO_STAND(wizard_prototype_stand) (edict_t *self) -> void
 {
@@ -102,21 +102,6 @@ void wizard_prototype_frame(edict_t *self)
 		frame = 0;
 }
 
-mframe_t wizard_prototype_frames_finish [] =
-{
-	{ai_charge, 0, wizard_prototype_frame},
-	{ai_charge, 0, wizard_prototype_frame},
-	{ai_charge, 0, wizard_prototype_frame},
-	{ai_charge, 0, wizard_prototype_frame},
-	{ai_charge, 0, wizard_prototype_frame}
-};
-MMOVE_T(wizard_prototype_move_finish) = {22, 26, wizard_prototype_frames_finish, wizard_prototype_run};
-
-void wizard_prototype_finish_attack(edict_t* self)
-{
-	M_SetAnimation(self, &wizard_prototype_move_finish);
-}
-
 TOUCH(spit_proto_touch) (edict_t* self, edict_t* other, const trace_t& tr, bool other_touching_self) -> void
 {
 
@@ -152,11 +137,10 @@ DIE(fire_spit_proto_die) (edict_t* self, edict_t* other, edict_t* inflictor, int
 
 void fire_spit_proto(edict_t* self, vec3_t start, vec3_t dir, int damage, int speed, int value)
 {
-	edict_t* spit;
-
 	if (!self->enemy || self->enemy == self)
 		return;
 
+	edict_t* spit;
 	spit = G_Spawn();
 	spit->s.origin = start;
 	spit->s.old_origin = start;
@@ -244,7 +228,11 @@ static void WizardSpitRight(edict_t* self)
 
 THINK(WizardPrototypeSpitManager)(edict_t* self) -> void
 {
+	if (!self->enemy || self->enemy->health <= 0)
+		return;
+
 	edict_t* wiz = self->owner;
+
 	if (!wiz || !wiz->inuse || wiz->deadflag || wiz->health <= 0) {
 		G_FreeEdict(self);
 		return;
@@ -252,18 +240,20 @@ THINK(WizardPrototypeSpitManager)(edict_t* self) -> void
 
 	if (self->count == 0) {
 		WizardSpitleft(wiz);
-	}
-	else {
+	}else{
 		WizardSpitRight(wiz);
 	}
+
 	self->think = G_FreeEdict;
 	self->nextthink = level.time + 1.0_sec;
 }
 
 static void wizard_prototype_prespit(edict_t* self)
 {
-	gi.sound(self, CHAN_WEAPON, sound_attack, 1, ATTN_NORM, 0);
+	if (!self->enemy || self->enemy->health <= 0)
+		return;
 
+	gi.sound(self, CHAN_WEAPON, sound_attack, 1, ATTN_NORM, 0);
 	edict_t* spitleft;
 	spitleft = G_Spawn();
 	spitleft->s.origin = self->s.origin;
@@ -315,8 +305,10 @@ PAIN (wizard_prototype_pain) (edict_t* self, edict_t* other, float kick, int dam
 {
 	if (skill->value == 3)
 		return;
+
 	if (level.time < self->pain_debounce_time)
 		return;
+
 	gi.sound (self, CHAN_VOICE, sound_pain, 1, ATTN_NORM, 0);
 
 	self->pain_debounce_time = level.time + 3_sec;
@@ -329,16 +321,15 @@ void wizard_prototype_fling(edict_t* self)
 	self->velocity[1] = -200 + 400 * crandom();
 	self->velocity[2] = 100 + 100 * crandom();
 
-	self->mins = {-16, -16, -24};
-	self->maxs = {16, 16, 8};
 	self->movetype = MOVETYPE_TOSS;
 	self->svflags |= SVF_DEADMONSTER;
 }
 
 void wizard_prototype_dead(edict_t *self)
 {
-	self->nextthink = 0_ms;
-	gi.linkentity(self);
+	self->mins = { -16, -16, -24 };
+	self->maxs = { 16, 16, 8 };
+	monster_dead(self);
 }
 
 mframe_t wizard_prototype_frames_death [] ={
@@ -368,8 +359,10 @@ DIE (wizard_prototype_die) (edict_t* self, edict_t* inflictor, edict_t* attacker
 		self->deadflag = true;
 		return;
 	}
+
 	if (self->deadflag == true)
 		return;
+
 	gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
 
 	self->deadflag = true;
@@ -384,12 +377,11 @@ MONSTERINFO_SIGHT (wizard_prototype_sight) (edict_t* self, edict_t* other) -> vo
 
 MONSTERINFO_SEARCH (wizard_prototype_search) (edict_t *self) -> void
 {
-	float r;
-	r = frandom() * 5;
+	float r = frandom() * 5;
 
 	if (r > 4.5)
 		gi.sound(self, CHAN_VOICE, sound_idle1, 1, ATTN_NORM, 0);
-	if (r < 1.5)
+	else
 		gi.sound(self, CHAN_VOICE, sound_idle2, 1, ATTN_NORM, 0);
 }
 

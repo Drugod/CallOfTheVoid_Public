@@ -247,7 +247,11 @@ static void WizardSpitRight(edict_t* self)
 
 THINK(WizardSpitManager)(edict_t* self) -> void
 {
+	if (!self->enemy || self->enemy->health <= 0)
+		return;
+
 	edict_t* wiz = self->owner;
+
 	if (!wiz || !wiz->inuse || wiz->deadflag || wiz->health <= 0) {
 		G_FreeEdict(self);
 		return;

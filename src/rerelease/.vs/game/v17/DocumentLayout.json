@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_prototype.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_wizard_prototype.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_wizard.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_wizard_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "m_wizard_strogg.cpp",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_strogg.cpp",
+              "RelativeDocumentMoniker": "m_wizard_strogg.cpp",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_strogg.cpp",
+              "RelativeToolTip": "m_wizard_strogg.cpp",
+              "ViewState": "AQIAALMAAAAAAAAAAAAmwMUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-31T08:53:03.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "m_wizard_prototype.cpp",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_prototype.cpp",
+              "RelativeDocumentMoniker": "m_wizard_prototype.cpp",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_prototype.cpp",
+              "RelativeToolTip": "m_wizard_prototype.cpp",
+              "ViewState": "AQIAADYAAAAAAAAAAAAmwB8BAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-31T07:20:15.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "m_wizard.cpp",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard.cpp",
+              "RelativeDocumentMoniker": "m_wizard.cpp",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard.cpp",
+              "RelativeToolTip": "m_wizard.cpp",
+              "ViewState": "AQIAAAUBAAAAAAAAAAAmwP4AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-31T07:11:30.873Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
