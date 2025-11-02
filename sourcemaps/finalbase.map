@@ -41713,7 +41713,7 @@
 "classname" "target_changelevel"
 "origin" "1856 -1172 -2036"
 "targetname" "changelevel"
-"spawnflags" "56"
+"spawnflags" "104"
 "map" "voidhub"
 "_tb_layer" "1"
 }

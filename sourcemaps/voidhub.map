@@ -8,6 +8,7 @@
 "_tb_mod" "q1q2"
 "start_items" "weapon_blaster 0"
 "sky" "black_sky_"
+"message" "Writ of the Vadrigar"
 // brush 0
 {
 ( -2048 -464 -2920 ) ( -2048 -463 -2920 ) ( -2048 -464 -2919 ) e1u1/sky1 -12 0 0 1 1
