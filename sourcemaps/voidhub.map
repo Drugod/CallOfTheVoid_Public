@@ -25542,9 +25542,9 @@
 // entity 494
 {
 "classname" "trigger_multiple"
-"message" "This is Call Of The Void Episode"
+"message" "This is Call Of The Void Episode\nBy Rest in Pixels "
 "spawnflags" "2048"
-"wait" "2"
+"wait" "4"
 "_tb_layer" "156"
 // brush 0
 {
@@ -34629,9 +34629,9 @@
 // entity 673
 {
 "classname" "trigger_multiple"
-"message" "This is Konig's Quake 1 Shareware"
+"message" "This is Call of the Doomed\nQ1 shareware by Konig"
 "spawnflags" "2048"
-"wait" "2"
+"wait" "4"
 "_tb_layer" "158"
 // brush 0
 {

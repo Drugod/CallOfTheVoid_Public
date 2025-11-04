@@ -1201,90 +1201,97 @@
 }
 // entity 74
 {
-"classname" "monster_mutantspawn"
-"origin" "112 480 -216"
-"spawnflags" "0"
-}
-// entity 75
-{
 "classname" "key_q1_runic_silver_key"
 "origin" "-64 688 -224"
 }
-// entity 76
+// entity 75
 {
 "classname" "key_q1_runic_gold_key"
 "origin" "-64 656 -224"
 }
-// entity 77
+// entity 76
 {
 "classname" "key_q1_medieval_silver_key"
 "origin" "-64 624 -224"
 }
-// entity 78
+// entity 77
 {
 "classname" "key_q1_medieval_gold_key"
 "origin" "-64 592 -224"
 }
-// entity 79
+// entity 78
 {
 "classname" "key_q1_base_silver_key"
 "origin" "-64 560 -224"
 }
-// entity 80
+// entity 79
 {
 "classname" "key_q1_base_gold_key"
 "origin" "-64 528 -224"
 }
-// entity 81
+// entity 80
 {
 "classname" "monster_hknight_prototype"
 "origin" "840 384 -216"
 "angle" "0"
 "spawnflags" "524289"
 }
-// entity 82
+// entity 81
 {
 "classname" "monster_dog"
 "origin" "680 208 -216"
 "angle" "0"
 "spawnflags" "524289"
 }
-// entity 83
+// entity 82
 {
 "classname" "monster_shambler_prototype"
 "origin" "840 480 -216"
 "angle" "0"
 "spawnflags" "524289"
 }
-// entity 84
+// entity 83
 {
 "classname" "monster_ogre"
 "origin" "680 288 -216"
 "angle" "0"
 "spawnflags" "524289"
 }
-// entity 85
+// entity 84
 {
 "classname" "monster_shambler"
 "origin" "680 480 -216"
 "spawnflags" "524289"
 }
-// entity 86
+// entity 85
 {
 "classname" "monster_hellknight"
 "origin" "680 384 -216"
 "angle" "0"
 "spawnflags" "524289"
 }
-// entity 87
+// entity 86
 {
 "classname" "monster_ironvore"
 "origin" "528 288 -216"
 "spawnflags" "524289"
 }
-// entity 88
+// entity 87
 {
 "classname" "monster_spawn"
 "origin" "528 224 -216"
 "spawnflags" "524292"
+}
+// entity 88
+{
+"classname" "monster_wizard"
+"origin" "160 528 -216"
+"angle" "0"
+"spawnflags" "1"
+}
+// entity 89
+{
+"classname" "monster_hknight_hyper"
+"origin" "528 352 -216"
+"spawnflags" "524289"
 }
