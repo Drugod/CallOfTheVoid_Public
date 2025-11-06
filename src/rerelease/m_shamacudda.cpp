@@ -556,6 +556,7 @@ void SP_monster_shamacudda(edict_t* self)
 	self->health = 600 * st.health_multiplier;
 	self->gib_health = -60;
 	self->mass = 500;
+	self->flags |= FL_DEEPONE;
 
 	self->pain = shamacudda_pain;
 	self->die = shamacudda_die;

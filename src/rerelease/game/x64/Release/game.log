@@ -1,9 +1,154 @@
-﻿  m_wizard.cpp
+﻿  bot_debug.cpp
+  bot_exports.cpp
+  bot_think.cpp
+  bot_utils.cpp
+  cg_main.cpp
+  cg_screen.cpp
+  g_ctf.cpp
+  p_ctf_menu.cpp
+  g_ai.cpp
+  g_chase.cpp
+  g_cmds.cpp
+  g_combat.cpp
+  g_func.cpp
+  g_items.cpp
+  g_misc.cpp
+  g_main.cpp
+  g_misc_q1q2.cpp
+  g_monster.cpp
+  g_phys.cpp
+  g_save.cpp
+  g_spawn.cpp
+  g_svcmds.cpp
+  g_target.cpp
+  g_trigger.cpp
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_misc_q1q2.cpp(37,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_phys.cpp(418,18): warning C4101: 'mv': variable local sin referencia
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_monster.cpp(1656,37): warning C4101: 'offset': variable local sin referencia
+  g_turret.cpp
+  g_utils.cpp
+  g_weapon.cpp
+  m_actor.cpp
+  m_arachnid.cpp
+  m_berserk.cpp
+  m_boss2.cpp
+  m_boss3.cpp
+  m_boss31.cpp
+  m_boss32.cpp
+  m_brain.cpp
+  m_chick.cpp
+  m_chthon.cpp
+  m_chtjor.cpp
+  m_dog.cpp
+  m_dog_prototype.cpp
+  m_dog_strogg.cpp
+  m_enforcer.cpp
+  m_enforcer_prototype.cpp
+  m_enforcer_strogg.cpp
+  m_fiend.cpp
+  m_fiend_prototype.cpp
+  m_fiend_strogg.cpp
+  m_fish.cpp
+  m_fishgunner.cpp
+  m_flipper.cpp
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\m_enforcer.cpp(109,6): warning C4101: 'mod': variable local sin referencia
+  m_float.cpp
+  m_flyer.cpp
+  m_gladiator.cpp
+  m_guardian.cpp
+  m_guncmdr.cpp
+  m_gunner.cpp
+  m_hellknight.cpp
+  m_hknightberserker_strogg.cpp
+  m_hknight_hyper.cpp
+  m_hknight_prototype.cpp
+  m_hover.cpp
+  m_infantry.cpp
+  m_insane.cpp
+  m_insane_spawn.cpp
+  m_ironvore.cpp
+  m_knight.cpp
+  m_knight_prototype.cpp
+  m_knight_strogg.cpp
+  m_medic.cpp
+  m_move.cpp
+  m_mutant.cpp
+  m_mutantspawn.cpp
+  m_ogre.cpp
+  m_ogrestrogg.cpp
+  m_ogre_prototype.cpp
+  m_ogre_shotgun_strogg.cpp
+  m_parasite.cpp
+  m_rotflyer.cpp
+  m_shalrath.cpp
+  m_shalrath_prototype.cpp
+  m_shalrath_strogg.cpp
+  m_shamacudda.cpp
+  m_shambler.cpp
+  m_shambler_prototype.cpp
+  m_shambler_strogg.cpp
+  m_shamedic_strogg.cpp
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\m_shalrath.cpp(316,7): warning C4101: 'n': variable local sin referencia
+  m_shamjorg.cpp
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\m_shalrath_prototype.cpp(316,7): warning C4101: 'n': variable local sin referencia
+  m_soldier.cpp
+  m_soldier_grunt.cpp
+  m_soldier_grunt_double.cpp
+  m_soldier_grunt_prototype.cpp
+  m_soldier_strogg.cpp
+  m_spawn.cpp
+  m_supershamblertank.cpp
+  m_supertank.cpp
+  m_tank.cpp
+  m_wizard.cpp
+  m_wizard_barracuda_strogg.cpp
   m_wizard_prototype.cpp
+  m_wizard_strogg.cpp
+  m_zombie.cpp
+  m_zombie_prototype.cpp
+  m_zombie_strogg.cpp
+  p_client.cpp
+  p_hud.cpp
+  p_move.cpp
+  p_trail.cpp
+  p_view.cpp
+  p_weapon.cpp
+  q_std.cpp
+  g_rogue_combat.cpp
+  g_rogue_func.cpp
+  g_rogue_items.cpp
+  g_rogue_misc.cpp
+  g_rogue_monster.cpp
+  g_rogue_newai.cpp
+  g_rogue_newdm.cpp
+  g_rogue_newfnc.cpp
+  g_rogue_newtarg.cpp
+  g_rogue_newtrig.cpp
+  g_rogue_newweap.cpp
+  g_rogue_phys.cpp
+  g_rogue_spawn.cpp
+  g_rogue_sphere.cpp
+  g_rogue_utils.cpp
+  m_rogue_carrier.cpp
+  m_rogue_stalker.cpp
+  m_rogue_turret.cpp
+  m_rogue_widow.cpp
+  m_rogue_widow2.cpp
+  p_rogue_weapon.cpp
+  rogue_dm_ball.cpp
+  rogue_dm_tag.cpp
+  g_xatrix_func.cpp
+  g_xatrix_items.cpp
+  g_xatrix_misc.cpp
+  g_xatrix_monster.cpp
+  g_xatrix_target.cpp
+  g_xatrix_weapon.cpp
+  m_xatrix_fixbot.cpp
+  m_xatrix_gekk.cpp
+  p_xatrix_weapon.cpp
      Creando biblioteca ../game_x64.lib y objeto ../game_x64.exp
   Generando código
-  2977 of 12361 functions (24.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    146 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB not found, fall back to full compilation.
+  All 12361 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Generación de código finalizada
   game.vcxproj -> C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\game_x64.dll

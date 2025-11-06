@@ -749,6 +749,7 @@ void SP_monster_rotflyer(edict_t *self)
 
 	self->health = 50 * st.health_multiplier;
 	self->mass = 50;
+	self->flags |= FL_DEEPONE;
 
 	self->pain = rotflyer_pain;
 	self->die = rotflyer_die;

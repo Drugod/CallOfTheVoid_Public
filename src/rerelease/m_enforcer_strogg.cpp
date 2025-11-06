@@ -542,8 +542,8 @@ void SP_monster_enforcer_strogg(edict_t* self)
 
 	self->health = 100 * st.health_multiplier;;
 	self->gib_health = -35;
-
 	self->mass = 120;
+	self->flags |= FL_DEEPONE;
 
 	self->pain = enforcer_strogg_pain;
 	self->die = enforcer_strogg_die;

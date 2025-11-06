@@ -312,6 +312,7 @@ void SP_monster_wizarcuda_strogg(edict_t *self)
 	self->health = 120 * st.health_multiplier;
 	self->gib_health = -40;
 	self->mass = 80;
+	self->flags |= FL_DEEPONE;
 
 	self->pain = wizarcuda_strogg_pain;
 	self->die = wizarcuda_strogg_die;
