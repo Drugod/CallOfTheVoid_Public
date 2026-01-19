@@ -11249,7 +11249,7 @@
 {
 "origin" "-200 1480 152"
 "classname" "target_speaker"
-"noise" "ambience/spark2.wav"
+"noise" "world/spark2.wav"
 "spawnflags" "1"
 "attenuation" "3"
 "targetname" "light1"
@@ -12340,7 +12340,7 @@
 {
 "classname" "target_speaker"
 "origin" "-94 1770 -288"
-"noise" "q1/ambience/drip1.wav"
+"noise" "ambience/drip1.wav"
 "spawnflags" "1"
 "attenuation" "3"
 }
@@ -13277,7 +13277,7 @@
 {
 "origin" "-998 2374 192"
 "classname" "target_speaker"
-"noise" "q1/ambience/drone6.wav"
+"noise" "ambience/drone6.wav"
 "angle" "270"
 "_tb_group" "5"
 }
@@ -14211,7 +14211,7 @@
 {
 "origin" "-70 1626 160"
 "classname" "target_speaker"
-"noise" "q1/ambience/drone6.wav"
+"noise" "ambience/drone6.wav"
 "angle" "0"
 "_tb_group" "11"
 }
@@ -14578,7 +14578,7 @@
 {
 "origin" "1542 3462 288"
 "classname" "target_speaker"
-"noise" "q1/ambience/drone6.wav"
+"noise" "ambience/drone6.wav"
 "angle" "180"
 "_tb_group" "17"
 }
@@ -14701,7 +14701,7 @@
 {
 "origin" "2406 1722 -192"
 "classname" "target_speaker"
-"noise" "q1/ambience/drone6.wav"
+"noise" "ambience/drone6.wav"
 "angle" "90"
 "_tb_group" "18"
 }
@@ -14718,7 +14718,7 @@
 "origin" "64 1488 160"
 "attenuation" "3"
 "spawnflags" "1"
-"noise" "ambience/fl_hum1.wav"
+"noise" "world/l_hum1.wav"
 }
 // entity 392
 {
@@ -16027,15 +16027,10 @@
 // entity 442
 {
 "classname" "light_torch_small"
-"origin" "-210 2422 78"
-}
-// entity 443
-{
-"classname" "light_torch_small"
 "origin" "-348 2368 160"
 "light" "200"
 }
-// entity 444
+// entity 443
 {
 "classname" "light_torch_small"
 "origin" "-484 2368 160"

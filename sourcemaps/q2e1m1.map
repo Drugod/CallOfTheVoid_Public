@@ -13870,7 +13870,7 @@
 {
 "classname" "target_speaker"
 "origin" "592 544 88"
-"noise" "ambience/fl_hum1.wav"
+"noise" "world/l_hum1.wav"
 "spawnflags" "1"
 "attenuation" "3"
 "_tb_layer" "1"
@@ -13879,7 +13879,7 @@
 {
 "origin" "176 1744 -152"
 "classname" "target_speaker"
-"noise" "ambience/fl_hum1.wav"
+"noise" "world/l_hum1.wav"
 "spawnflags" "1"
 "attenuation" "3"
 "_tb_layer" "1"
@@ -13888,7 +13888,7 @@
 {
 "classname" "target_speaker"
 "origin" "80 1744 -152"
-"noise" "ambience/fl_hum1.wav"
+"noise" "world/l_hum1.wav"
 "spawnflags" "1"
 "attenuation" "3"
 "_tb_layer" "1"
@@ -13897,7 +13897,7 @@
 {
 "origin" "416 2064 -112"
 "classname" "target_speaker"
-"noise" "ambience/fl_hum1.wav"
+"noise" "world/l_hum1.wav"
 "spawnflags" "1"
 "attenuation" "3"
 "_tb_layer" "1"
@@ -13906,7 +13906,7 @@
 {
 "classname" "target_speaker"
 "origin" "416 1968 -112"
-"noise" "ambience/fl_hum1.wav"
+"noise" "world/l_hum1.wav"
 "spawnflags" "1"
 "attenuation" "3"
 "_tb_layer" "1"
@@ -13922,7 +13922,7 @@
 {
 "classname" "target_speaker"
 "origin" "-472 2064 -88"
-"noise" "ambience/fl_hum1.wav"
+"noise" "world/l_hum1.wav"
 "spawnflags" "1"
 "attenuation" "3"
 "_tb_layer" "1"

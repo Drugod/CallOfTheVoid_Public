@@ -337,7 +337,7 @@ static void chthon_death1_think(edict_t *self)
 
 static void chthon_death_end(edict_t *self)
 {
-    level.killed_monsters++;
+    //level.killed_monsters++;
     G_UseTargets(self, self->enemy);
     G_FreeEdict(self);
 }

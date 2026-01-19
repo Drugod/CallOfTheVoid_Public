@@ -3,40 +3,20 @@
   "WorkspaceRootPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_rotflyer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_rotflyer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_chthon.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_chthon.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_spawn.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:g_spawn.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_monster.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:g_monster.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_barracuda_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_wizard_barracuda_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_utils.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:g_utils.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_enforcer_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_enforcer_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_prototype.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_wizard_prototype.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_shamacudda.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_shamacudda.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_zombie_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_zombie_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_wizard.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:m_wizard_strogg.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_combat.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C994B5EA-3058-403C-953D-3673C2C4D64E}|game.vcxproj|solutionrelative:g_combat.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -51,118 +31,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "m_rotflyer.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_rotflyer.cpp",
-              "RelativeDocumentMoniker": "m_rotflyer.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_rotflyer.cpp",
-              "RelativeToolTip": "m_rotflyer.cpp",
-              "ViewState": "AQIAAOACAAAAAAAAAAAmwOwCAAAAAAAA",
+              "Title": "m_chthon.cpp",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_chthon.cpp",
+              "RelativeDocumentMoniker": "m_chthon.cpp",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_chthon.cpp",
+              "RelativeToolTip": "m_chthon.cpp",
+              "ViewState": "AQIAAE0BAAAAAAAAAAAcwFMBAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-06T12:53:59.176Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "g_spawn.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_spawn.cpp",
-              "RelativeDocumentMoniker": "g_spawn.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_spawn.cpp",
-              "RelativeToolTip": "g_spawn.cpp",
-              "ViewState": "AQIAAAsBAAAAAAAAAAAAAAsBAAAYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-06T12:53:55.236Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "m_enforcer_strogg.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_enforcer_strogg.cpp",
-              "RelativeDocumentMoniker": "m_enforcer_strogg.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_enforcer_strogg.cpp",
-              "RelativeToolTip": "m_enforcer_strogg.cpp",
-              "ViewState": "AQIAABACAAAAAAAAAAAUwCECAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-06T12:51:41.927Z",
+              "WhenOpened": "2025-12-05T17:24:53.584Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "m_wizard_barracuda_strogg.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_barracuda_strogg.cpp",
-              "RelativeDocumentMoniker": "m_wizard_barracuda_strogg.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_barracuda_strogg.cpp",
-              "RelativeToolTip": "m_wizard_barracuda_strogg.cpp",
-              "ViewState": "AQIAACgBAAAAAAAAAAAUwDwBAAAcAAAA",
+              "Title": "g_utils.cpp",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_utils.cpp",
+              "RelativeDocumentMoniker": "g_utils.cpp",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_utils.cpp",
+              "RelativeToolTip": "g_utils.cpp",
+              "ViewState": "AQIAANYAAAAAAAAAAAAiwOgAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-06T12:51:24.899Z",
+              "WhenOpened": "2025-12-05T17:24:26.99Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "m_shamacudda.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_shamacudda.cpp",
-              "RelativeDocumentMoniker": "m_shamacudda.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_shamacudda.cpp",
-              "RelativeToolTip": "m_shamacudda.cpp",
-              "ViewState": "AQIAACACAAAAAAAAAAAUwC4CAAAbAAAA",
+              "DocumentIndex": 3,
+              "Title": "g_combat.cpp",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_combat.cpp",
+              "RelativeDocumentMoniker": "g_combat.cpp",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_combat.cpp",
+              "RelativeToolTip": "g_combat.cpp",
+              "ViewState": "AQIAAEkEAAAAAAAAAAAMwFcEAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-06T12:51:10.087Z",
+              "WhenOpened": "2025-12-05T17:21:49.918Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "m_zombie_strogg.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_zombie_strogg.cpp",
-              "RelativeDocumentMoniker": "m_zombie_strogg.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_zombie_strogg.cpp",
-              "RelativeToolTip": "m_zombie_strogg.cpp",
-              "ViewState": "AQIAALECAAAAAAAAAAAUwMICAAAbAAAA",
+              "DocumentIndex": 1,
+              "Title": "g_monster.cpp",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_monster.cpp",
+              "RelativeDocumentMoniker": "g_monster.cpp",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\g_monster.cpp",
+              "RelativeToolTip": "g_monster.cpp",
+              "ViewState": "AQIAAJcCAAAAAAAAAAAiwLgCAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-06T12:50:58.483Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "m_wizard_strogg.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_strogg.cpp",
-              "RelativeDocumentMoniker": "m_wizard_strogg.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_strogg.cpp",
-              "RelativeToolTip": "m_wizard_strogg.cpp",
-              "ViewState": "AQIAALMAAAAAAAAAAAAmwMUAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-31T08:53:03.097Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "m_wizard_prototype.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_prototype.cpp",
-              "RelativeDocumentMoniker": "m_wizard_prototype.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard_prototype.cpp",
-              "RelativeToolTip": "m_wizard_prototype.cpp",
-              "ViewState": "AQIAAEsAAAAAAAAAAAAmwEIAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-31T07:20:15.586Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "m_wizard.cpp",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard.cpp",
-              "RelativeDocumentMoniker": "m_wizard.cpp",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Quake 2\\rerelease\\q1q2\\src\\rerelease\\m_wizard.cpp",
-              "RelativeToolTip": "m_wizard.cpp",
-              "ViewState": "AQIAAAUBAAAAAAAAAAAmwP4AAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-31T07:11:30.873Z",
+              "WhenOpened": "2025-12-05T17:18:49.226Z",
               "EditorCaption": ""
             }
           ]

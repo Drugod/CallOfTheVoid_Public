@@ -12113,7 +12113,7 @@
 "origin" "-822 -374 -304"
 "classname" "target_speaker"
 "attenuation" "3"
-"noise" "ambient/swamp2.wav"
+"noise" "ambience/swamp2.wav"
 "spawnflags" "1"
 "_tb_layer" "1"
 }
@@ -12122,7 +12122,7 @@
 "classname" "target_speaker"
 "origin" "-1150 -646 -304"
 "attenuation" "3"
-"noise" "ambient/swamp2.wav"
+"noise" "ambience/swamp2.wav"
 "spawnflags" "1"
 "_tb_layer" "1"
 }
@@ -12131,7 +12131,7 @@
 "origin" "-1470 -438 -304"
 "classname" "target_speaker"
 "attenuation" "3"
-"noise" "ambient/swamp1.wav"
+"noise" "ambience/swamp1.wav"
 "_tb_layer" "1"
 }
 // entity 271
@@ -12139,7 +12139,7 @@
 "classname" "target_speaker"
 "origin" "-854 50 -304"
 "attenuation" "3"
-"noise" "ambient/swamp1.wav"
+"noise" "ambience/swamp1.wav"
 "_tb_layer" "1"
 }
 // entity 272
@@ -12147,7 +12147,7 @@
 "origin" "-526 -526 -304"
 "classname" "target_speaker"
 "attenuation" "3"
-"noise" "ambient/swamp1.wav"
+"noise" "ambience/swamp1.wav"
 "_tb_layer" "1"
 }
 // entity 273

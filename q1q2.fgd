@@ -800,7 +800,7 @@ misc_satellite_dish : "Satellite Dish"
 // Just fidgets in one spot and teleports away when triggered
 //
 // 0221 - removed Monsters class inheritance
-@PointClass base(EditorFlags, Targetable) size(-32 -32 0, 32 32 80) model({ "path": ":models/monsters/boss3/rider/tris.md2", "frame": 414}) = monster_boss3_stand : "Stationnary Makron" []
+@PointClass base(EditorFlags, Targetable) size(-32 -32 0, 32 32 90) model({ "path": ":models/monsters/boss3/rider/tris.md2", "frame": 414}) = monster_boss3_stand : "Stationnary Makron" []
 @PointClass base(Monsters) model({ "path": ":models/monsters/brain/tris.md2" }) = monster_brain : "Brains"
 [
 	spawnflags(Flags) =
@@ -823,7 +823,7 @@ misc_satellite_dish : "Satellite Dish"
     ]
 ]
 @PointClass base(Monsters) model({ "path": ":models/monsters/flyer/tris.md2" }) = monster_flyer : "Flyer" []
-@PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/gladiatr/tris.md2" }) = monster_gladiator : "Gladiator" []
+@PointClass base(Monsters) size(-48 -48 -20, 48 48 48) model({ "path": ":models/monsters/gladiatr/tris.md2" }) = monster_gladiator : "Gladiator" []
 @PointClass base(Monsters) model({ "path": ":models/monsters/gunner/tris.md2" }) = monster_gunner : "Gunner"
 [
     spawnflags(Flags) =
@@ -846,12 +846,12 @@ misc_satellite_dish : "Satellite Dish"
         8 : "No jumping" : 0
     ]
 ]
-@PointClass base(Monsters) size(-80 -80 0, 90 90 140) model({ "path": ":models/monsters/boss3/jorg/tris.md2" }) = monster_jorg : "Jorg" []
+@PointClass base(Monsters) size(-80 -80 0, 80 80 140) model({ "path": ":models/monsters/boss3/jorg/tris.md2" }) = monster_jorg : "Jorg" []
 
 // 0221 - this entity can only spawn once the Jorg dies ... im sure someone will change that tho
-@PointClass base(Monsters) size(-32 -32 0, 32 32 80) model({ "path": ":models/monsters/boss3/rider/tris.md2", "frame": 414}) = monster_makron : "Makron" []
+@PointClass base(Monsters) size(-80 -80 0, 80 80 140) model({ "path": ":models/monsters/boss3/rider/tris.md2", "frame": 414}) = monster_makron : "Makron" []
 @PointClass base(Monsters) model({ "path": ":models/monsters/medic/tris.md2" }) = monster_medic : "Medic" []
-@PointClass base(Monsters) size(-32 -32 -24, 32 32 32)
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 32)
     model(
         {{
             spawnflags & 65536 -> { "path": ":models/monsters/mutant/tris.md2", "skin": 1, "frame": 33 },
@@ -900,7 +900,7 @@ monster_mutant : "Mutant"
     ]
 ]
 
-@PointClass base(EditorFlags, Scale, Targetable) size(-32 -32 -24, 32 32 80) model({{
+@PointClass base(EditorFlags, Scale, Targetable) size(-64 -64 0, 64 64 112) model({{
     scale != NULL -> {"path": ":models/monsters/tank/tris.md2", "skin": 2, "scale":scale},{"path": ":models/monsters/tank/tris.md2", "skin": 2, "scale":1.5}
 }}) = monster_tank_stand : "Stationnary Tank Commander" []
 
@@ -920,7 +920,7 @@ monster_mutant : "Mutant"
     ]
 ]
 
-@PointClass base(Monsters) size(-32 -32 -16, 32 32 72) model({{
+@PointClass base(Monsters) size(-32 -32 -16, 32 32 64) model({{
     spawnflags	== 65536   ->	{"path":":models/monsters/tank/tris.md2","skin":2, "scale":"1.0", "frame":"251"},    
     spawnflags	& "65536^8"   ->	{"path":":models/monsters/tank/tris.md2","skin":2, "scale":"1.5", "frame":"251"},
     spawnflags	&	8	->	{"path":":models/monsters/tank/tris.md2","skin":2,"scale":"1.5"},
@@ -937,7 +937,7 @@ monster_mutant : "Mutant"
     scale(string) : "Scale"
 ]
 
-@PointClass base(Monsters) size(-64 -64 0, 64 64 72) model({ "path": ":models/monsters/boss1/tris.md2" }) = monster_supertank : "Super Tank Boss"
+@PointClass base(Monsters) size(-64 -64 0, 64 64 112) model({ "path": ":models/monsters/boss1/tris.md2" }) = monster_supertank : "Super Tank Boss"
 [
     spawnflags(Flags) =
     [
@@ -993,7 +993,7 @@ monster_mutant : "Mutant"
     delay(float) : "delay between sparks" : "1"
 ]
 
-@PointClass base(Monsters) size(-24 -24 -24, 24 24 24)
+@PointClass base(Monsters) size(-18 -18 -24, 18 18 24)
     model(
         {{
             spawnflags & 65536 -> { "path": ":models/monsters/gekk/tris.md2", "skin": 2, "frame": 141 },
@@ -1012,9 +1012,9 @@ monster_gekk : "Gekk"
     ]
 ]
 @PointClass base(Monsters) model({ "path": ":models/monsters/bitch/tris.md2", "skin": 2 }) size(-16 -16 0, 16 16 56) = monster_chick_heat : "Iron Maiden (heat-seeking missile)" []
-@PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/gladiatr/tris.md2", "skin": 2 }) = monster_gladb : "Gladiator (phalanx)" []
+@PointClass base(Monsters) size(-32 -32 -24, 32 32 42) model({ "path": ":models/monsters/gladiatr/tris.md2", "skin": 2 }) = monster_gladb : "Gladiator (phalanx)" []
 
-@PointClass base(Monsters) size(-64 -64 0, 64 64 72) model({ "path": ":models/monsters/boss1/tris.md2", "skin": 2 }) = monster_boss5 : "Super Tank Boss (power armor)" []
+@PointClass base(Monsters) size(-64 -64 0, 64 64 112) model({ "path": ":models/monsters/boss1/tris.md2", "skin": 2 }) = monster_boss5 : "Super Tank Boss (power armor)" []
 
 @PointClass base(info_notnull, Target, Targetable) = hint_path : "Monster Path"
 [
@@ -1034,14 +1034,14 @@ monster_gekk : "Gekk"
 ]
 
 @PointClass base(Monsters) size(-40 -40 0, 40 40 144) model({ "path": ":models/monsters/blackwidow/tris.md2" }) = monster_widow : "Black Widow (on foot)" []
-@PointClass base(Monsters) size(-70 -70 0, 70 70 144) model({ "path": ":models/monsters/blackwidow2/tris.md2" }) = monster_widow2 : "Black Widow (spider)" []
+@PointClass base(Monsters) size(-40 -40 0, 40 40 144) model({ "path": ":models/monsters/blackwidow2/tris.md2" }) = monster_widow2 : "Black Widow (spider)" []
 @PointClass base(Monsters) model({ "path": ":models/monsters/medic/tris.md2", "skin": 2 }) = monster_medic_commander : "Medic Commander"
 [
     reinforcements(string): "Semicolon separated list of entity classes and cost of monster to spawn" : "monster_soldier_light 1;monster_soldier 2;monster_soldier_ss 2;monster_infantry 3;monster_gunner 4;monster_medic 5;monster_gladiator 6"
     monster_slots(integer) : "How many points to spend on monster spawns. Increases by up to 2x for Hard skill" : 3
 ]
 @PointClass base(Monsters) model({ "path": ":models/monsters/flyer/tris.md2" }) = monster_kamikaze : "Flyer (kamikaze)" []
-@PointClass base(Monsters) size(-12 -12 -12, 12 12 12) model({ "path": ":models/monsters/turret/tris.md2" }) = monster_turret : "Turret Monster"
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 32) model({ "path": ":models/monsters/turret/tris.md2" }) = monster_turret : "Turret Monster"
 [
     spawnflags(Flags) =
     [
@@ -1474,7 +1474,7 @@ Set 'map' value to 'mapname$playername' where playername equals the targetname o
 @PointClass base(EditorFlags) color(128 255 128) size(-16 -16 -24, 16 16 32) model({ "path": ":models/monsters/infantry/tris.md2"}) = turret_driver : "Turret driver"   [   target(target_destination) : "Target (turret_breach)"   ]
 
 // Expansions
-@PointClass base(EditorFlags) color(128 255 128) size(-4 -4 -4, 4 4 4) = turret_invisible_brain : "Turret invisible brain"
+@PointClass base(EditorFlags) color(128 255 128) size(-16 -16 -24, 16 16 32) = turret_invisible_brain : "Turret invisible brain"
 [
     delay(float) : "Delay between firing; leave unset for skill ramping" : "0"
     target(target_destination) : "Target (turret_breach)"
@@ -1622,32 +1622,32 @@ spawnflags == 0 -> 	{"path": "models/ctf/banner/small.md2", "scale":"1.0"},
 //HYBRID MONSTERS
 @PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/shamblerstrogg/tris.md2" }) = monster_shambler_strogg : "Shambler strogg"[]
 @PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/shamacudda/tris.md2" }) = monster_shamacudda : "Shamacudda"[]
-@PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/ogrestrogg/tris.md2" }) = monster_ogre_strogg : "Ogre strogg"[]
+@PointClass base(Monsters) size(-32 -32 -24, 32 32 42) model({ "path": ":models/monsters/ogrestrogg/tris.md2" }) = monster_ogre_strogg : "Ogre strogg"[]
 @PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/ogre2strogg/tris.md2" }) = monster_ogre2_strogg : "Ogre Shotgunner strogg"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/grunt_strogg/tris.md2" }) = monster_soldier_strogg : "Soldier strogg"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/grunt_double/tris.md2" }) = monster_soldier_grunt_double : "Soldier double strogg"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/enforcerstrogg/tris.md2" }) = monster_enforcer_strogg : "Enforcer strogg"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/dogstrogg/tris.md2" }) = monster_dog_strogg : "Dog strogg"[]
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 24) model({ "path": ":models/monsters/dogstrogg/tris.md2" }) = monster_dog_strogg : "Dog strogg"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/fiendstrogg/tris.md2" }) = monster_fiend_strogg : "Fiend strogg"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/zombiestrogg/tris.md2" }) = monster_zombie_strogg : "Zombie strogg"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/shalrathstrogg/tris.md2" }) = monster_shalrath_strogg : "Shalrath strogg"[]
+@PointClass base(Monsters) size(-32 -32 -24, 32 32 48) model({ "path": ":models/monsters/zombiestrogg/tris.md2" }) = monster_zombie_strogg : "Zombie strogg"[]
+@PointClass base(Monsters) size(-32 -32 -24, 32 32 48) model({ "path": ":models/monsters/shalrathstrogg/tris.md2" }) = monster_shalrath_strogg : "Shalrath strogg"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/wizardstrogg/tris.md2" }) = monster_wizard_strogg : "Wizard strogg"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/scraggacuda/tris.md2" }) = monster_wizarcuda_strogg : "Scraggacuda"[]
-@PointClass base(Monsters) size(-100 -100 -0, 100 100 325) model({ "path": ":models/monsters/shamjorg/tris.md2" }) = monster_shamjorg : "Shamjorg"[]
-@PointClass base(Monsters) size(-100 -100 -0, 100 100 325) model({ "path": ":models/monsters/chtjor/tris.md2" }) = monster_chtjor : "Chtjor"[]
-@PointClass base(Monsters) size(-64 -64 0, 64 64 72) model({ "path": ":models/monsters/shamblertank/tris.md2" }) = monster_supershamblertank : "Shambler Tank"[]
+@PointClass base(Monsters) size(-100 -100 0, 100 100 325) model({ "path": ":models/monsters/shamjorg/tris.md2" }) = monster_shamjorg : "Shamjorg"[]
+@PointClass base(Monsters) size(-100 -100 0, 100 100 350) model({ "path": ":models/monsters/chtjor/tris.md2" }) = monster_chtjor : "Chtjor"[]
+@PointClass base(Monsters) size(-64 -64 0, 64 64 112) model({ "path": ":models/monsters/shamblertank/tris.md2" }) = monster_supershamblertank : "Shambler Tank"[]
 @PointClass base(Monsters) size(-32 -32 0, 32 32 96) model({ "path": ":models/monsters/shamblerthunder/tris.md2" }) = monster_shamedic : "Shamedic"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/knightstrogg/tris.md2" }) = monster_knight_strogg : "Knight strogg"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/insane_spawn/tris.md2" }) = monster_insane_spawn : "Insane Spawn"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/fishgunner/tris.md2"}) = monster_fishgunner : "Fishgunner"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/rotflyer/tris.md2"}) = monster_rotflyer : "Rotflyer"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/ironvore/tris.md2"}) = monster_ironvore : "Iron Vore"[]
+@PointClass base(Monsters) size(-8 -8 -8, 8 8 8) model({ "path": ":models/monsters/insane_spawn/tris.md2" }) = monster_insane_spawn : "Insane Spawn"[]
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 36) model({ "path": ":models/monsters/fishgunner/tris.md2"}) = monster_fishgunner : "Fishgunner"[]
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 16) model({ "path": ":models/monsters/rotflyer/tris.md2"}) = monster_rotflyer : "Rotflyer"[]
+@PointClass base(Monsters) size(-16 -16 0, 16 16 56) model({ "path": ":models/monsters/ironvore/tris.md2"}) = monster_ironvore : "Iron Vore"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/hyperknight/tris.md2" }) = monster_hknight_hyper : "HyperKnight"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/hellberserkerstrogg/tris.md2" }) = monster_hknight_bsk_strogg : "Hellzerker strogg"
 [
     spawnflags(Flags) =    [        8 : "No jumping" : 0    ]
 ]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/mutantspawn/tris.md2" }) = monster_mutantspawn : "Mutant Spawn"
+@PointClass base(Monsters) size(-18 -18 -24, 18 18 30) model({ "path": ":models/monsters/mutantspawn/tris.md2" }) = monster_mutantspawn : "Mutant Spawn"
 [
     spawnflags(Flags) =    [        8 : "No jumping" : 0    ]
 ]
@@ -1663,21 +1663,21 @@ spawnflags == 0 -> 	{"path": "models/ctf/banner/small.md2", "scale":"1.0"},
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/fiend_prototype/tris.md2" }) = monster_fiend_prototype : "Fiend Prototype"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/knight_prototype/tris.md2" }) = monster_knight_prototype : "Knight Prototype"[]
 @PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/shambler_prototype/tris.md2" }) = monster_shambler_prototype : "Shambler Prototype"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/shalrath_prototype/tris.md2" }) = monster_shalrath_prototype : "Shalrath Prototype"[]
+@PointClass base(Monsters) size(-32 -32 -24, 32 32 48) model({ "path": ":models/monsters/shalrath_prototype/tris.md2" }) = monster_shalrath_prototype : "Shalrath Prototype"[]
 
 //Q1 VANILLA 
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/spawn/tris.md2" }) = monster_spawn : "Spawn Q1"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/fish/tris.md2" }) = monster_fish : "Fish Q1"[]
+@PointClass base(Monsters) size(-16 -16 0, 16 16 40) model({ "path": ":models/monsters/spawn/tris.md2" }) = monster_spawn : "Spawn Q1"[]
+@PointClass base(Monsters) size(-16 -16 -24, 16 16 64) model({ "path": ":models/monsters/fish/tris.md2" }) = monster_fish : "Fish Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/hellknight/tris.md2" }) = monster_hellknight : "Hellknight Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/dog/tris.md2" }) = monster_dog : "Dog Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/enforcer/tris.md2" }) = monster_enforcer : "Enforcer Q1"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/zombie/tris.md2" }) = monster_zombie : "Zombie Q1"[]
-@PointClass base(Monsters) size(-32 -32 -24, 32 32 64) model({ "path": ":models/monsters/ogre/tris.md2" }) = monster_ogre : "Ogre Q1"[]
+@PointClass base(Monsters) size(-32 -32 -24, 32 32 48) model({ "path": ":models/monsters/zombie/tris.md2" }) = monster_zombie : "Zombie Q1"[]
+@PointClass base(Monsters) size(-32 -32 -24, 32 32 42) model({ "path": ":models/monsters/ogre/tris.md2" }) = monster_ogre : "Ogre Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/grunt/tris.md2" }) = monster_soldier_grunt : "Grunt Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/wizard/tris.md2" }) = monster_wizard : "Wizard Q1"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/fiend/tris.md2" }) = monster_fiend : "Fiend Q1"[]
+@PointClass base(Monsters) size(-16 -16 0, 16 16 40) model({ "path": ":models/monsters/fiend/tris.md2" }) = monster_fiend : "Fiend Q1"[]
 @PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/knight/tris.md2" }) = monster_knight : "Knight Q1"[]
-@PointClass base(Monsters) size(-16 -16 -24, 16 16 40) model({ "path": ":models/monsters/shalrath/tris.md2" }) = monster_shalrath : "Shalrath Q1"[]
+@PointClass base(Monsters) size(-16 -16 0, 16 16 56) model({ "path": ":models/monsters/shalrath/tris.md2" }) = monster_shalrath : "Shalrath Q1"[]
 @PointClass base(Monsters) size(-128 -128 -24, 128 128 256) model({ "path": ":models/monsters/chthon/tris.md2", "frame": "57"}) = monster_chthon : "Chthon"[]
 
 //OTHER STUFF
@@ -1901,7 +1901,7 @@ misc_fiend_craft : "Fiend Crafting"
 @PointClass base(Monsters) size(-96 -96 -66, 96 96 62) model({ "path": ":models/monsters/guardian/tris.md2" }) = monster_guardian : "Guardian (PSX)" []
 @PointClass base(Monsters) size(-48 -48 -20, 48 48 48) model({ "path": ":models/monsters/arachnid/tris.md2" }) = monster_arachnid : "Arachnid (PSX)" []
 
-@PointClass base(EditorFlags, Targetable, Teamable) color(255 0 0) size(-4 -4 -4, 4 4 4) = target_poi : "Compass POI"
+@PointClass base(EditorFlags, Targetable, Teamable) color(255 0 0) size(-8 -8 -8, 8 8 8) = target_poi : "Compass POI"
 [
     spawnflags(Flags) =
     [

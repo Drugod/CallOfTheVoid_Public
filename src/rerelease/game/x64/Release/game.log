@@ -12,8 +12,8 @@
   g_combat.cpp
   g_func.cpp
   g_items.cpp
-  g_misc.cpp
   g_main.cpp
+  g_misc.cpp
   g_misc_q1q2.cpp
   g_monster.cpp
   g_phys.cpp
@@ -22,8 +22,8 @@
   g_svcmds.cpp
   g_target.cpp
   g_trigger.cpp
-C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_misc_q1q2.cpp(37,20): warning C4018: '<': no coinciden signed/unsigned
 C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_phys.cpp(418,18): warning C4101: 'mv': variable local sin referencia
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_misc_q1q2.cpp(37,20): warning C4018: '<': no coinciden signed/unsigned
 C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\g_monster.cpp(1656,37): warning C4101: 'offset': variable local sin referencia
   g_turret.cpp
   g_utils.cpp
@@ -51,8 +51,8 @@ C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelea
   m_fish.cpp
   m_fishgunner.cpp
   m_flipper.cpp
-C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\m_enforcer.cpp(109,6): warning C4101: 'mod': variable local sin referencia
   m_float.cpp
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\m_enforcer.cpp(109,6): warning C4101: 'mod': variable local sin referencia
   m_flyer.cpp
   m_gladiator.cpp
   m_guardian.cpp
@@ -88,10 +88,10 @@ C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelea
   m_shambler_prototype.cpp
   m_shambler_strogg.cpp
   m_shamedic_strogg.cpp
-C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\m_shalrath.cpp(316,7): warning C4101: 'n': variable local sin referencia
   m_shamjorg.cpp
-C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\m_shalrath_prototype.cpp(316,7): warning C4101: 'n': variable local sin referencia
   m_soldier.cpp
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\m_shalrath_prototype.cpp(316,7): warning C4101: 'n': variable local sin referencia
+C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelease\m_shalrath.cpp(316,7): warning C4101: 'n': variable local sin referencia
   m_soldier_grunt.cpp
   m_soldier_grunt_double.cpp
   m_soldier_grunt_prototype.cpp
@@ -148,7 +148,8 @@ C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\rerelea
   p_xatrix_weapon.cpp
      Creando biblioteca ../game_x64.lib y objeto ../game_x64.exp
   Generando código
-  Previous IPDB not found, fall back to full compilation.
-  All 12361 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  3045 of 12361 functions (24.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    187 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   game.vcxproj -> C:\Program Files (x86)\Steam\steamapps\common\Quake 2\rerelease\q1q2\src\game_x64.dll
